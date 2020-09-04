@@ -1,4 +1,4 @@
-# LotSpottor
+# LotSpotter
 A parking lot occupancy solution for the University of South Carolina, Columbia.
 
 ## Team
