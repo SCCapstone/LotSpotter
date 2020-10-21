@@ -22,9 +22,6 @@ Links to our important Wiki pages:
 
 ## External Requirements
 
-List all the stuff the reader will need to install in order to get you app to 
-run in their laptop. For example:
-
 In order to build this project you first have to install:
 
 * [NPM](https://www.npmjs.com/)
