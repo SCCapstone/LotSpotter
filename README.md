@@ -55,14 +55,6 @@ To run the app from the cloned repo, in terminal navigate to the /src/ folder, t
 
 # Deployment
 
-Webapps need a deployment section that explains how to get it deployed on the 
-Internet. These should be detailed enough so anyone can re-deploy if needed
-. Note that you **do not put passwords in git**. 
-
-Mobile apps will also sometimes need some instructions on how to build a
-"release" version, maybe how to sign it, and how to run that binary in an
-emulator or in a physical phone.
-
 To build a "release" version of our application, execute the following command with the /src/ folder of the project as your active directory:
 > ionic cordova build --release android
 
