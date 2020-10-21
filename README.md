@@ -10,7 +10,7 @@ is built using [Ionic](https://ionicframework.com/)/[Angular](https://angular.io
 
 This application was developed for [CSCE 490](https://capstone.cse.sc.edu/) at the [University of South Carolina](https://sc.edu/).
 
-For more detailed documentation on this project including a description, architecture, and design, check out our Wiki(https://github.com/SCCapstone/LotSpotter/wiki).
+For more detailed documentation on this project including a description, architecture, and design, check out our [Wiki](https://github.com/SCCapstone/LotSpotter/wiki).
 
 Links to our important Wiki pages:
 
