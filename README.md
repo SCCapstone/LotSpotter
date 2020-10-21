@@ -49,21 +49,15 @@ To install all of the dependencies you will need for building and launching this
 
 > npm install @ionic-native/geolocation
 
-> ionic serve
-
-
-You only need to add instructions for the OS you are using.
-
 ## Setup
 
-Here you list all the one-time things the developer needs to do after cloning
-your repo. Sometimes there is no need for this section, but some apps require
-some first-time configuration from the developer, for example: setting up a
-database for running your webapp locally.
+There are no setup requirements that the developer must take care of for the first launch of the application on their local.
 
 ## Running
 
-Specify the commands for a developer to run the app from the cloned repo.
+To run the app from the cloned repo, in terminal navigate to the /src/ folder, then execute
+
+> ionic serve
 
 # Deployment
 
