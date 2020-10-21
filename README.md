@@ -24,23 +24,16 @@ In order to build this project you first have to install:
 * [Cordova](https://cordova.apache.org/plugins/)
 
 To install all of the dependencies you will need for building and launching this application on Ubuntu, execute the following commands:
-
-> sudo apt install nodejs
-
-> npm install -g @ionic/cli
-
-> git clone https://github.com/SCCapstone/LotSpotter.git
-
-> cd LotSpotter
-
-> ionic cordova plugin add cordova-plugin-nativegeocoder
-
-> npm install @ionic-native/native-geocoder
-
-> ionic cordova plugin add cordova-plugin-geolocation
-
-> npm install @ionic-native/geolocation
-
+```bash
+sudo apt install nodejs
+npm install -g @ionic/cli
+git clone https://github.com/SCCapstone/LotSpotter.git
+cd LotSpotter
+ionic cordova plugin add cordova-plugin-nativegeocoder
+npm install @ionic-native/native-geocoder
+ionic cordova plugin add cordova-plugin-geolocation
+npm install @ionic-native/geolocation
+```
 ## Setup
 
 There are no setup requirements that the developer must take care of for the first launch of the application on their local.
