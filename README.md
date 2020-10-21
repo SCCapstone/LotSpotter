@@ -1,28 +1,15 @@
-# LotSpotter
-A parking lot occupancy solution for the University of South Carolina, Columbia.
 
-## Team
- * [Daniel Jones](https://github.com/Dojones98)
- * [Luis Baez](https://github.com/AnadamaBread)
- * [Abigail Delnoce](https://github.com/adelnoce)
- * [Cassidy Bradley](https://github.com/cassidybradley99)
- * [Austin Staton](https://github.com/aj-staton)
- 
- ***
- 
- # Vidal's template for us to fill out
+
+
  
  # LotSpotter
 
-This first paragraph should be a short description of the app. You can add links
-to your wiki pages that have more detailed descriptions.
+LotSpotter is a parking lot occupancy traker built to help students, faculty, and
+staff make informed decisions on their morning commute to campus. This application 
+is built using [Ionic](https://ionicframework.com/)/[Angular](https://angular.io/) with a [FireBase BaaS](https://firebase.google.com/) and [Cordova](https://cordova.apache.org/plugins/) plugins.
 
-Your audience for the Readme.md are other developers who are joining your team.
-Specifically, the file should contain detailed instructions that any developer
-can follow to install, compile, run, and test your project. These are not only
-useful to new developers, but also to you when you have to re-install everything
-because your old laptop crashed. Also, the teachers of this class will be
-following your instructions.
+This application was developed for [CSCE 490](https://capstone.cse.sc.edu/) at the [University of South Carolina](https://sc.edu/).
+
 
 ## External Requirements
 
@@ -31,24 +18,31 @@ run in their laptop. For example:
 
 In order to build this project you first have to install:
 
+* [NPM](https://www.npmjs.com/)
 * [Node.js](https://nodejs.org/en/)
-* [MongoDB](https://www.mongodb.com/)
+* [Ionic CLI](https://ionicframework.com/docs/cli)
+* [Cordova](https://cordova.apache.org/plugins/)
 
-If possible, list the actual commands you used to install these, so the reader
-can just cut-n-paste the commands and get everything setup.
-
-You only need to add instructions for the OS you are using.
-
+To install all of the dependencies you will need for building and launching this application on Ubuntu, execute the following commands:
+```bash
+sudo apt install nodejs
+npm install -g @ionic/cli
+git clone https://github.com/SCCapstone/LotSpotter.git
+cd LotSpotter
+ionic cordova plugin add cordova-plugin-nativegeocoder
+npm install @ionic-native/native-geocoder
+ionic cordova plugin add cordova-plugin-geolocation
+npm install @ionic-native/geolocation
+```
 ## Setup
 
-Here you list all the one-time things the developer needs to do after cloning
-your repo. Sometimes there is no need for this section, but some apps require
-some first-time configuration from the developer, for example: setting up a
-database for running your webapp locally.
+There are no setup requirements that the developer must take care of for the first launch of the application on their local.
 
 ## Running
 
-Specify the commands for a developer to run the app from the cloned repo.
+To run the app from the cloned repo, in terminal navigate to the /src/ folder, then execute
+
+> ionic serve
 
 # Deployment
 
@@ -59,6 +53,16 @@ Internet. These should be detailed enough so anyone can re-deploy if needed
 Mobile apps will also sometimes need some instructions on how to build a
 "release" version, maybe how to sign it, and how to run that binary in an
 emulator or in a physical phone.
+
+To build a "release" version of our application, execute the following command with the /src/ folder of the project as your active directory:
+> ionic cordova build --release android
+
+This will place an unsigned .apk of the application at platforms/android/build/outputs/apk
+
+More detailed instructions on generating a release version of an ionic applicaton can be found [here](https://ionicframework.com/docs/v1/guide/publishing.html).
+
+To run this application on an emulator, execute the following command:
+> ionic cordova emulate android
 
 # Testing
 
@@ -79,4 +83,8 @@ Explain how to run the automated tests.
 
 # Authors
 
-Your names and emails
+ * [Daniel Jones](https://github.com/Dojones98) | dojones@cec.sc.edu
+ * [Luis Baez](https://github.com/AnadamaBread) | lbaez@email.sc.edu
+ * [Abigail Delnoce](https://github.com/adelnoce) | adelnoce@email.sc.edu
+ * [Cassidy Bradley](https://github.com/cassidybradley99) | Cmb11@email.sc.edu
+ * [Austin Staton](https://github.com/aj-staton) | ajstaton@email.sc.edu
