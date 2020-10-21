@@ -22,9 +22,6 @@ Links to our important Wiki pages:
 
 ## External Requirements
 
-List all the stuff the reader will need to install in order to get you app to 
-run in their laptop. For example:
-
 In order to build this project you first have to install:
 
 * [NPM](https://www.npmjs.com/)
@@ -37,7 +34,7 @@ To install all of the dependencies you will need for building and launching this
 sudo apt install nodejs
 npm install -g @ionic/cli
 git clone https://github.com/SCCapstone/LotSpotter.git
-cd LotSpotter
+cd LotSpotter/
 ionic cordova plugin add cordova-plugin-nativegeocoder
 npm install @ionic-native/native-geocoder
 ionic cordova plugin add cordova-plugin-geolocation
@@ -55,14 +52,6 @@ To run the app from the cloned repo, in terminal navigate to the /src/ folder, t
 
 # Deployment
 
-Webapps need a deployment section that explains how to get it deployed on the 
-Internet. These should be detailed enough so anyone can re-deploy if needed
-. Note that you **do not put passwords in git**. 
-
-Mobile apps will also sometimes need some instructions on how to build a
-"release" version, maybe how to sign it, and how to run that binary in an
-emulator or in a physical phone.
-
 To build a "release" version of our application, execute the following command with the /src/ folder of the project as your active directory:
 > ionic cordova build --release android
 
@@ -72,6 +61,10 @@ More detailed instructions on generating a release version of an ionic applicato
 
 To run this application on an emulator, execute the following command:
 > ionic cordova emulate android
+
+# Style Guide
+Our group will be following [this](https://basarat.gitbook.io/typescript/styleguide)
+formatting.
 
 # Testing
 
