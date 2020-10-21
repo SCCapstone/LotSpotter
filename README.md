@@ -34,7 +34,7 @@ To install all of the dependencies you will need for building and launching this
 sudo apt install nodejs
 npm install -g @ionic/cli
 git clone https://github.com/SCCapstone/LotSpotter.git
-cd LotSpotter
+cd LotSpotter/
 ionic cordova plugin add cordova-plugin-nativegeocoder
 npm install @ionic-native/native-geocoder
 ionic cordova plugin add cordova-plugin-geolocation
