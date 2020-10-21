@@ -14,15 +14,10 @@ A parking lot occupancy solution for the University of South Carolina, Columbia.
  
  # LotSpotter
 
-This first paragraph should be a short description of the app. You can add links
-to your wiki pages that have more detailed descriptions.
+LotSpotter is a parking lot occupancy traker built to help students, faculty, and
+staff make informed decisions on their morning commute to campus. This application 
+is built using [Ionic](https://ionicframework.com/)/[Angular](https://angular.io/) with a [FireBase BaaS](https://firebase.google.com/) and [Cordova](https://cordova.apache.org/plugins/) plugins.
 
-Your audience for the Readme.md are other developers who are joining your team.
-Specifically, the file should contain detailed instructions that any developer
-can follow to install, compile, run, and test your project. These are not only
-useful to new developers, but also to you when you have to re-install everything
-because your old laptop crashed. Also, the teachers of this class will be
-following your instructions.
 
 ## External Requirements
 
@@ -31,11 +26,31 @@ run in their laptop. For example:
 
 In order to build this project you first have to install:
 
+* [NPM](https://www.npmjs.com/)
 * [Node.js](https://nodejs.org/en/)
-* [MongoDB](https://www.mongodb.com/)
+* [Ionic CLI](https://ionicframework.com/docs/cli)
+* [Cordova](https://cordova.apache.org/plugins/)
 
-If possible, list the actual commands you used to install these, so the reader
-can just cut-n-paste the commands and get everything setup.
+To install all of the dependencies you will need for building and launching this application on Ubuntu, execute the following commands:
+
+> sudo apt install nodejs
+
+> npm install -g @ionic/cli
+
+> git clone https://github.com/SCCapstone/LotSpotter.git
+
+> cd LotSpotter
+
+> ionic cordova plugin add cordova-plugin-nativegeocoder
+
+> npm install @ionic-native/native-geocoder
+
+> ionic cordova plugin add cordova-plugin-geolocation
+
+> npm install @ionic-native/geolocation
+
+> ionic serve
+
 
 You only need to add instructions for the OS you are using.
 
