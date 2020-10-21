@@ -64,6 +64,10 @@ More detailed instructions on generating a release version of an ionic applicato
 To run this application on an emulator, execute the following command:
 > ionic cordova emulate android
 
+# Style Guide
+Our group will be following [this](https://basarat.gitbook.io/typescript/styleguide)
+formatting.
+
 # Testing
 
 In 492 you will write automated tests. When you do you will need to add a 
