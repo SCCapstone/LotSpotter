@@ -1,22 +1,14 @@
-# LotSpotter
-A parking lot occupancy solution for the University of South Carolina, Columbia.
 
-## Team
- * [Daniel Jones](https://github.com/Dojones98)
- * [Luis Baez](https://github.com/AnadamaBread)
- * [Abigail Delnoce](https://github.com/adelnoce)
- * [Cassidy Bradley](https://github.com/cassidybradley99)
- * [Austin Staton](https://github.com/aj-staton)
- 
- ***
- 
- # Vidal's template for us to fill out
+
+
  
  # LotSpotter
 
 LotSpotter is a parking lot occupancy traker built to help students, faculty, and
 staff make informed decisions on their morning commute to campus. This application 
 is built using [Ionic](https://ionicframework.com/)/[Angular](https://angular.io/) with a [FireBase BaaS](https://firebase.google.com/) and [Cordova](https://cordova.apache.org/plugins/) plugins.
+
+This application was developed for [CSCE 490](https://capstone.cse.sc.edu/) at the [University of South Carolina](https://sc.edu/).
 
 
 ## External Requirements
@@ -69,6 +61,16 @@ Mobile apps will also sometimes need some instructions on how to build a
 "release" version, maybe how to sign it, and how to run that binary in an
 emulator or in a physical phone.
 
+To build a "release" version of our application, execute the following command with the /src/ folder of the project as your active directory:
+> ionic cordova build --release android
+
+This will place an unsigned .apk of the application at platforms/android/build/outputs/apk
+
+More detailed instructions on generating a release version of an ionic applicaton can be found [here](https://ionicframework.com/docs/v1/guide/publishing.html).
+
+To run this application on an emulator, execute the following command:
+> ionic cordova emulate android
+
 # Testing
 
 In 492 you will write automated tests. When you do you will need to add a 
@@ -88,4 +90,8 @@ Explain how to run the automated tests.
 
 # Authors
 
-Your names and emails
+ * [Daniel Jones](https://github.com/Dojones98) | dojones@cec.sc.edu
+ * [Luis Baez](https://github.com/AnadamaBread) | lbaez@email.sc.edu
+ * [Abigail Delnoce](https://github.com/adelnoce) | adelnoce@email.sc.edu
+ * [Cassidy Bradley](https://github.com/cassidybradley99) | Cmb11@email.sc.edu
+ * [Austin Staton](https://github.com/aj-staton) | ajstaton@email.sc.edu
