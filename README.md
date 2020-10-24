@@ -1,3 +1,6 @@
+
+
+
 # LotSpotter
 
 LotSpotter is a parking lot occupancy traker built to help students, faculty, and
