@@ -1,8 +1,4 @@
-
-
-
- 
- # LotSpotter
+# LotSpotter
 
 LotSpotter is a parking lot occupancy traker built to help students, faculty, and
 staff make informed decisions on their morning commute to campus. This application 
