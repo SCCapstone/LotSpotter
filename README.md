@@ -1,4 +1,3 @@
-This is a test of merging the branches.
 # LotSpotter
 
 LotSpotter is a parking lot occupancy traker built to help students, faculty, and
