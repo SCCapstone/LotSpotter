@@ -10,6 +10,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
+  // This is a comment for Austin's milestone.
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
