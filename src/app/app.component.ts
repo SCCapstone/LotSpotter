@@ -11,14 +11,65 @@ import { Environment } from '@ionic-native/google-maps';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss']
 })
-export class AppComponent {
-  constructor(
-    private platform: Platform,
-    private splashScreen: SplashScreen,
-    private statusBar: StatusBar
-  ) {
-    this.initializeApp();
+
+export class AppComponent {currentPageTitle = 'Dashboard';
+
+appPages = [
+  {
+    title: 'Home',
+    url: '/pages/home',
+    icon: 'home'
+  },
+  {
+    title: 'Avaliable Lots',
+    url: '/pages/avaliable-lots',
+    icon: 'film'
+  },
+  {
+    title: 'All lots',
+    url: '/pages/all-lots',
+    icon: 'settings'
+  },
+  {
+    title: 'Manage Passes',
+    url: '/pages/manage-passes',
+    icon: 'clipboard'
+  },
+  {
+    title: 'Purchase Pass',
+    url: '/pages/purchase-a-pass',
+    icon: 'card'
+  },
+  {
+    title: 'Settings',
+    url: '/pages/settings',
+    icon: 'settings'
+  },
+  {
+    title: 'Map',
+    url: '/pages/map',
+    icon: 'map'
+  },
+  {
+    title: 'Analytics',
+    url: '/pages/analytics',
+    icon: 'bar-chart'
+  },
+  {
+    title: 'Favorites',
+    url: '/pages/favorites',
+    icon: 'star'
+
   }
+];
+
+constructor(
+  private platform: Platform,
+  private splashScreen: SplashScreen,
+  private statusBar: StatusBar,
+) {
+  this.initializeApp();
+}
 
   initializeApp() {
     this.platform.ready().then(() => {
