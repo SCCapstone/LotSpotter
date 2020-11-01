@@ -44,7 +44,7 @@ There are no setup requirements that the developer must take care of for the fir
 
 To run the app from the cloned repo, in terminal navigate to the /src/ folder, then execute
 
-> ionic serve
+> ionic cordova run browser
 
 # Deployment
 
