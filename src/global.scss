@@ -24,3 +24,21 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+// Font added from Google fonts, what we originally used on Figma
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap');
+// **Current Font
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+// Attempt to set toolbar color for entire app
+ion-toolbar{
+    --ion-background-color: #6b0000;
+    --ion-text-color: #ffffff;
+}
+
+// Set header font
+ion-list-header{
+    font-weight: 500;
+    font-size: 30px;
+}
