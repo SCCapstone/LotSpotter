@@ -1,8 +1,4 @@
-
-
-
- 
- # LotSpotter
+# LotSpotter
 
 LotSpotter is a parking lot occupancy traker built to help students, faculty, and
 staff make informed decisions on their morning commute to campus. This application 
@@ -36,9 +32,7 @@ npm install -g @ionic/cli
 git clone https://github.com/SCCapstone/LotSpotter.git
 cd LotSpotter/
 ionic cordova plugin add cordova-plugin-nativegeocoder
-npm install @ionic-native/native-geocoder
-ionic cordova plugin add cordova-plugin-geolocation
-npm install @ionic-native/geolocation
+npm install
 ```
 ## Setup
 
@@ -48,7 +42,7 @@ There are no setup requirements that the developer must take care of for the fir
 
 To run the app from the cloned repo, in terminal navigate to the /src/ folder, then execute
 
-> ionic serve
+> ionic cordova run browser
 
 # Deployment
 
