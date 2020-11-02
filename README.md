@@ -32,9 +32,7 @@ npm install -g @ionic/cli
 git clone https://github.com/SCCapstone/LotSpotter.git
 cd LotSpotter/
 ionic cordova plugin add cordova-plugin-nativegeocoder
-npm install @ionic-native/native-geocoder
-ionic cordova plugin add cordova-plugin-geolocation
-npm install @ionic-native/geolocation
+npm install
 ```
 ## Setup
 
