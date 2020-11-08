@@ -1,0 +1,106 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title> Home </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="4">
+        <ion-card color="primary" (click)="avaliableLotsNav()"> 
+          <ion-card-content>
+            <ion-img [src]="logo"></ion-img>
+          </ion-card-content>
+          <ion-item color="primary">
+            <ion-label>Avaliable Lots</ion-label>
+          </ion-item>
+        </ion-card>
+      </ion-col>
+      <ion-col size="4">
+        <ion-card color="primary" (click)="allLotsNav()">
+          <ion-card-content>
+            <ion-img [src]="logo"></ion-img>
+          </ion-card-content>
+          <ion-item color="primary">
+            <ion-label>All Lots</ion-label>
+          </ion-item>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="4">
+        <ion-card color="primary" (click)="managePassesNav()">
+          <ion-card-content>
+            <ion-img [src]="logo"></ion-img>
+          </ion-card-content>
+          <ion-item color="primary">
+            <ion-label>Manage Passes</ion-label>
+          </ion-item>
+        </ion-card>
+      </ion-col>
+      <ion-col size="4">
+        <ion-card color="primary" (click)="purchaseAPassNav()">
+          <ion-card-content>
+            <ion-img [src]="logo"></ion-img>
+          </ion-card-content>
+          <ion-item color="primary">
+            <ion-label>Purchase A Pass</ion-label>
+          </ion-item>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="4">
+        <ion-card color="primary" (click)="settingsNav()">
+          <ion-card-content>
+            <ion-img [src]="logo"></ion-img>
+          </ion-card-content>
+          <ion-item color="primary">
+            <ion-label>Settings</ion-label>
+          </ion-item>
+        </ion-card>
+      </ion-col>
+      <ion-col size="4">
+        <ion-card color="primary" (click)="mapNav()">
+          <ion-card-content>
+            <ion-img [src]="logo"></ion-img>
+          </ion-card-content>
+          <ion-item color="primary">
+            <ion-label>Map</ion-label>
+          </ion-item>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="4">
+        <ion-card color="primary" (click)="analyticsNav()">
+          <ion-card-content>
+            <ion-img [src]="logo"></ion-img>
+          </ion-card-content>
+          <ion-item color="primary">
+            <ion-label>Analytics</ion-label>
+          </ion-item>
+        </ion-card>
+      </ion-col>
+      <ion-col size="4">
+        <ion-card color="primary" (click)="favoritesNav()">
+          <ion-card-content>
+            <ion-img [src]="logo"></ion-img>
+          </ion-card-content>
+          <ion-item color="primary">
+            <ion-label>Favorites</ion-label>
+          </ion-item>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    
+  </ion-grid>
+
+  <ion-button type="submit" (click)="authService.SignOut()" expand="block"
+    >Logout</ion-button
+  >
+</ion-content>
