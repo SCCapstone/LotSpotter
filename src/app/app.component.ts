@@ -6,6 +6,19 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { Environment } from '@ionic-native/google-maps';
 
+import * as firebase from 'firebase';
+
+var firebaseConfig = {
+  apiKey: "AIzaSyAQN02izLyzeBTCBsBIADHoWSMu8nOfLWI",
+  authDomain: "lotspotter-ba109.firebaseapp.com",
+  databaseURL: "https://lotspotter-ba109.firebaseio.com",
+  projectId: "lotspotter-ba109",
+  storageBucket: "lotspotter-ba109.appspot.com",
+  messagingSenderId: "142655337490",
+  appId: "1:142655337490:web:986c04ebfa6dd8cbef14cb",
+  measurementId: "G-SBTVL9CDG0"
+};
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
