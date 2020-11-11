@@ -20,7 +20,7 @@ export class HomePage {
   }
 
   avaliableLotsNav() {
-    this.router.navigate(['avaliable-lots']);
+    this.router.navigate(['available-lots']);
   }
 
   allLotsNav() {
