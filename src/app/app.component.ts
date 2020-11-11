@@ -17,47 +17,47 @@ export class AppComponent {currentPageTitle = 'Dashboard';
 appPages = [
   {
     title: 'Home',
-    url: '/pages/home',
+    url: 'home',
     icon: 'home'
   },
   {
-    title: 'Avaliable Lots',
-    url: '/pages/avaliable-lots',
+    title: 'Available Lots',
+    url: 'available-lots',
     icon: 'film'
   },
   {
     title: 'All lots',
-    url: '/pages/all-lots',
+    url: 'all-lots',
     icon: 'settings'
   },
   {
     title: 'Manage Passes',
-    url: '/pages/manage-passes',
+    url: 'manage-passes',
     icon: 'clipboard'
   },
-  {
+  /*{
     title: 'Purchase Pass',
-    url: '/pages/purchase-a-pass',
+    url: 'purchase-a-pass',
     icon: 'card'
-  },
+  },*/
   {
     title: 'Settings',
-    url: '/pages/settings',
+    url: 'settings',
     icon: 'settings'
   },
   {
     title: 'Map',
-    url: '/pages/map',
+    url: 'map',
     icon: 'map'
   },
   {
     title: 'Analytics',
-    url: '/pages/analytics',
+    url: 'analytics',
     icon: 'bar-chart'
   },
   {
     title: 'Favorites',
-    url: '/pages/favorites',
+    url: 'favorites',
     icon: 'star'
 
   }
