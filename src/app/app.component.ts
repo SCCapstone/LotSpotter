@@ -6,6 +6,19 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { Environment } from '@ionic-native/google-maps';
 
+import * as firebase from 'firebase';
+
+var firebaseConfig = {
+  apiKey: "AIzaSyAQN02izLyzeBTCBsBIADHoWSMu8nOfLWI",
+  authDomain: "lotspotter-ba109.firebaseapp.com",
+  databaseURL: "https://lotspotter-ba109.firebaseio.com",
+  projectId: "lotspotter-ba109",
+  storageBucket: "lotspotter-ba109.appspot.com",
+  messagingSenderId: "142655337490",
+  appId: "1:142655337490:web:986c04ebfa6dd8cbef14cb",
+  measurementId: "G-SBTVL9CDG0"
+};
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -17,47 +30,47 @@ export class AppComponent {currentPageTitle = 'Dashboard';
 appPages = [
   {
     title: 'Home',
-    url: '/pages/home',
+    url: 'home',
     icon: 'home'
   },
   {
-    title: 'Avaliable Lots',
-    url: '/pages/avaliable-lots',
+    title: 'Available Lots',
+    url: 'available-lots',
     icon: 'film'
   },
   {
     title: 'All lots',
-    url: '/pages/all-lots',
+    url: 'all-lots',
     icon: 'settings'
   },
   {
     title: 'Manage Passes',
-    url: '/pages/manage-passes',
+    url: 'manage-passes',
     icon: 'clipboard'
   },
-  {
+  /*{
     title: 'Purchase Pass',
-    url: '/pages/purchase-a-pass',
+    url: 'purchase-a-pass',
     icon: 'card'
-  },
+  },*/
   {
     title: 'Settings',
-    url: '/pages/settings',
+    url: 'settings',
     icon: 'settings'
   },
   {
     title: 'Map',
-    url: '/pages/map',
+    url: 'map',
     icon: 'map'
   },
   {
     title: 'Analytics',
-    url: '/pages/analytics',
+    url: 'analytics',
     icon: 'bar-chart'
   },
   {
     title: 'Favorites',
-    url: '/pages/favorites',
+    url: 'favorites',
     icon: 'star'
 
   }
