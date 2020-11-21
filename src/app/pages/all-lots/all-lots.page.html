@@ -9,24 +9,33 @@
 </ion-header>
 
 <ion-content>
-  <ion-card>
-    <ion-item>
-      <ion-icon name="pin" slot="start"></ion-icon>
-      <ion-label>S4 - Behind Columbia Hall</ion-label>
-      <ion-text slot="end">Spaces Open - 46</ion-text>
+  <ion-button (click)="fetch()">Fetch</ion-button>
+  <ion-list *ngIf="tasks.length !=0">
+    <ion-item *ngFor="let item of tasks">
+      <ion-label>
+        <h3>{{item.name}} test</h3>
+        <p>{{item.desc}}</p>
+      </ion-label>
     </ion-item>
-  
-    <ion-card-content>
-        <ion-row>
-          <ion-col>
-            <ion-button fill="outline">Directions</ion-button>
-          </ion-col>
-          <ion-col center>
-            <div class="container">
-            <ion-icon name="checkmark-circle" color="success"></ion-icon>
-            </div>
-          </ion-col>
-        </ion-row>
-    </ion-card-content>
-  </ion-card>
+  </ion-list>
+    <ion-card>
+      <ion-item>
+        <ion-icon name="pin" slot="start"></ion-icon>
+        <ion-label>Lot Name</ion-label>
+        <ion-text slot="end">Spaces Open - 46</ion-text>
+      </ion-item>
+    
+      <ion-card-content>
+          <ion-row>
+            <ion-col>
+              <ion-button fill="outline">Directions</ion-button>
+            </ion-col>
+            <ion-col center>
+              <div class="container">
+              <ion-icon name="checkmark-circle" color="success"></ion-icon>
+              </div>
+            </ion-col>
+          </ion-row>
+      </ion-card-content>
+    </ion-card>
 </ion-content>
