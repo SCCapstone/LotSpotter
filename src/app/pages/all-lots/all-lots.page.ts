@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { discardPeriodicTasks } from '@angular/core/testing';
+import firebase from 'firebase';
+import { Lot } from '../../interfaces';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'app-all-lots',
@@ -8,25 +11,32 @@ import { AngularFirestore } from '@angular/fire/firestore';
 })
 export class AllLotsPage implements OnInit {
 
-  tasks:any = [];
+  private database = firebase.firestore();
+  private lots:Lot[] = [];
 
   constructor(
-    private afFirestore: AngularFirestore
   ) { }
 
-  fetch() {
-    this.afFirestore.collection('lots').snapshotChanges().subscribe(res => {
-      console.log(res);
-      let tmp = [];
-      res.forEach(task => {
-        tmp.push({ key: task.payload.doc.id, ...task.payload.doc.data });
-      })
-      console.log(tmp);
-      this.tasks = tmp;
-    })
-  }
-
   ngOnInit() {
+    this.fetch();
   }
 
+  fetch() {
+    var self = this;
+    this.database.collection('lots').onSnapshot(function(querySnapshot) {
+      self.lots = [];
+      querySnapshot.forEach(function(doc) {
+        let a = doc.data();
+        let lot:Lot = { name: a.name,
+                addr: a.addr,
+                currCap: a.currCap,
+                maxCap: a.maxCap,
+                desc: a.desc,
+                loc: a.loc,
+                lotType: a.lotType
+        }
+        self.lots.push(lot);
+      });
+    });
+  }
 }
