@@ -55,6 +55,10 @@ const routes: Routes = [
     path: 'home',
     loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
   },
+  {
+    path: 'lot-detail/:name', // I have zero clue why ':name' is needed here. src: https://www.youtube.com/watch?v=DZrWzoW4_4M
+    loadChildren: () => import('./pages/lot-detail/lot-detail.module').then( m => m.LotDetailPageModule)
+  },
 ];
 
 @NgModule({
