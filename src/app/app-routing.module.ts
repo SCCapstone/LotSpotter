@@ -8,7 +8,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
@@ -58,6 +58,10 @@ const routes: Routes = [
   {
     path: 'lot-detail/:name', // I have zero clue why ':name' is needed here. src: https://www.youtube.com/watch?v=DZrWzoW4_4M
     loadChildren: () => import('./pages/lot-detail/lot-detail.module').then( m => m.LotDetailPageModule)
+  },
+  {
+    path: 'verify',
+    loadChildren: () => import('./pages/verify/verify.module').then( m => m.VerifyPageModule)
   },
 ];
 
