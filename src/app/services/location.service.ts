@@ -12,6 +12,8 @@ import {
   Platform
 } from '@ionic/angular';
 
+import { Router } from '@angular/router';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -25,16 +27,12 @@ export class LocationService {
               'Senate Street', 'Sumter Street', 
               'Columbia Hall', 'S4', 'S8', 'GS4', 'AD1',
             'AD3', 'AD6', 'AD6', 'AD7', 'AD9', 'AD11', 'AD12'];
-  /*
-  img = "https://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap" +
-          "&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318" +
-          "&markers=color:red%7Clabel:C%7C40.718217,-73.998284" +
-          "&key=AIzaSyA4gpqIrlhwjFpfkqm2e2lnnm-xxbJZXMQ"
-  */
-  constructor(public toastCtrl: ToastController,
-    private platform: Platform) { }
 
-    loadMap() {
+  constructor( public toastCtrl: ToastController,
+               private platform: Platform, 
+               private router: Router) { }
+
+    loadDynamicMap():void {
       this.map = GoogleMaps.create('map_canvas');
       this.addParkingLots();
       this.getMyLocation();
@@ -44,8 +42,12 @@ export class LocationService {
     getLots():string[] {
       return this.parking;
     }
+
+    navToLotDetail(lot:string):void {
+      this.router.navigate(['/lot-detail', lot]);
+    }
   
-    getMyLocation(){
+    getMyLocation():void {
   
       // Get the location of you
       this.map.getMyLocation().then((location: MyLocation) => {
@@ -262,6 +264,11 @@ export class LocationService {
       //marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
         //alert('The University of South Carolina');
       //});
+
+      /* Handle Click Events */
+      marker16.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
+        this.navToLotDetail("AD12");
+      });
     }
 
     clearMap() {

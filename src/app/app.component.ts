@@ -5,8 +5,8 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { Environment } from '@ionic-native/google-maps';
+import firebase from 'firebase';
 
-import * as firebase from 'firebase';
 
 var firebaseConfig = {
   apiKey: "AIzaSyAQN02izLyzeBTCBsBIADHoWSMu8nOfLWI",
@@ -25,64 +25,66 @@ var firebaseConfig = {
   styleUrls: ['app.component.scss']
 })
 
-export class AppComponent {currentPageTitle = 'Dashboard';
+export class AppComponent {
+  
+  currentPageTitle = 'Dashboard';
 
-appPages = [
-  {
-    title: 'Home',
-    url: 'home',
-    icon: 'home'
-  },
-  {
-    title: 'Available Lots',
-    url: 'available-lots',
-    icon: 'film'
-  },
-  {
-    title: 'All lots',
-    url: 'all-lots',
-    icon: 'settings'
-  },
-  {
-    title: 'Manage Passes',
-    url: 'manage-passes',
-    icon: 'clipboard'
-  },
-  /*{
-    title: 'Purchase Pass',
-    url: 'purchase-a-pass',
-    icon: 'card'
-  },*/
-  {
-    title: 'Settings',
-    url: 'settings',
-    icon: 'settings'
-  },
-  {
-    title: 'Map',
-    url: 'map',
-    icon: 'map'
-  },
-  {
-    title: 'Analytics',
-    url: 'analytics',
-    icon: 'bar-chart'
-  },
-  {
-    title: 'Favorites',
-    url: 'favorites',
-    icon: 'star'
+  appPages = [
+    {
+      title: 'Home',
+      url: 'home',
+      icon: 'home'
+    },
+    {
+      title: 'Available Lots',
+      url: 'available-lots',
+      icon: 'film'
+    },
+    {
+      title: 'All lots',
+      url: 'all-lots',
+      icon: 'settings'
+    },
+    {
+      title: 'Manage Passes',
+      url: 'manage-passes',
+      icon: 'clipboard'
+    },
+    /*{
+      title: 'Purchase Pass',
+      url: 'purchase-a-pass',
+      icon: 'card'
+    },*/
+    {
+      title: 'Map',
+      url: 'map',
+      icon: 'map'
+    },
+    {
+      title: 'Analytics',
+      url: 'analytics',
+      icon: 'bar-chart'
+    },
+    {
+      title: 'Favorites',
+      url: 'favorites',
+      icon: 'star'
 
+    },
+    {
+      title: 'Settings',
+      url: 'settings',
+      icon: 'settings'
+    }
+  ];
+
+  constructor(
+    private platform: Platform,
+    private splashScreen: SplashScreen,
+    private statusBar: StatusBar,
+  ) {
+    this.initializeApp();
   }
-];
-
-constructor(
-  private platform: Platform,
-  private splashScreen: SplashScreen,
-  private statusBar: StatusBar,
-) {
-  this.initializeApp();
-}
 
   initializeApp() {
     this.platform.ready().then(() => {
@@ -95,6 +97,7 @@ constructor(
       });
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      firebase.initializeApp(firebaseConfig);
     });
   }
 }
