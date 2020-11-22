@@ -1,10 +1,26 @@
 <ion-header>
-  <ion-sidemenu></ion-sidemenu> 
   <ion-toolbar>
+    <ion-menu-button slot="start"></ion-menu-button>
     <ion-title> {{ currentLot.name }} Details </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-<ion-button (click)="showData()"></ion-button>
+  <ion-item
+      button
+      detail="false"
+      class="item in-list ion-focusable item-label hydrated ion-text-wrap">
+      <ion-label>
+        <h2>{{ currentLot.name }}</h2>
+        <p>{{ currentLot.desc }}</p>
+      </ion-label>
+    </ion-item>
+  <ion-img [src]="map"></ion-img>
+  <ion-text> {{ currentLot.addr }} </ion-text>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar> 
+    <ion-icon name="share"> </ion-icon>
+  </ion-toolbar>
+</ion-footer>
