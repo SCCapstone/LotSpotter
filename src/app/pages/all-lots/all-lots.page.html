@@ -3,10 +3,31 @@
      <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>all-lots</ion-title>
+    <ion-title>All Lots</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ion-list *ngIf="lots.length !=0">
+    <ion-card *ngFor="let item of lots" [routerLink]="['/lot-detail', item.name]">
+        <ion-item>
+          <ion-icon name="pin" slot="start"></ion-icon>
+          <ion-label>{{item.name}}</ion-label>
+          <ion-text slot="end">Spaces Open - {{item.maxCap - item.currCap}}</ion-text>
+        </ion-item>
+      
+        <ion-card-content>
+            <ion-row>
+              <ion-col>
+                <ion-button fill="outline">Directions</ion-button>
+              </ion-col>
+              <ion-col center>
+                <div class="container">
+                <ion-icon name="checkmark-circle" color="success"></ion-icon>
+                </div>
+              </ion-col>
+            </ion-row>
+        </ion-card-content>
+      </ion-card>
+  </ion-list>
 </ion-content>

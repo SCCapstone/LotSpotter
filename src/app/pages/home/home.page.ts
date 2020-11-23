@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginPageModule } from '../login/login.module';
 import { Router } from "@angular/router";
-
+import { AuthenticationService } from "../../services/authentication-service";
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -11,7 +11,8 @@ export class HomePage {
   logo: String;
 
   constructor(
-    public router: Router
+    public router: Router,
+    public authService: AuthenticationService
   
   ) {}
 
@@ -20,7 +21,7 @@ export class HomePage {
   }
 
   avaliableLotsNav() {
-    this.router.navigate(['avaliable-lots']);
+    this.router.navigate(['available-lots']);
   }
 
   allLotsNav() {

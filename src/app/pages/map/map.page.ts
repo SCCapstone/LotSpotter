@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import {
   GoogleMaps,
@@ -34,7 +35,7 @@ export class MapPage implements OnInit {
 
   ngOnInit() {
     this.platform.ready();
-    this.locServ.loadMap();
+    this.locServ.loadDynamicMap();
     this.showPins();
   }
 

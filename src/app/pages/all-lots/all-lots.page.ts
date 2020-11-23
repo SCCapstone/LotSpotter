@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { discardPeriodicTasks } from '@angular/core/testing';
+import firebase from 'firebase';
+import { Lot } from '../../interfaces';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'app-all-lots',
@@ -7,9 +11,32 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AllLotsPage implements OnInit {
 
-  constructor() { }
+  private database = firebase.firestore();
+  private lots:Lot[] = [];
+
+  constructor(
+  ) { }
 
   ngOnInit() {
+    this.fetch();
   }
 
+  fetch() {
+    var self = this;
+    this.database.collection('lots').onSnapshot(function(querySnapshot) {
+      self.lots = [];
+      querySnapshot.forEach(function(doc) {
+        let a = doc.data();
+        let lot:Lot = { name: a.name,
+                addr: a.addr,
+                currCap: a.currCap,
+                maxCap: a.maxCap,
+                desc: a.desc,
+                loc: a.loc,
+                lotType: a.lotType
+        }
+        self.lots.push(lot);
+      });
+    });
+  }
 }

@@ -1,4 +1,5 @@
 <ion-header [translucent]="true">
+  <ion-sidemenu></ion-sidemenu>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
@@ -7,93 +8,93 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content>
   <ion-grid>
     <ion-row>
-      <ion-col size="4">
-        <ion-card color="primary" (click)="avaliableLotsNav()"> 
+      <ion-col>
+        <ion-card color="primary" (click)="avaliableLotsNav()" class="ion-text-center"> 
           <ion-card-content>
-            <ion-img [src]="logo"></ion-img>
+            <ion-icon name="car-outline"></ion-icon>
+              <div class = "ion-text-center">
+              <p>Avaliable Lots<p>
+              </div>
           </ion-card-content>
-          <ion-item color="primary">
-            <ion-label>Avaliable Lots</ion-label>
-          </ion-item>
         </ion-card>
       </ion-col>
-      <ion-col size="4">
-        <ion-card color="primary" (click)="allLotsNav()">
+      <ion-col>
+        <ion-card color="primary" (click)="allLotsNav()" class="ion-text-center">
           <ion-card-content>
-            <ion-img [src]="logo"></ion-img>
+            <ion-icon name="grid-outline"></ion-icon>
+            <div class = "ion-text-center">
+              <p>All Lots<p>
+              </div>
           </ion-card-content>
-          <ion-item color="primary">
-            <ion-label>All Lots</ion-label>
-          </ion-item>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col size="4">
-        <ion-card color="primary" (click)="managePassesNav()">
-          <ion-card-content>
-            <ion-img [src]="logo"></ion-img>
-          </ion-card-content>
-          <ion-item color="primary">
-            <ion-label>Manage Passes</ion-label>
-          </ion-item>
-        </ion-card>
-      </ion-col>
-      <ion-col size="4">
-        <ion-card color="primary" (click)="purchaseAPassNav()">
-          <ion-card-content>
-            <ion-img [src]="logo"></ion-img>
-          </ion-card-content>
-          <ion-item color="primary">
-            <ion-label>Purchase A Pass</ion-label>
-          </ion-item>
         </ion-card>
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col size="4">
-        <ion-card color="primary" (click)="settingsNav()">
+      <ion-col>
+        <ion-card color="primary" (click)="managePassesNav()" class="ion-text-center">
           <ion-card-content>
-            <ion-img [src]="logo"></ion-img>
+            <ion-icon name="clipboard-outline"></ion-icon>
+            <div class = "ion-text-center">
+              <p>Manage Passes<p>
+              </div>
           </ion-card-content>
-          <ion-item color="primary">
-            <ion-label>Settings</ion-label>
-          </ion-item>
         </ion-card>
       </ion-col>
-      <ion-col size="4">
-        <ion-card color="primary" (click)="mapNav()">
+      <ion-col>
+        <ion-card color="primary" (click)="purchaseAPassNav()" class="ion-text-center">
           <ion-card-content>
-            <ion-img [src]="logo"></ion-img>
+            <ion-icon name="card-outline"></ion-icon>
+            <div class = "ion-text-center">
+              <p>Purchase A Pass<p>
+              </div>
           </ion-card-content>
-          <ion-item color="primary">
-            <ion-label>Map</ion-label>
-          </ion-item>
         </ion-card>
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col size="4">
-        <ion-card color="primary" (click)="analyticsNav()">
+      <ion-col>
+        <ion-card color="primary" (click)="settingsNav()" class="ion-text-center">
           <ion-card-content>
-            <ion-img [src]="logo"></ion-img>
+            <ion-icon name="settings-outline"></ion-icon>
+            <div class = "ion-text-center">
+              <p>Settings<p>
+              </div>
           </ion-card-content>
-          <ion-item color="primary">
-            <ion-label>Analytics</ion-label>
-          </ion-item>
         </ion-card>
       </ion-col>
-      <ion-col size="4">
-        <ion-card color="primary" (click)="favoritesNav()">
+      <ion-col>
+        <ion-card color="primary" (click)="mapNav()" class="ion-text-center">
           <ion-card-content>
-            <ion-img [src]="logo"></ion-img>
+            <ion-icon name="map-outline"></ion-icon>
+            <div class = "ion-text-center">
+              <p>Map<p>
+              </div>
           </ion-card-content>
-          <ion-item color="primary">
-            <ion-label>Favorites</ion-label>
-          </ion-item>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-card color="primary" (click)="analyticsNav()" class="ion-text-center">
+          <ion-card-content>
+            <ion-icon name="speedometer-outline"></ion-icon>
+            <div class = "ion-text-center">
+              <p>Analytics<p>
+              </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col>
+        <ion-card color="primary" (click)="favoritesNav()" class="ion-text-center">
+          <ion-card-content>
+            <ion-icon name="star-outline"></ion-icon>
+            <div class = "ion-text-center">
+              <p>Favorites<p>
+              </div>
+          </ion-card-content>
         </ion-card>
       </ion-col>
     </ion-row>
