@@ -1,13 +1,43 @@
 <ion-header>
-  <ion-sidemenu></ion-sidemenu>
+  
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title>Testing UI</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    
+    <!-- Select lot/garage to edit occupancy of -->
+    <ion-label class="header-weight">Select a Garage/Lot:</ion-label>
+    <ion-item class="margin">
+      <ion-select slot="end" formControlName="lot">
+        <ion-select-option *ngFor="let item of lots" [value]="item.name">{{item.name}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-label class="header-weight">Select to Add or Remove vehicles in lot:</ion-label>
+    <ion-radio-group class="margin" formControlName="operation">
+
+      <ion-item>
+        <ion-label>Add</ion-label>
+        <ion-radio value="add"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Remove</ion-label>
+        <ion-radio value="remove"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+
+    <ion-label class="header-weight">Number of Vehicles:</ion-label>
+    <ion-item class="margin">
+      <ion-input formControlName="number_of_vehicles"></ion-input>
+    </ion-item>
+  </form>
 
 </ion-content>
