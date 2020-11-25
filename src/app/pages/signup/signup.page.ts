@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from "@angular/router";
+import { AuthenticationService } from "../../services/authentication-service";
 
 @Component({
   selector: 'app-signup',
@@ -7,9 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SignupPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    public authService: AuthenticationService,
+    public router: Router
+  ) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
+
+   signUp(email, password){
+    this.authService.RegisterUser(email.value, password.value)
+    .then((res) => {
+      // Do something here
+      this.authService.SendVerificationMail()
+      this.router.navigate(['verify']);
+    }).catch((error) => {
+      window.alert(error.message)
+    })
+}
 
 }
