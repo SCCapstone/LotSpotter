@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
+import { ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { TestingUiPageRoutingModule } from './testing-ui-routing.module';
@@ -13,7 +13,8 @@ import { TestingUiPage } from './testing-ui.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    TestingUiPageRoutingModule
+    TestingUiPageRoutingModule,
+    ReactiveFormsModule,
   ],
   declarations: [TestingUiPage]
 })
