@@ -33,7 +33,8 @@ export class AllLotsPage implements OnInit {
                 maxCap: a.maxCap,
                 desc: a.desc,
                 loc: a.loc,
-                lotType: a.lotType
+                lotType: a.lotType,
+                id: doc.id,
         }
         self.lots.push(lot);
       });

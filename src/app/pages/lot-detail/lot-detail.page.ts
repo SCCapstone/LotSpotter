@@ -27,7 +27,8 @@ export class LotDetailPage implements OnInit {
     maxCap: 0,
     desc: "...",
     loc: null,
-    lotType: "..."
+    lotType: "...",
+    id: "...",
   }; 
 
   constructor( private router: Router, private route: ActivatedRoute,
