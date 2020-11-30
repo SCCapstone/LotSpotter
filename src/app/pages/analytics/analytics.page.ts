@@ -16,6 +16,19 @@ export class AnalyticsPage implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  this.fetch();
+  }
+
+  doRefresh(event) {
+    this.fetch();
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      event.target.complete();
+    }, 2000);
+  }
+
+  fetch(){
+    //TODO
   }
 
 }
