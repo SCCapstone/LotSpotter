@@ -21,6 +21,14 @@ export class AllLotsPage implements OnInit {
     this.fetch();
   }
 
+  doRefresh(event) {
+    this.fetch();
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      event.target.complete();
+    }, 2000);
+  }
+
   fetch() {
     var self = this;
     this.database.collection('lots').onSnapshot(function(querySnapshot) {
