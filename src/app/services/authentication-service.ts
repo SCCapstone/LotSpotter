@@ -93,12 +93,27 @@ export class AuthenticationService {
       email: user.email,
       displayName: user.displayName,
       photoURL: user.photoURL,
-      emailVerified: user.emailVerified
+      emailVerified: user.emailVerified,
+      userType: user.userType
     }
     this.userEmail = user.email;
     return userRef.set(userData, {
       merge: true
     })
+  }
+
+  // Change User Type
+  cUserType(newtype) {
+     localStorage.setItem('user.userType', JSON.stringify(newtype));
+    //  JSON.parse(localStorage.getItem('user'));
+  }
+  // Get user type
+  gUserType(){
+    let currentUT = JSON.parse(localStorage.getItem("user.userType"));
+    if(currentUT == null){
+      currentUT = "Unknown"
+    }
+    return currentUT;
   }
 
   // Sign-out 
