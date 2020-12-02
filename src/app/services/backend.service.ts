@@ -40,7 +40,7 @@ export class BackendService {
                     id: doc.id,
 
             }
-             console.log(lot.id)
+            // console.log(lot.id)
         });
     })
     .catch(function(error) {
@@ -60,7 +60,7 @@ export class BackendService {
   // pulled updateItem from 546 class code
   docID: any;
   updateItem(newValues){
-    console.log(newValues.id);
+    // console.log(newValues.id);
 
     let newInfo = this.database.collection("lots").doc(newValues.id).update(newValues)
     // this.events.publish('dataloaded',Date.now());

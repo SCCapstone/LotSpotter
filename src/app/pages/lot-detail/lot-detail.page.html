@@ -21,7 +21,7 @@
   </ion-card> 
 
   <ion-item>
-    <ion-icon slot="end" name="car"></ion-icon>
+    <ion-icon slot="end" name="car" (click)="toLot(currentLot.loc)"></ion-icon>
     <ion-label>
       <h2> {{ currentLot.addr }} </h2>
       <p> Columbia, SC 29201 </p>
