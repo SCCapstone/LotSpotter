@@ -4,6 +4,8 @@ import firebase from 'firebase';
 import { Lot } from '../../interfaces';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
+import { LocationService } from '../../services/location.service';
+
 @Component({
   selector: 'app-all-lots',
   templateUrl: './all-lots.page.html',
@@ -14,11 +16,15 @@ export class AllLotsPage implements OnInit {
   private database = firebase.firestore();
   private lots:Lot[] = [];
 
-  constructor(
-  ) { }
+  constructor( private locServ: LocationService) 
+  { }
 
   ngOnInit() {
     this.fetch();
+  }
+
+  toLot(location:firebase.firestore.GeoPoint):void {
+    this.locServ.openMapsApp(location.latitude + "," + location.longitude); 
   }
 
   doRefresh(event) {

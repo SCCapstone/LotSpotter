@@ -5,6 +5,7 @@ import firebase from 'firebase';
 
 import { BackendService } from '../../services/backend.service';
 import { Lot } from '../../interfaces';
+import { LocationService } from 'src/app/services/location.service';
 
 @Component({
   selector: 'app-lot-detail',
@@ -32,7 +33,8 @@ export class LotDetailPage implements OnInit {
   }; 
 
   constructor( private router: Router, private route: ActivatedRoute,
-               private backend: BackendService) { 
+               private backend: BackendService,
+               private locServ: LocationService) { 
   }
 
   ngOnInit() {
@@ -45,6 +47,10 @@ export class LotDetailPage implements OnInit {
       console.log("Could not get lot data.")
     });
     console.log("Viewing Lot: " + param);
+  }
+
+  toLot(location:firebase.firestore.GeoPoint):void {
+    this.locServ.openMapsApp(location.latitude + "," + location.longitude); 
   }
 
   getImage() {
