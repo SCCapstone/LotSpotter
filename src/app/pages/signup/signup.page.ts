@@ -9,6 +9,12 @@ import { AuthenticationService } from "../../services/authentication-service";
 })
 export class SignupPage implements OnInit {
 
+  user={
+    email:"",
+    password:"",
+    usertype:""
+  }
+
   constructor(
     public authService: AuthenticationService,
     public router: Router

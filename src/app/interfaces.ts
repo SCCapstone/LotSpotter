@@ -8,4 +8,5 @@ export interface Lot {
     desc: string; 
     loc: firebase.firestore.GeoPoint;
     lotType: string;
+    id: string;
 }

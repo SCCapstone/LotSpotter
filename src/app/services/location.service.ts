@@ -43,6 +43,24 @@ export class LocationService {
       return this.parking;
     }
 
+    public openMapsApp(location: string, label: string = "") {
+      let status;
+      let coordinates:string = location;
+      
+      if (this.platform.is('android')) {
+        status = 'geo:' + coordinates + '?q=' + coordinates;
+        if (label) {
+          status += '(' + label + ')';
+        }
+      } else if (this.platform.is('desktop')){ // This will never be used. Don't release.
+          status = 'https://maps.google.com/maps?q=@'+location;
+      } 
+      else {
+        status = 'maps://maps.apple.com/?q=' + coordinates;
+      }
+      window.location.href = status;
+    }
+
     navToLotDetail(lot:string):void {
       this.router.navigate(['/lot-detail', lot]);
     }
