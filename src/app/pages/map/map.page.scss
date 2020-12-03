@@ -1,8 +1,23 @@
-#map_canvas {
-    width: 100%;
-    height: 100%;
+:host(.can-go-back) {
+  ion-header {
+    ion-toolbar {
+      ion-buttons {
+        ion-menu-button {
+          display: none;
+        }
+      }
+    }
   }
-// Set button font to match app
-.button{
-  font-family: 'Raleway', sans-serif;
+}
+
+:not(:host(.can-go-back)) {
+  ion-header {
+    ion-toolbar {
+      ion-buttons {
+        ion-back-button {
+          display: none;
+        }
+      }
+    }
+  }
 }
