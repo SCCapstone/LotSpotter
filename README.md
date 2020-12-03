@@ -52,7 +52,7 @@ To build a "release" version of our application, execute the following command w
 
 This will place an unsigned .apk of the application at platforms/android/build/outputs/apk.
 
-**If this .apk is emulated in Android Studio, Android Studio needs to be a version later than v4.X.X. In our testing, older versions were not compatible.
+**If this .apk is emulated in Android Studio, Android Studio needs to be a version later than v4.X.X. In our testing, older versions were not compatible.**
  
 More detailed instructions on generating a release version of an ionic applicaton can be found [here](https://ionicframework.com/docs/v1/guide/publishing.html).
 
