@@ -10,8 +10,7 @@ import { LocationService } from 'src/app/services/location.service';
 @Component({
   selector: 'app-lot-detail',
   templateUrl: './lot-detail.page.html',
-  styleUrls: ['./lot-detail.page.scss'],
-})
+  styleUrls: ['./lot-detail.page.scss'],})
 export class LotDetailPage implements OnInit {
  
   private map = "https://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap \

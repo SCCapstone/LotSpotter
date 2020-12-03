@@ -90,10 +90,10 @@ export class AppComponent {
     this.platform.ready().then(() => {
       Environment.setEnv({
         // api key for server
-        'API_KEY_FOR_BROWSER_RELEASE': 'AIzaSyA4gpqIrlhwjFpfkqm2e2lnnm-xxbJZXMQ',
+        'API_KEY_FOR_BROWSER_RELEASE': 'AIzaSyApLIm8vm_vQlT8z-IBRsppoRC8OJveW_Y',
 
         // api key for local development
-        'API_KEY_FOR_BROWSER_DEBUG': 'AIzaSyA4gpqIrlhwjFpfkqm2e2lnnm-xxbJZXMQ'
+        'API_KEY_FOR_BROWSER_DEBUG': 'AIzaSyApLIm8vm_vQlT8z-IBRsppoRC8OJveW_Y'
       });
       this.statusBar.styleDefault();
       this.splashScreen.hide();

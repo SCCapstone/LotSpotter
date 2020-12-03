@@ -120,6 +120,7 @@ export class AuthenticationService {
   SignOut() {
     return this.ngFireAuth.signOut().then(() => {
       localStorage.removeItem('user');
+      localStorage.setItem('user.userType', JSON.stringify("Unknown"));
       this.userEmail = "";
       this.router.navigate(['login']);
 
