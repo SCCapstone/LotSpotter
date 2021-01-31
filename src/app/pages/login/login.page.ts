@@ -41,13 +41,13 @@ export class LoginPage implements OnInit {
 
   // For Behavior Testing
   
-  navigateTo() {
-    return browser.get('/');
-  }
+  // navigateTo() {
+  //   return browser.get('/');
+  // }
 
-  getPageTitle() {
-    // return element(by.css())
-  }
+  // getPageTitle() {
+  //   // return element(by.css())
+  // }
 
 
 }
