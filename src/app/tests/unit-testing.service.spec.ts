@@ -21,6 +21,10 @@ describe('BackendServiceTest', () => {
     backService = new BackendService();
   });
 
+  /*
+  This test runs the Backend Services' getLotData() function to ensure a resolved
+  promise is returned, indicating a successful request.
+  */
   it("should be a resolved promise", async () => {  
     // Random index in the array.
     let randex: number = Math.floor(Math.random() * random.length);
