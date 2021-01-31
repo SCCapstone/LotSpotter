@@ -65,7 +65,9 @@ formatting.
 
 # Testing
 
-All tests are run with `npm test`. They are located in `/src/app/tests/`. We are using [Jasmine](https://jasmine.github.io/) for our testing framework; [Karma](http://karma-runner.github.io/6.0/index.html) is the runnner. 
+Unit Tests are run with `npm test`. They are located in `/src/app/tests/`. We are using [Jasmine](https://jasmine.github.io/) for our testing framework; [Karma](http://karma-runner.github.io/6.0/index.html) is the runnner. 
+
+Behavior Tests are run with `npm run e2e`. These tests are located in `/e2e/src/app.e2e-spec.ts`. For this we are using the BDD framework [Jasmine](https://jasmine.github.io/) to execute the commands and the built in Ionic package [ProtractorJS](https://www.protractortest.org/#/) to interact with the virtual application via browser. 
 
 
 
