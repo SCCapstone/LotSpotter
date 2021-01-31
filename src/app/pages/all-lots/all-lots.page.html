@@ -32,7 +32,9 @@
               </ion-col>
               <ion-col center>
                 <div class="container">
-                <ion-icon name="checkmark-circle" color="success"></ion-icon>
+                <ion-icon *ngIf="item.currCap < .7*item.maxCap" name="checkmark-circle" color="success"></ion-icon>
+                <ion-icon *ngIf="item.currCap > .7*item.maxCap" name="close-circle" color="danger"></ion-icon>
+                <ion-icon *ngIf="item.currCap >= .7*item.maxCap && item.currCap <= .7*item.maxCap" name="ellipse" color="warning"></ion-icon>
                 </div>
               </ion-col>
             </ion-row>
