@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { MapPage } from './map.page';
 
 describe('MapPage', () => {
@@ -8,9 +8,11 @@ describe('MapPage', () => {
   let fixture: ComponentFixture<MapPage>;
 
   beforeEach(async(() => {
+  
     TestBed.configureTestingModule({
       declarations: [ MapPage ],
-      imports: [IonicModule.forRoot()]
+      imports: [IonicModule.forRoot()],
+      providers: [ Geolocation ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(MapPage);

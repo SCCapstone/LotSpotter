@@ -6,7 +6,13 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Router, RouterModule, PreloadAllModules, Routes } from '@angular/router';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { CommonModule } from '@angular/common';
+
 
 describe('AppComponent', () => {
 
@@ -22,15 +28,19 @@ describe('AppComponent', () => {
     platformSpy = jasmine.createSpyObj('Platform', { ready: platformReadySpy });
 
     TestBed.configureTestingModule({
-      imports: [ ReactiveFormsModule, FormBuilder ],
+      imports: [ 
+        CommonModule,
+        HttpClientTestingModule,
+        RouterTestingModule,
+      ],
       declarations: [AppComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
         { provide: StatusBar, useValue: statusBarSpy },
         { provide: SplashScreen, useValue: splashScreenSpy },
         { provide: Platform, useValue: platformSpy },
-        // { provide: Geolocation }, 
-        
+        { provide: Geolocation },
+        { provide: Router, useClass: class { navigate = jasmine.createSpy("navigate"); }},
       ],
     }).compileComponents();
   }));
@@ -41,6 +51,7 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
+
   it('should initialize the app', async () => {
     TestBed.createComponent(AppComponent);
     expect(platformSpy.ready).toHaveBeenCalled();
@@ -49,6 +60,5 @@ describe('AppComponent', () => {
     expect(splashScreenSpy.hide).toHaveBeenCalled();
   });
 
-  // TODO: add more tests!
-
+  
 });
