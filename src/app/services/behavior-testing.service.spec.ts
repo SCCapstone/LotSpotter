@@ -17,12 +17,3 @@ describe('BehaviorTestingService', () => {
   });
 });
 
-describe('LoginPage', () => {
-  let loginp: LoginPage;
-  describe('before logged in', () =>{
-
-    it('displays the login screen', () => {
-      expect(loginp.ngOnInit()).toContain('../../../assets/uofscbanner_red.png');
-    })
-  })
-})
