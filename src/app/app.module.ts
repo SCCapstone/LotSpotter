@@ -16,7 +16,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { environment } from 'src/environments/environment';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
-
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
@@ -39,7 +39,8 @@ import { AgmCoreModule } from '@agm/core';
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     AngularFirestore,
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    Geolocation
   ],
   bootstrap: [AppComponent]
 })
