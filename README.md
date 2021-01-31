@@ -65,12 +65,7 @@ formatting.
 
 # Testing
 
-In 492 you will write automated tests. When you do you will need to add a 
-section that explains how to run them.
-
-The unit tests are in `/test/unit`.
-
-The behavioral tests are in `/test/casper/`.
+All tests are run with `npm test`. They are located in `/src/app/tests/`.
 
 ## Testing Technology
 
