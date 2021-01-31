@@ -71,7 +71,7 @@ npm test
 ```
 Unit Tests are located in `/src/app/tests/`. We are using [Jasmine](https://jasmine.github.io/) for our testing framework; [Karma](http://karma-runner.github.io/6.0/index.html) is the runnner. 
 
-Behavior Tests are run with:
+Behavioral Tests are run with:
 ```
 npm run e2e
 ```
