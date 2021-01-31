@@ -8,8 +8,11 @@
 
 <ion-content>
   <!-- Header and Favorite Button -->
-  <ion-item color="medium">
-    <ion-icon slot="end" name="star-outline"></ion-icon>
+  <ion-item>
+    <button ion-button slot="end">
+      <ion-icon name="star-outline" color="warning" size="large" (click)="addFavorites()"></ion-icon>
+    </button>
+
     <ion-label>
       <h1> {{ currentLot.name }} - {{ currentLot.desc }} </h1> 
     </ion-label>
