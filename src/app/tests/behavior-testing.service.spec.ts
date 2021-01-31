@@ -1,16 +1,7 @@
-import { TestBed } from '@angular/core/testing';
+describe('Behavior', () => {
 
-import { BehaviorTestingService } from './behavior-testing.service';
-
-describe('BehaviorTestingService', () => {
-  let service: BehaviorTestingService;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(BehaviorTestingService);
+  it("example", function() {  
+    expect(true).toBe(false);
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
 });

@@ -62,7 +62,7 @@ export class BackendService {
   updateItem(newValues){
     // console.log(newValues.id);
 
-    let newInfo = this.database.collection("lots").doc(newValues.id).update(newValues)
+    let newInfo = this.database.collection("lots").doc(newValues.id).update(newValues);
     // this.events.publish('dataloaded',Date.now());
 
     // let itemIndex = this.items.findIndex(item => item.id == newValues.id);
