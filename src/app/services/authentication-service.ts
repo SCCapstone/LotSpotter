@@ -1,15 +1,19 @@
 import { Injectable, NgZone } from '@angular/core';
 import auth from "../../../node_modules/firebase"
 import { User } from "./user";
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute} from "@angular/router";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFireDatabase } from '@angular/fire/database';
+import firebase from 'firebase';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthenticationService {
+
+  private database = firebase.firestore();
 
   userEmail: String;
   userData: any;

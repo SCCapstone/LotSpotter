@@ -12,11 +12,13 @@ import { LocationService } from 'src/app/services/location.service';
   templateUrl: './lot-detail.page.html',
   styleUrls: ['./lot-detail.page.scss'],})
 export class LotDetailPage implements OnInit {
+
+  private database = firebase.firestore();
  
   private map = "https://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap \
   &markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318 \
   &markers=color:red%7Clabel:C%7C40.718217,-73.998284 \
-  &key=AIzaSyA4gpqIrlhwjFpfkqm2e2lnnm-xxbJZXMQ"
+  &key=AIzaSyB7Xv6-oY-j1-PuLSfpd6WA4gDORz1WVmE"
   
   private openSpots:number = 0;
 
@@ -54,6 +56,10 @@ export class LotDetailPage implements OnInit {
 
   getImage() {
 
+  }
+
+  addFavorites() {
+    var lot = this.database.collection('users')
   }
 
 }
