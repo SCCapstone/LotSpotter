@@ -34,6 +34,7 @@ cd LotSpotter/
 ionic cordova plugin add cordova-plugin-nativegeocoder
 npm install
 ```
+
 ## Setup
 
 There are no setup requirements that the developer must take care of for the first launch of the application on their local.
@@ -49,8 +50,10 @@ To run the app from the cloned repo, in terminal navigate to the /src/ folder, t
 To build a "release" version of our application, execute the following command with the /src/ folder of the project as your active directory:
 > ionic cordova build --release android
 
-This will place an unsigned .apk of the application at platforms/android/build/outputs/apk
+This will place an unsigned .apk of the application at platforms/android/build/outputs/apk.
 
+**If this .apk is emulated in Android Studio, Android Studio needs to be a version later than v4.X.X. In our testing, older versions were not compatible.**
+ 
 More detailed instructions on generating a release version of an ionic applicaton can be found [here](https://ionicframework.com/docs/v1/guide/publishing.html).
 
 To run this application on an emulator, execute the following command:
@@ -62,20 +65,25 @@ formatting.
 
 # Testing
 
-In 492 you will write automated tests. When you do you will need to add a 
-section that explains how to run them.
+Unit Tests are run with:  
+```
+npm test
+```
+Our Unit Tests are located in `/src/app/tests/`. We are using [Jasmine](https://jasmine.github.io/) for our testing framework; [Karma](http://karma-runner.github.io/6.0/index.html) is the runnner. 
 
-The unit tests are in `/test/unit`.
+_Note_: When I ran `npm test` with on my ubuntu machine, I didn't have enough child processes. This command fixed that issue:
+ ```bash
+ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+ ```
+ I found that command [here](https://stackoverflow.com/questions/53930305/nodemon-error-system-limit-for-number-of-file-watchers-reached).
 
-The behavioral tests are in `/test/casper/`.
+Behavioral Tests are run with:
+```
+npm run e2e
+```
+These tests are located in `/e2e/src/app.e2e-spec.ts`. For this we are using the BDD framework [Jasmine](https://jasmine.github.io/) to execute the commands and using [ProtractorJS](https://www.protractortest.org/#/) to interact with the virtual application via browser. The current behavior test after running `npm run e2e` will automate user login, verify homepage, then logout. 
 
-## Testing Technology
 
-In some cases you need to install test runners, etc. Explain how.
-
-## Running Tests
-
-Explain how to run the automated tests.
 
 # Authors
 

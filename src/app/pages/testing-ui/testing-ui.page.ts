@@ -78,6 +78,7 @@ export class TestingUiPage implements OnInit {
     });
     console.log("Viewing Lot: " + name);
   }
+  
   async updateLot(value){
     console.log(value)
     console.log(value.lot_name)
