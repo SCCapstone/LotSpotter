@@ -5,6 +5,7 @@ import { Lot } from '../../interfaces';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { BackendService } from 'src/app/services/backend.service';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
+import { trimTrailingNulls } from '@angular/compiler/src/render3/view/util';
 
 @Component({
   selector: 'app-testing-ui',
@@ -93,12 +94,15 @@ export class TestingUiPage implements OnInit {
     console.log("Viewing Lot: " + value.lot_name);
     
     var converted_number_of_vehicles = Number(value.number_of_vehicles)
+    var action = 0;
     if(value.operation == "add"){
+      action = 1;
       this.new_capacity = this.currentLot.currCap + converted_number_of_vehicles;
       console.log(this.new_capacity);
     }
     else if(value.operation == "remove")
     {
+      action = 0;
       this.new_capacity = this.currentLot.currCap - converted_number_of_vehicles;
       console.log(this.new_capacity);
     }
@@ -119,9 +123,16 @@ export class TestingUiPage implements OnInit {
       id: this.currentLot.id,
     }
 
+    let stats = {
+      action: action,
+      lot: this.currentLot.name,
+      time: firebase.firestore.Timestamp.fromDate(new Date())
+    }
+
     console.log(newValues)
     console.log(newValues.id)
     this.backend.updateItem(newValues);
+    this.backend.addStat(stats);
 
     this.goToAllLots();
   }
