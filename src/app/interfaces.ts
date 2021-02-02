@@ -1,4 +1,5 @@
 import firebase from 'firebase';
+import { Timestamp } from 'rxjs';
 
 export interface Lot {
     name: string;
@@ -9,4 +10,10 @@ export interface Lot {
     loc: firebase.firestore.GeoPoint;
     lotType: string;
     id: string;
+}
+
+export interface Stat {
+    action: number;
+    lot: string;
+    time: firebase.firestore.Timestamp;
 }
