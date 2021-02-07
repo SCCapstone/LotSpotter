@@ -13,7 +13,7 @@ import time
 import random
 
 # Initializaton
-CRED = credentials.Certificate("../../python.json")
+CRED = credentials.Certificate("python.json")
 firebase_admin.initialize_app(CRED)
 db = firestore.client()
 #  Constants
@@ -41,14 +41,6 @@ for i in range(COUNT):
         'lot': lot,
         'time': ts
     })
-    
+
     if (TIME_DELAY):
         time.sleep(1)
-    
-
-
-
-
-
-
-
