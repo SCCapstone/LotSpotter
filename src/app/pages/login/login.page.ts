@@ -39,6 +39,7 @@ export class LoginPage implements OnInit {
     this.router.navigate(['signup']);
   }
 
+<<<<<<< HEAD
   // For Behavior Testing
   
   // navigateTo() {
@@ -49,5 +50,10 @@ export class LoginPage implements OnInit {
   //   // return element(by.css())
   // }
 
+=======
+  forgotPassword() {
+    
+  }
+>>>>>>> 6bb85f0fd57359315d4cf88e5a5d5dcf15ccc58a
 
 }

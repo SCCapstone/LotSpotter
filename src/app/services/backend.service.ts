@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 
 import firebase from 'firebase';
+//import { stat } from 'fs';
 
 import { Lot } from '../interfaces';
+import { Stat } from '../interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -55,6 +57,41 @@ export class BackendService {
         reject("failed");
       }
     });
+  }
+
+  async getStats(lotName:string):Promise<Stat> {
+    let stat:Stat = null;
+    let counter:number = 0;
+
+    var self = this;
+    await this.database.collection("stats").where("lot", "==", lotName)
+    .get().then(function(querySnapshot) {
+        querySnapshot.forEach( (doc) => {
+            counter++;
+            let a = doc.data();
+            stat = { action: a.action,
+                    lot: a.lot,
+                    time: a.time,
+            }
+            // console.log(lot.id)
+        });
+    })
+    .catch(function(error) {
+        console.log("Error getting documents: ", error);
+    });
+    
+    return new Promise<Stat>((resolve, reject) => {
+      // Each lot has an original name; there shouldn't be more than 1.
+      if (counter == 1) {
+        resolve(stat);
+      } else {
+        reject("failed");
+      }
+    });
+  }
+
+  addStat(stats){
+    this.database.collection('stats').add(stats);
   }
 
   // pulled updateItem from 546 class code
