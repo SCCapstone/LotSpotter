@@ -109,7 +109,7 @@ export class AuthenticationService {
   // Change User Type
   cUserType(newtype) {
      localStorage.setItem('user.userType', JSON.stringify(newtype));
-    //  JSON.parse(localStorage.getItem('user'));
+     //  JSON.parse(localStorage.getItem('user'));
   }
   // Get user type
   gUserType(){
@@ -129,6 +129,17 @@ export class AuthenticationService {
       this.router.navigate(['login']);
 
     })
+  }
+
+  deleteUser(){
+    var user = firebase.auth().currentUser;
+    user.delete().then(function() {
+      console.log(user.uid, " deleted");
+      alert("Account deleted.")
+    }, function(error) {
+      console.log("error deleting user");
+    })
+    this.router.navigate(['/home'])
   }
 
 }
