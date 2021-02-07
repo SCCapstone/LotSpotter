@@ -10,3 +10,9 @@ export interface Lot {
     lotType: string;
     id: string;
 }
+
+export interface Stat {
+    action: number;
+    lot: string;
+    time: Date;
+}
