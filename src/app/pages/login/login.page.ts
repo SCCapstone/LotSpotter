@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { AuthenticationService } from "../../services/authentication-service";
+import { browser, by, element } from 'protractor';
 
 
 @Component({
@@ -36,6 +37,10 @@ export class LoginPage implements OnInit {
 
   signupNav() {
     this.router.navigate(['signup']);
+  }
+
+  forgotPassword() {
+    
   }
 
 }

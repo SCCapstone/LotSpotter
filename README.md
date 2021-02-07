@@ -83,8 +83,16 @@ npm run e2e
 ```
 These tests are located in `/e2e/src/app.e2e-spec.ts`. For this we are using the BDD framework [Jasmine](https://jasmine.github.io/) to execute the commands and using [ProtractorJS](https://www.protractortest.org/#/) to interact with the virtual application via browser. The current behavior test after running `npm run e2e` will automate user login, verify homepage, then logout. 
 
+To simulate the entries/exits to parking lots, there's a Python script located in `/src/scripts/`. To run it, ensure the needed packages are installed with:
+```bash
+pip3 install firebase_admin
+```
+Then, execute with Python 3. Python 2 is not supoported by `firebase_admin`.
+```bash
+python3 /src/scripts/mock_lot_data.py`
+```
 
-
+***
 # Authors
 
  * [Daniel Jones](https://github.com/Dojones98) | dojones@cec.sc.edu

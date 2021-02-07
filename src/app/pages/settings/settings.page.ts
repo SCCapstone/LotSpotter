@@ -88,6 +88,29 @@ export class SettingsPage implements OnInit {
     this.router.navigate(['testing-ui']);
   }
 
+  async QueDelete(){
+    let alert = await this.alertc.create({
+      message: 'Are you sure you want to delete your Account? This can not be undone.',
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            console.log('Delete clicked');
+            this.authService.deleteUser();
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
 
 
 }

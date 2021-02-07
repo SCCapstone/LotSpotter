@@ -1,4 +1,5 @@
 import firebase from 'firebase';
+import { Timestamp } from 'rxjs';
 
 export interface Lot {
     name: string;
@@ -14,5 +15,5 @@ export interface Lot {
 export interface Stat {
     action: number;
     lot: string;
-    time: Date;
+    time: firebase.firestore.Timestamp;
 }
