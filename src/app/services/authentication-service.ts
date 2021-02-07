@@ -139,7 +139,7 @@ export class AuthenticationService {
     }, function(error) {
       console.log("error deleting user");
     })
-    this.router.navigate(['/home'])
+    this.router.navigate(['login'])
   }
 
 }

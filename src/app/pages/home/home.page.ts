@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
+import { AuthenticationService } from "../../services/authentication-service";
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -9,6 +11,7 @@ export class HomePage {
   logo: String;
 
   constructor(
+    public authService: AuthenticationService,
     public router: Router,
   
   ) {}
@@ -47,6 +50,9 @@ export class HomePage {
 
   favoritesNav() {
     this.router.navigate(['favorites']);
+  }
+  SignOff(){
+    this.authService.SignOut();
   }
 
 }
