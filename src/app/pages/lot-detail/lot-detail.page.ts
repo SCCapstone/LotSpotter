@@ -66,8 +66,8 @@ export class LotDetailPage implements OnInit {
     });
 
     console.log("Viewing Lot: " + param);
-    console.log("Address is: "+ this.currentLot.addr)
-    console.log("Address Second is: "+ this.currentLot.addr)
+    // console.log("Address is: "+ this.currentLot.addr)
+    // console.log("Address Second is: "+ this.currentLot.addr)
 
     console.log(Number(this.openSpots),"  ",Number(this.currentLot.currCap),"  ",Number(this.currentLot.maxCap))
     this.showChart(this.currentLot);
