@@ -4,7 +4,7 @@ import { Router,ActivatedRoute } from '@angular/router';
 import firebase from 'firebase';
 
 import { BackendService } from '../../services/backend.service';
-import { Lot } from '../../interfaces';
+import { Lot, Stat } from '../../interfaces';
 import { LocationService } from 'src/app/services/location.service';
 
 import { Chart } from 'chart.js';
@@ -34,6 +34,13 @@ export class LotDetailPage implements OnInit {
     lotType: "...",
     id: "...",
   };
+
+  private stat:Stat = {
+    action: 0,
+    lot: "...",
+    currCap: 0,
+    time: firebase.firestore.Timestamp.fromDate(new Date()),
+  }
 
   constructor( private router: Router, private route: ActivatedRoute,
                private backend: BackendService,
@@ -73,7 +80,10 @@ export class LotDetailPage implements OnInit {
           labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
           datasets: [{
               label: lotName,
-              data: [12, 19, 3, 5, 2, 3],
+              data: [{
+                  x: this.stat.time,
+                  y: this.currentLot.currCap
+              }],
               backgroundColor: [
                   'rgba(255, 99, 132, 0.2)',
                   'rgba(54, 162, 235, 0.2)',

@@ -33,12 +33,14 @@ for i in range(COUNT):
     # Generate random data
     action = random.randrange(0,2,1) # 0=entry; 1=exit
     lot = random.choice(lots)
+    currCap = db.collection(u'lots').get()
     # src: https://code.luasoftware.com/tutorials/google-cloud-firestore/python-firestore-use-server-timestamp/
     ts = firebase_admin.firestore.SERVER_TIMESTAMP
     # Write the generated data to firestore
     db.collection(u'stats').add({
         'action': action, 
         'lot': lot,
+        'currCap': currCap,
         'time': ts
     })
 

@@ -71,6 +71,7 @@ export class BackendService {
             let a = doc.data();
             stat = { action: a.action,
                     lot: a.lot,
+                    currCap: a.currCap,
                     time: a.time,
             }
             // console.log(lot.id)
