@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { AuthenticationService } from "../../services/authentication-service";
 import { browser, by, element } from 'protractor';
+import { User } from '../../interfaces';
 
 
 @Component({
@@ -11,6 +12,13 @@ import { browser, by, element } from 'protractor';
 })
 export class LoginPage implements OnInit {
   logo: String;
+
+  private currUser:User = {
+    email: "",
+    favorites: [],
+    permits: [],
+    uid: "",
+  };
 
   constructor(
     public authService: AuthenticationService,
@@ -33,6 +41,9 @@ export class LoginPage implements OnInit {
       }).catch((error) => {
         window.alert(error.message)
       })
+      this.currUser.email = this.authService.userData.email;
+      this.currUser.uid = this.authService.userData.uid;
+      console.log("current user: "+this.currUser.email);
   }
 
   signupNav() {
