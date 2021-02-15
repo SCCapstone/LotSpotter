@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar color="primary">
+     <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Select Garage/Lot</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-card >
+        <div class="format">
+          <h1> Garage Permit</h1>
+          <p>  These permits provide a guaranteed spot in a covered garage. They also allow overnight parking and access to any decal lots.</p>
+          <p>  Price: $400/Semester (one garage only)</p>
+        </div>
+        <!-- make the choice to pay for either one semester or two -->
+        
+        <ion-card-content>
+          <ion-select slot="end" (ionChange) = "garage_name($event)">
+            <ion-select-option *ngFor="let item of lots" [value]="item.name" >{{item.name}}</ion-select-option>
+          </ion-select>
+          <ion-button expand="block" (click)="garagePaymentRoute()">Purchase</ion-button>
+        </ion-card-content>
+        <!-- <ion-item>
+          <ion-button expand="block" slot="end" (click)="paymentRoute()">Purchase</ion-button>
+        </ion-item> -->
+    </ion-card>
+
+    <ion-card>
+      <div class="format">
+        <h1>Lot Permit</h1>
+        <p>These permits provide the opportunity to park in any decal lots as well as the S lots. These permits do not guarantee a spot. There is no overnight parking with this permit.</p>
+        <p>Price: $70/Semester</p>
+      </div>
+
+      <ion-card-content>
+        <ion-button expand="block" (click)="lotPaymentRoute()">Purchase</ion-button>
+      </ion-card-content>
+    </ion-card>
+</ion-content>

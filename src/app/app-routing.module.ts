@@ -63,6 +63,22 @@ const routes: Routes = [
     path: 'verify',
     loadChildren: () => import('./pages/verify/verify.module').then( m => m.VerifyPageModule)
   },
+  {
+    path: 'purchase-a-pass-select',
+    loadChildren: () => import('./purchase-a-pass-select/purchase-a-pass-select.module').then( m => m.PurchaseAPassSelectPageModule)
+  },
+  {
+    path: 'purchase-a-pass-payment',
+    loadChildren: () => import('./purchase-a-pass-payment/purchase-a-pass-payment.module').then( m => m.PurchaseAPassPaymentPageModule)
+  },
+  {
+    path: 'purchase-a-pass-review',
+    loadChildren: () => import('./purchase-a-pass-review/purchase-a-pass-review.module').then( m => m.PurchaseAPassReviewPageModule)
+  },
+  {
+    path: 'purchase-a-pass-shipping',
+    loadChildren: () => import('./purchase-a-pass-shipping/purchase-a-pass-shipping.module').then( m => m.PurchaseAPassShippingPageModule)
+  },
 ];
 
 @NgModule({

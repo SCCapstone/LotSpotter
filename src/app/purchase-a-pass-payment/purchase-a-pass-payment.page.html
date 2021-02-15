@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar color="primary">
+     <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Payment Information</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="margin">
+  <form [formGroup]="payment_information">
+    
+    <ion-label class="margin">Name on Card:</ion-label>
+    <ion-item>
+      <ion-input formControlName="name_on_card"></ion-input>
+    </ion-item>
+
+    <ion-label>Card Number:</ion-label>
+    <ion-item>
+      <ion-input formControlName="card_number"></ion-input>
+    </ion-item>
+
+    <ion-label>Expiration Date:</ion-label>
+    <ion-item>
+      <!-- Change this to be three years from the current year -->
+      <ion-datetime displayFormat="MM/YYYY" formControlName="expiration_date" pickerFormat="MMMM YYYY" max="2999"></ion-datetime>
+    </ion-item>
+
+    <ion-label>CVV:</ion-label>
+    <ion-item>
+      <ion-input formControlName="cvv"></ion-input>
+    </ion-item>
+
+    <ion-label>Zip Code:</ion-label>
+    <ion-item>
+      <ion-input formControlName="zip_code"></ion-input>
+    </ion-item>
+  
+
+  </form>
+</ion-content>
+
+<ion-button class="submit-btn" expand="block" type="submit" (click)="goToReview(payment_information.value)">Submit Changes</ion-button> 

@@ -16,7 +16,7 @@ export class AllLotsPage implements OnInit {
   private database = firebase.firestore();
   private lots:Lot[] = [];
 
-  constructor( private locServ: LocationService) 
+  constructor( private locServ: LocationService,) 
   { }
 
   ngOnInit() {
