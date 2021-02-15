@@ -89,7 +89,7 @@ pip3 install firebase_admin
 ```
 Then, execute with Python 3. Python 2 is not supoported by `firebase_admin`.
 ```bash
-python3 /src/scripts/mock_lot_data.py`
+python3 /src/scripts/mock_lot_data.py
 ```
 
 ***
