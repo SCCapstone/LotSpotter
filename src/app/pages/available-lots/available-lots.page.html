@@ -15,4 +15,27 @@
     </ion-refresher-content>
   </ion-refresher>
 
+  <ion-list *ngIf="lots.length !=0">
+    <ion-card *ngFor="let item of lots" [routerLink]="['/lot-detail', item.name]">
+        <ion-item>
+          <ion-icon name="pin" slot="start"></ion-icon>
+          <ion-label>{{item.name}}</ion-label>
+          <ion-text slot="end">Spaces Open - {{item.maxCap - item.currCap}}</ion-text>
+        </ion-item>
+      
+        <ion-card-content>
+            <ion-row>
+              <ion-col>
+                <ion-button fill="outline" (click)="toLot(item.loc)">Directions</ion-button>
+              </ion-col>
+              <ion-col center>
+                <div class="container">
+                <ion-icon name="checkmark-circle" color="success"></ion-icon>
+                </div>
+              </ion-col>
+            </ion-row>
+        </ion-card-content>
+      </ion-card>
+  </ion-list>
+
 </ion-content>
