@@ -15,5 +15,6 @@ export interface Lot {
 export interface Stat {
     action: number;
     lot: string;
+    currCap: number;
     time: firebase.firestore.Timestamp;
 }

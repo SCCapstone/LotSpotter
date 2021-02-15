@@ -127,6 +127,7 @@ export class TestingUiPage implements OnInit {
 
     let stats = {
       action: action,
+      currCap: this.currentLot.currCap,
       lot: this.currentLot.name,
       time: firebase.firestore.Timestamp.fromDate(new Date())
     }
