@@ -130,16 +130,8 @@ export class LotDetailPage implements OnInit {
       data: {
           labels: ['Max','Taken', 'Free'],
           datasets: [{
-<<<<<<< HEAD
               label: curr_lot.name,
               data: [Number(curr_lot.maxCap), Number(curr_lot.currCap), Number(this.openSpots)],
-=======
-              label: lotName,
-              data: [{
-                  x: this.stat.time,
-                  y: this.currentLot.currCap
-              }],
->>>>>>> 755effafabce88fb2b50e08973e59c8fcb597cc0
               backgroundColor: [
                   'rgba(255, 99, 97, 0.2)',
                   'rgba(185, 23, 195, 0.2)',
