@@ -1,6 +1,7 @@
 import { browser, element, by } from 'protractor';
 import { AppPage } from './app.po';
 
+<<<<<<< HEAD
 // describe('Login', () => {
 //   let page: AppPage;
 
@@ -29,12 +30,17 @@ import { AppPage } from './app.po';
 // });
 
 describe('SignUp', () =>{
+=======
+describe('Basic Functionality', () => {
+>>>>>>> 755effafabce88fb2b50e08973e59c8fcb597cc0
   let page: AppPage;
 
   beforeEach(() => {
+    page = new AppPage();
     browser.get("/")
   });
 
+<<<<<<< HEAD
   it('should select signup, create an account, and login', () => {
     var s_emailEL = element(by.xpath('/html/body/app-root/ion-app/ion-split-pane/ion-router-outlet/app-signup/ion-content/form/ion-item[1]/ion-input'));
     var s_passswordEL = element(by.xpath('/html/body/app-root/ion-app/ion-split-pane/ion-router-outlet/app-signup/ion-content/form/ion-item[2]/ion-input'));
@@ -69,4 +75,15 @@ describe('SignUp', () =>{
     browser.get('/home');
 
   });
+=======
+  it('The app should launch to a login screen and navigate to the homepage upon successful login, allowing the user to logout', () => {
+   page.login('test@test.com', 'testtest')
+   page.loadPage('/home');
+   page.logout();
+   
+  });
+
+  //it('The app should allow the user to login and navigate using the homepage')
+
+>>>>>>> 755effafabce88fb2b50e08973e59c8fcb597cc0
 });

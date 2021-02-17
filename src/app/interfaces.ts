@@ -15,5 +15,13 @@ export interface Lot {
 export interface Stat {
     action: number;
     lot: string;
+    currCap: number;
     time: firebase.firestore.Timestamp;
+}
+
+export interface User {
+    email: string;
+    favorites: string[];
+    permits: string[];
+    uid: string;
 }

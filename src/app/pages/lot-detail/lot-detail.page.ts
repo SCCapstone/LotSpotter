@@ -4,8 +4,10 @@ import { Router,ActivatedRoute } from '@angular/router';
 import firebase from 'firebase';
 
 import { BackendService } from '../../services/backend.service';
-import { Lot } from '../../interfaces';
+import { Lot, Stat, User } from '../../interfaces';
 import { LocationService } from 'src/app/services/location.service';
+
+import { AuthenticationService } from "../../services/authentication-service";
 
 import { Chart } from 'chart.js';
 import { parseI18nMeta } from '@angular/compiler/src/render3/view/i18n/meta';
@@ -36,9 +38,24 @@ export class LotDetailPage implements OnInit {
     id: "..."
   };
 
+  private stat:Stat = {
+    action: 0,
+    lot: "...",
+    currCap: 0,
+    time: firebase.firestore.Timestamp.fromDate(new Date()),
+  }
+
+  private currUser:User = {
+    email: "",
+    favorites: [],
+    permits:[],
+    uid:""
+  };
+
   constructor( private router: Router, private route: ActivatedRoute,
                private backend: BackendService,
-               private locServ: LocationService) { 
+               private locServ: LocationService,
+               public authService: AuthenticationService) { 
   }
 
   ngOnInit() {
@@ -82,8 +99,29 @@ export class LotDetailPage implements OnInit {
 
   }
 
-  addFavorites() {
+  addFavorites(lotName:string) {
+    /*console.log("user id: "+this.authService.userData.uid);
+    console.log("user email: "+this.authService.userData.email);
+    this.backend.getUser(this.authService.userData.uid).then((res)=> {
+      console.log("Viewing User: "+ this.currUser.email);
+      this.currUser = res;
+      this.currUser.favorites.push(lotName);
+    }).catch((message)=> {
+      console.log("Could not get user data and add favorite.")
+    });*/
+    this.currUser.uid = this.authService.userData.uid;
+    this.backend.getUser(this.currUser.uid);
+    console.log("Adding "+lotName);
+    this.currUser.favorites.push(lotName);
     
+
+    let newValues = {
+      email: this.currUser.email,
+      favorites: this.currUser.favorites,
+      permits: this.currUser.permits,
+      uid: this.currUser.uid
+    }
+    this.backend.updateUser(newValues);
   }
 
   showChart(curr_lot) {
@@ -92,8 +130,16 @@ export class LotDetailPage implements OnInit {
       data: {
           labels: ['Max','Taken', 'Free'],
           datasets: [{
+<<<<<<< HEAD
               label: curr_lot.name,
               data: [Number(curr_lot.maxCap), Number(curr_lot.currCap), Number(this.openSpots)],
+=======
+              label: lotName,
+              data: [{
+                  x: this.stat.time,
+                  y: this.currentLot.currCap
+              }],
+>>>>>>> 755effafabce88fb2b50e08973e59c8fcb597cc0
               backgroundColor: [
                   'rgba(255, 99, 97, 0.2)',
                   'rgba(185, 23, 195, 0.2)',
