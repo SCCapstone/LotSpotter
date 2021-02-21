@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { AuthenticationService } from "../../services/authentication-service";
 import { browser, by, element } from 'protractor';
-import { User } from '../../interfaces';
+import { BackendService } from 'src/app/services/backend.service';
 
 
 @Component({
@@ -13,16 +13,10 @@ import { User } from '../../interfaces';
 export class LoginPage implements OnInit {
   logo: String;
 
-  private currUser:User = {
-    email: "",
-    favorites: [],
-    permits: [],
-    uid: "",
-  };
-
   constructor(
     public authService: AuthenticationService,
-    public router: Router
+    public router: Router,
+    private backend: BackendService
   ) { }
 
   ngOnInit() {
@@ -30,6 +24,8 @@ export class LoginPage implements OnInit {
   }
 
   logIn(email, password) {
+    console.log("Login with "+email.value);
+
     this.authService.SignIn(email.value, password.value)
       .then((res) => {
         if(this.authService.isEmailVerified) {
@@ -41,9 +37,8 @@ export class LoginPage implements OnInit {
       }).catch((error) => {
         window.alert(error.message)
       })
-      this.currUser.email = this.authService.userData.email;
-      this.currUser.uid = this.authService.userData.uid;
-      console.log("current user: "+this.currUser.email);
+      console.log("Current user: "+this.authService.userData.email);
+      console.log("Current Uid: "+this.authService.userData.uid);
   }
 
   signupNav() {

@@ -5,7 +5,6 @@ import firebase from 'firebase';
 
 import { Lot } from '../interfaces';
 import { Stat } from '../interfaces';
-import { User } from '../interfaces';
 import { AuthenticationService } from "./authentication-service";
 
 
@@ -96,46 +95,7 @@ export class BackendService {
 
   addStat(stats){
     this.database.collection('stats').add(stats);
-  }
-
-  async getUser(uid:string):Promise<User> {
-    let user:User = null;
-    let counter:number = 0;
-
-    var self = this;
-    await this.database.collection("users").where("uid", "==", uid)
-    .get().then(function(querySnapshot) {
-        querySnapshot.forEach( (doc) => {
-            counter++;
-            let a = doc.data();
-            user = { email: a.email,
-                    favorites: a.favorite,
-                    permits: a.permit,
-                    uid: a.uid,
-            }
-        });
-    })
-    .catch(function(error) {
-        console.log("Error getting documents: ", error);
-    });
-    
-    return new Promise<User>((resolve, reject) => {
-      // Each lot has an original name; there shouldn't be more than 1.
-      if (counter == 1) {
-        resolve(user);
-      } else {
-        reject("failed");
-      }
-    });
-  }
-  addUser(user:User){
-    console.log("user id: "+user.uid);
-    this.database.collection("users").doc(user.uid).set(user);
-  }
-
-  updateUser(newValues:User){
-    this.database.collection("users").doc(newValues.uid).update(newValues);
-  }
+  } 
 
   // pulled updateItem from 546 class code
   docID: any;
