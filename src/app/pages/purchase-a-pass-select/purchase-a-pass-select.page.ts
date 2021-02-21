@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { discardPeriodicTasks } from '@angular/core/testing';
 import firebase from 'firebase';
-import { Lot } from '../interfaces';
+import { Lot } from '../../interfaces';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
-import { LocationService } from '../services/location.service';
+import { LocationService } from '../../services/location.service';
 // import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
