@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 import firebase from 'firebase';
 //import { stat } from 'fs';
@@ -16,7 +17,8 @@ export class BackendService {
 
   private database = firebase.firestore();
 
-  constructor(public authService: AuthenticationService) { }
+  constructor(public authService: AuthenticationService,
+              public afAuth: AngularFireAuth) { }
 
   /* @breif: getLotData() will return document data from a single lot. Since 
              lots don't have duplicate names and there aren't many within
@@ -117,6 +119,10 @@ export class BackendService {
     // console.log("now saving all items:");
     // let usersStringifiedObj = JSON.stringify(this.items);
     // localStorage.setItem("items", usersStringifiedObj);
+  }
+
+  setUsertype(type) {
+    
   }
 
 

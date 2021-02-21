@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
-import { AuthenticationService } from "../../services/authentication-service";
 import { browser, by, element } from 'protractor';
 import { BackendService } from 'src/app/services/backend.service';
+import firebase from 'firebase';
+import {AngularFireAuth} from '@angular/fire/auth';
 
 
 @Component({
@@ -14,39 +15,56 @@ export class LoginPage implements OnInit {
   logo: String;
 
   constructor(
-    public authService: AuthenticationService,
     public router: Router,
-    private backend: BackendService
+    private backend: BackendService,
+    public afAuth: AngularFireAuth,
   ) { }
 
   ngOnInit() {
     this.logo = "../../../assets/uofscbanner_red.png";
   }
 
-  logIn(email, password) {
-    console.log("Login with "+email.value);
+  logIn(email, password){
+  	var self=this;
+	this.afAuth.signInWithEmailAndPassword(email.value, password.value).catch(function(error) {
+		// Handle Errors here.
+		var errorCode = error.code;
+		var errorMessage = error.message;
+		console.log(errorCode);
 
-    this.authService.SignIn(email.value, password.value)
-      .then((res) => {
-        if(this.authService.isEmailVerified) {
-          this.router.navigate(['home']);          
-        } else {
-          window.alert('Email is not verified')
-          return false;
-        }
-      }).catch((error) => {
-        window.alert(error.message)
-      })
-      console.log("Current user: "+this.authService.userData.email);
-      console.log("Current Uid: "+this.authService.userData.uid);
+		if (errorCode === 'auth/wrong-password') {
+            alert('Wrong password.');
+          } else if (errorCode === 'auth/user-not-found'){
+            alert("User does not exist");
+          }
+          console.log(error);
+		}
+	).then(function(result){
+    var user= firebase.auth().currentUser;
+        console.log("login succeeded");
+        console.log(user.uid);
+
+        //get my users from database 
+        firebase.firestore().collection("users").where("uid", "==", user.uid)
+          .get()
+          .then(function(querySnapshot) {
+              querySnapshot.forEach(function(doc) {
+                  console.log(doc.id, " => ", doc.data());
+                  var type = doc.data().usertype;
+                  console.log("usertype:"+type);
+                  self.backend.setUsertype(type);
+              });
+          })
+          .catch(function(error) {
+              console.log("Error getting documents: ", error);
+          });
+
+          self.router.navigate(['home']);
+	});
   }
 
   signupNav() {
-    this.router.navigate(['signup']);
-  }
-
-  forgotPassword() {
-    
+  this.router.navigate(['signup']);
   }
 
 }
