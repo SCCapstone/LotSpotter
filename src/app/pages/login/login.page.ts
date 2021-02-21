@@ -13,6 +13,7 @@ import {AngularFireAuth} from '@angular/fire/auth';
 })
 export class LoginPage implements OnInit {
   logo: String;
+  validCreds: boolean = false;
 
   constructor(
     public router: Router,
@@ -26,18 +27,23 @@ export class LoginPage implements OnInit {
 
   logIn(email, password){
   	var self=this;
+    this.validCreds = true;
 	this.afAuth.signInWithEmailAndPassword(email.value, password.value).catch(function(error) {
 		// Handle Errors here.
 		var errorCode = error.code;
 		var errorMessage = error.message;
 		console.log(errorCode);
+    console.log("in error catch")
+    self.validCreds = false;
 
+  
 		if (errorCode === 'auth/wrong-password') {
             alert('Wrong password.');
           } else if (errorCode === 'auth/user-not-found'){
             alert("User does not exist");
-          }
+          } 
           console.log(error);
+  
 		}
 	).then(function(result){
     var user= firebase.auth().currentUser;
@@ -53,13 +59,17 @@ export class LoginPage implements OnInit {
                   var type = doc.data().usertype;
                   console.log("usertype:"+type);
                   self.backend.setUsertype(type);
+
+                  if(self.validCreds){
+                    self.router.navigate(['home']);
+                  }
               });
           })
           .catch(function(error) {
               console.log("Error getting documents: ", error);
           });
 
-          self.router.navigate(['home']);
+          
 	});
   }
 

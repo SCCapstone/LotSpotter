@@ -136,15 +136,4 @@ export class AuthenticationService {
     })
   }
 
-  deleteUser(){
-    var user = firebase.auth().currentUser;
-    user.delete().then(function() {
-      console.log(user.uid, " deleted");
-      alert("Account deleted.")
-    }, function(error) {
-      console.log("error deleting user");
-    })
-    this.router.navigate(['login'])
-  }
-
 }

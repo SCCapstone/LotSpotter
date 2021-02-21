@@ -52,7 +52,11 @@ export class SignupPage implements OnInit {
 			var user = firebase.auth().currentUser;
 			 var db = firebase.firestore();
 		          db.collection("users").add({
-		            'uid':user.uid		          
+                'uid':user.uid,
+                'email':user.email,
+                'favorites':[],
+                'permits':[]
+		            		          
 		      })
 		      .then(function(docRef) {
 		          console.log("user written with ID: ", docRef.id);
