@@ -16,7 +16,7 @@ export class AuthenticationService {
   private database = firebase.firestore();
 
   userEmail: String;
-  userData: any;
+  public userData: any;
 
   constructor(
     public afStore: AngularFirestore,
@@ -39,6 +39,11 @@ export class AuthenticationService {
   // Login in with email/password
   SignIn(email, password) {
     return this.ngFireAuth.signInWithEmailAndPassword(email, password)
+    .then((result)=> {
+      this.SetUserData(result.user);
+    }).catch((error) => {
+      window.alert(error)
+    })
   }
 
   // Register user with email/password
@@ -127,7 +132,7 @@ export class AuthenticationService {
       localStorage.setItem('user.userType', JSON.stringify("Unknown"));
       this.userEmail = "";
       this.router.navigate(['login']);
-
+      console.log("User sucessfully logged out");
     })
   }
 
