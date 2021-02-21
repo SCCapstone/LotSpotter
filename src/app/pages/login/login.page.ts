@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { AuthenticationService } from "../../services/authentication-service";
 import { browser, by, element } from 'protractor';
+import { BackendService } from 'src/app/services/backend.service';
 
 
 @Component({
@@ -14,7 +15,8 @@ export class LoginPage implements OnInit {
 
   constructor(
     public authService: AuthenticationService,
-    public router: Router
+    public router: Router,
+    private backend: BackendService
   ) { }
 
   ngOnInit() {
@@ -22,6 +24,8 @@ export class LoginPage implements OnInit {
   }
 
   logIn(email, password) {
+    console.log("Login with "+email.value);
+
     this.authService.SignIn(email.value, password.value)
       .then((res) => {
         if(this.authService.isEmailVerified) {
@@ -33,6 +37,8 @@ export class LoginPage implements OnInit {
       }).catch((error) => {
         window.alert(error.message)
       })
+      console.log("Current user: "+this.authService.userData.email);
+      console.log("Current Uid: "+this.authService.userData.uid);
   }
 
   signupNav() {

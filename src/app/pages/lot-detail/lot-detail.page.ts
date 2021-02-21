@@ -7,7 +7,10 @@ import { BackendService } from '../../services/backend.service';
 import { Lot, Stat } from '../../interfaces';
 import { LocationService } from 'src/app/services/location.service';
 
+import { AuthenticationService } from "../../services/authentication-service";
+
 import { Chart } from 'chart.js';
+import { parseI18nMeta } from '@angular/compiler/src/render3/view/i18n/meta';
 
 @Component({
   selector: 'app-lot-detail',
@@ -15,7 +18,7 @@ import { Chart } from 'chart.js';
   styleUrls: ['./lot-detail.page.scss'],})
 export class LotDetailPage implements OnInit {
 
-  
+  public lotdata: number[];
  
   private map = "https://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap \
   &markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318 \
@@ -24,7 +27,7 @@ export class LotDetailPage implements OnInit {
   
   private openSpots:number = 0;
 
-  private currentLot:Lot = {
+  public currentLot:any = {
     name: "...",
     addr: "...",
     currCap: 0,
@@ -32,7 +35,7 @@ export class LotDetailPage implements OnInit {
     desc: "...",
     loc: null,
     lotType: "...",
-    id: "...",
+    id: "..."
   };
 
   private stat:Stat = {
@@ -44,21 +47,41 @@ export class LotDetailPage implements OnInit {
 
   constructor( private router: Router, private route: ActivatedRoute,
                private backend: BackendService,
-               private locServ: LocationService) { 
+               private locServ: LocationService,
+               public authService: AuthenticationService) { 
   }
 
   ngOnInit() {
+    this.fetchLotData();
+  }
+
+  async fetchLotData() {
+    // var self = this;
     let param:string = this.route.snapshot.paramMap.get("name"); // src: https://www.youtube.com/watch?v=DZrWzoW4_4M
-    this.backend.getLotData(param).then((res) => {
-      this.currentLot = res;
+    await this.backend.getLotData(param).then((res) => {
+      this.currentLot = {
+        name:res.name,
+        addr:res.addr,
+        currCap:res.currCap,
+        maxCap:res.maxCap,
+        desc:res.desc,
+        loc:res.loc,
+        lotType:res.lotType,
+        id:res.id
+      }
       this.openSpots = res.maxCap - res.currCap;
       // TODO: Call the image API request.
     }).catch((message) => {
       console.log("Could not get lot data.")
     });
-    console.log("Viewing Lot: " + param);
 
-    this.showChart(param);
+    console.log("Viewing Lot: " + param);
+    // console.log("Address is: "+ this.currentLot.addr)
+    // console.log("Address Second is: "+ this.currentLot.addr)
+
+    console.log(Number(this.openSpots),"  ",Number(this.currentLot.currCap),"  ",Number(this.currentLot.maxCap))
+    this.showChart(this.currentLot);
+
   }
 
   toLot(location:firebase.firestore.GeoPoint):void {
@@ -69,41 +92,33 @@ export class LotDetailPage implements OnInit {
 
   }
 
-  addFavorites() {
-    
+  addFavorites(lotName:string) {
+   
   }
 
-  showChart(lotName:string) {
+  showChart(curr_lot) {
     var myChart = new Chart("myChart", {
       type: 'bar',
       data: {
-          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+          labels: ['Max','Taken', 'Free'],
           datasets: [{
-              label: lotName,
-              data: [{
-                  x: this.stat.time,
-                  y: this.currentLot.currCap
-              }],
+              label: curr_lot.name,
+              data: [Number(curr_lot.maxCap), Number(curr_lot.currCap), Number(this.openSpots)],
               backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(255, 206, 86, 0.2)',
-                  'rgba(75, 192, 192, 0.2)',
-                  'rgba(153, 102, 255, 0.2)',
-                  'rgba(255, 159, 64, 0.2)'
+                  'rgba(255, 99, 97, 0.2)',
+                  'rgba(185, 23, 195, 0.2)',
+                  'rgba(97, 255, 99, 0.2)'
               ],
               borderColor: [
-                  'rgba(255, 99, 132, 1)',
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(255, 206, 86, 1)',
-                  'rgba(75, 192, 192, 1)',
-                  'rgba(153, 102, 255, 1)',
-                  'rgba(255, 159, 64, 1)'
+                  'rgba(255, 99, 97, 1)',
+                  'rgba(185, 23, 195, 1)',
+                  'rgba(97, 255, 99, 1)'
               ],
               borderWidth: 1
           }]
       },
       options: {
+        title: curr_lot.name,
           scales: {
               yAxes: [{
                   ticks: {

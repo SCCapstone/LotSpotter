@@ -5,6 +5,8 @@ import firebase from 'firebase';
 
 import { Lot } from '../interfaces';
 import { Stat } from '../interfaces';
+import { AuthenticationService } from "./authentication-service";
+
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +16,7 @@ export class BackendService {
 
   private database = firebase.firestore();
 
-  constructor() { }
+  constructor(public authService: AuthenticationService) { }
 
   /* @breif: getLotData() will return document data from a single lot. Since 
              lots don't have duplicate names and there aren't many within
@@ -93,7 +95,7 @@ export class BackendService {
 
   addStat(stats){
     this.database.collection('stats').add(stats);
-  }
+  } 
 
   // pulled updateItem from 546 class code
   docID: any;

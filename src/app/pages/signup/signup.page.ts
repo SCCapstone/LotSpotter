@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { AuthenticationService } from "../../services/authentication-service";
+import firebase from 'firebase';
+import { BackendService } from 'src/app/services/backend.service';
 
 @Component({
   selector: 'app-signup',
@@ -15,9 +17,12 @@ export class SignupPage implements OnInit {
     usertype:""
   }
 
+  private database = firebase.firestore();
+
   constructor(
     public authService: AuthenticationService,
-    public router: Router
+    public router: Router,
+    private backend: BackendService
   ) { }
 
   ngOnInit() {}
@@ -31,6 +36,6 @@ export class SignupPage implements OnInit {
     }).catch((error) => {
       window.alert(error.message)
     })
-}
+  }
 
 }
