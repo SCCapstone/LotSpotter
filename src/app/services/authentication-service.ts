@@ -15,7 +15,6 @@ export class AuthenticationService {
 
   private database = firebase.firestore();
 
-  userEmail: String;
   public userData: any;
 
   constructor(
@@ -40,7 +39,7 @@ export class AuthenticationService {
   SignIn(email, password) {
     return this.ngFireAuth.signInWithEmailAndPassword(email, password)
     .then((result)=> {
-      this.SetUserData(result.user);
+      //localStorage.setItem('user', result.user)
     }).catch((error) => {
       window.alert(error)
     })
@@ -105,7 +104,6 @@ export class AuthenticationService {
       emailVerified: user.emailVerified,
       userType: user.userType
     }
-    this.userEmail = user.email;
     return userRef.set(userData, {
       merge: true
     })
@@ -130,9 +128,11 @@ export class AuthenticationService {
     return this.ngFireAuth.signOut().then(() => {
       localStorage.removeItem('user');
       localStorage.setItem('user.userType', JSON.stringify("Unknown"));
-      this.userEmail = "";
+      this.userData.email = "Not Logged In";
+      this.userData.uid = "";
       this.router.navigate(['login']);
       console.log("User sucessfully logged out");
+      console.log("User Type: "+this.userData.userType+"\nEmail: "+this.userData.email);
     })
   }
 
