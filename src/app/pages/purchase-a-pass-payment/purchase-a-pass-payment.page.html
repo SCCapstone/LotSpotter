@@ -12,7 +12,7 @@
     
     <ion-label class="margin">Name on Card:</ion-label>
     <ion-item>
-      <ion-input formControlName="name_on_card"></ion-input>
+      <ion-input formControlName="card_name"></ion-input>
     </ion-item>
 
     <ion-label>Card Number:</ion-label>
@@ -23,7 +23,7 @@
     <ion-label>Expiration Date:</ion-label>
     <ion-item>
       <!-- Change this to be three years from the current year -->
-      <ion-datetime displayFormat="MM/YYYY" formControlName="expiration_date" pickerFormat="MMMM YYYY" max="2999"></ion-datetime>
+      <ion-datetime displayFormat="MM/YYYY" formControlName="exp_date" pickerFormat="MMMM YYYY" max="2999"></ion-datetime>
     </ion-item>
 
     <ion-label>CVV:</ion-label>
@@ -33,7 +33,7 @@
 
     <ion-label>Zip Code:</ion-label>
     <ion-item>
-      <ion-input formControlName="zip_code"></ion-input>
+      <ion-input formControlName="card_zip_code"></ion-input>
     </ion-item>
   
 

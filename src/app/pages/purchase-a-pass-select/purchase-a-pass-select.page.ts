@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { discardPeriodicTasks } from '@angular/core/testing';
 import firebase from 'firebase';
 import { Lot } from '../../interfaces';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Router, ActivatedRoute, NavigationExtras,ParamMap } from '@angular/router';
 
 import { LocationService } from '../../services/location.service';
+import { type } from 'os';
 // import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -14,7 +15,7 @@ import { LocationService } from '../../services/location.service';
 })
 export class PurchaseAPassSelectPage implements OnInit {
 
-  
+  // Add a variable to the purchase object that connects it to the user 
 
   private database = firebase.firestore();
   private lots:Lot[] = [];
@@ -28,6 +29,7 @@ export class PurchaseAPassSelectPage implements OnInit {
     street_address: '',
     apt_number: '',
     shipping_zip_code: '',
+    city: '',
     state: '',
     country: '',
     pick_up_pass: false,
@@ -36,8 +38,9 @@ export class PurchaseAPassSelectPage implements OnInit {
     exp_date: '',
     cvv: '',
     card_zip_code: '',
-  };
+  }
 
+  // purchase = {} as any;
   constructor( 
     private locServ: LocationService,
     private route: ActivatedRoute,
@@ -85,14 +88,29 @@ export class PurchaseAPassSelectPage implements OnInit {
       this.purchase.garage_name = this.set_garage_name; 
     }
 
-    this.router.navigate(['purchase-a-pass-payment', this.purchase]);
+  
+
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+          "purchase":JSON.stringify(this.purchase),
+  
+      }
+    }
+    this.router.navigate(['purchase-a-pass-shipping'], navigationExtras);
   }
   
   lotPaymentRoute() {
    
 
     this.purchase.pass_type = "Lot";
-    this.router.navigate(['purchase-a-pass-payment', this.purchase]);
+
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+          "purchase":JSON.stringify(this.purchase),
+  
+      }
+    }
+    this.router.navigate(['purchase-a-pass-shipping'], navigationExtras);
   }
 
 }
