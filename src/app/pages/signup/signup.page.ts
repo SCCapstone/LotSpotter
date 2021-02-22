@@ -51,7 +51,7 @@ export class SignupPage implements OnInit {
 	}).then(function(result){
 			var user = firebase.auth().currentUser;
 			 var db = firebase.firestore();
-		          db.collection("users").add({
+		          db.collection("users").doc(user.uid).set({
                 'uid':user.uid,
                 'email':user.email,
                 'favorites':[],
@@ -59,7 +59,7 @@ export class SignupPage implements OnInit {
 		            		          
 		      })
 		      .then(function(docRef) {
-		          console.log("user written with ID: ", docRef.id);
+		          console.log("user written with ID: " + user.uid);
 		      })
 		      .catch(function(error) {
 		          console.error("Error adding document: ", error);

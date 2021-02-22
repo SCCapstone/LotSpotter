@@ -97,8 +97,18 @@ export class SettingsPage implements OnInit {
     }, function(error) {
       console.log("error deleting user");
     })
+
+    firebase.firestore().collection("users").doc(user.uid).delete().then(function() {
+      console.log("document successfully deleted");
+      console.log("User " + user.uid + "deleted");
+    }).catch(function (error) {
+      console.error("Error removing document: " , error);
+    })
     this.router.navigate(['login'])
+
   }
+
+  
 
   async QueDelete(){
     let alert = await this.alertc.create({
