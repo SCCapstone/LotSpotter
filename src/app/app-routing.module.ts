@@ -79,6 +79,10 @@ const routes: Routes = [
     path: 'purchase-a-pass-shipping',
     loadChildren: () => import('./pages/purchase-a-pass-shipping/purchase-a-pass-shipping.module').then( m => m.PurchaseAPassShippingPageModule)
   },
+  {
+    path: 'password-reset',
+    loadChildren: () => import('./pages/password-reset/password-reset.module').then( m => m.PasswordResetPageModule)
+  },
 ];
 
 @NgModule({
