@@ -5,7 +5,7 @@ import { Purchase } from '../../interfaces';
 import { Router, ActivatedRoute, ParamMap, NavigationExtras } from '@angular/router';
 import { BackendService } from 'src/app/services/backend.service';
 import { formatDate } from '@angular/common';
-
+import { AlertController } from '@ionic/angular';
 import { LocationService } from '../../services/location.service'; 
 @Component({
   selector: 'app-purchase-a-pass-review',
@@ -36,7 +36,8 @@ export class PurchaseAPassReviewPage implements OnInit {
   constructor(private router: Router, 
     public formBuilder:FormBuilder,
     private route:ActivatedRoute,
-    private backend:BackendService) { 
+    private backend:BackendService,
+    public alertController:AlertController) { 
       this.route.queryParams.subscribe(params => {
         this.purchase = JSON.parse(params["purchase"]);
     });
@@ -67,12 +68,22 @@ export class PurchaseAPassReviewPage implements OnInit {
   
   }
 
-  submitPurchase(){
+  async submitPurchase(){
 
 
-
+    
+    
     this.backend.newPurchase(this.purchase);
 
+    const alert = await this.alertController.create({
+      message: 'Purchase Successful',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+    let result = await alert.onDidDismiss();
+
+    this.router.navigate(['home']);
 
   }
 }

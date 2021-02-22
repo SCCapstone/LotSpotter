@@ -22,7 +22,9 @@
     {{this.purchase.city}} {{this.purchase.state}} {{this.purchase.country}} {{this.purchase.shipping_zip_code}}  <br>
 
   </p>
-  <p *ngIf="this.purchase.pick_up_pass==true"> Pass will be picked up from Parking Services </p>
+  <p class="thicker" *ngIf="this.purchase.pick_up_pass==true"> Pass will be picked up from Parking Services: </p>
+  <p *ngIf="this.purchase.pick_up_pass==true">1501 Pendleton St. <br>
+    Columbia, SC 29208 <br></p>
 
   <h1>Payment Information</h1>
   <p>Card Name: {{this.purchase.card_name}} <br>
