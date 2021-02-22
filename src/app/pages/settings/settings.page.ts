@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { AuthenticationService } from "../../services/authentication-service";
 import { AlertController } from '@ionic/angular';
+import firebase from 'firebase';
 
 
 @Component({
@@ -88,6 +89,33 @@ export class SettingsPage implements OnInit {
     this.router.navigate(['testing-ui']);
   }
 
+  passwordResetNav() {
+    this.router.navigate(['password-reset'])
+  }
+
+  deleteUser(){
+    var user = firebase.auth().currentUser;
+    user.delete().then(function() {
+      console.log(user.uid, " deleted");
+      alert("Account deleted.")
+    }, function(error) {
+      console.log("error deleting user");
+    })
+
+    firebase.firestore().collection("users").doc(user.uid).delete().then(function() {
+      console.log("document successfully deleted");
+      console.log("User " + user.uid + "deleted");
+    }).catch(function (error) {
+      console.error("Error removing document: " , error);
+    })
+    this.router.navigate(['login'])
+
+  }
+
+
+
+  
+
   async QueDelete(){
     let alert = await this.alertc.create({
       message: 'Are you sure you want to delete your Account? This can not be undone.',
@@ -103,7 +131,7 @@ export class SettingsPage implements OnInit {
           text: 'Yes',
           handler: () => {
             console.log('Delete clicked');
-            this.authService.deleteUser();
+            this.deleteUser();
           }
         }
       ]

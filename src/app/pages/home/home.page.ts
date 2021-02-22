@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { AuthenticationService } from "../../services/authentication-service";
+import {AngularFireAuth} from '@angular/fire/auth';
+import { serializeNodes } from '@angular/compiler/src/i18n/digest';
 
 @Component({
   selector: 'app-home',
@@ -13,6 +15,7 @@ export class HomePage {
   constructor(
     public authService: AuthenticationService,
     public router: Router,
+    public afAuth: AngularFireAuth,
   
   ) {}
 
@@ -51,8 +54,12 @@ export class HomePage {
   favoritesNav() {
     this.router.navigate(['favorites']);
   }
-  SignOff(){
-    this.authService.SignOut();
+  signOut(){
+   var self = this;
+   this.afAuth.signOut().then( function() { 
+     console.log("logged out")
+     self.router.navigate(["/login"]);
+   })
   }
 
 }
