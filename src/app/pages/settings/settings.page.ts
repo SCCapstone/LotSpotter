@@ -89,6 +89,10 @@ export class SettingsPage implements OnInit {
     this.router.navigate(['testing-ui']);
   }
 
+  passwordResetNav() {
+    this.router.navigate(['password-reset'])
+  }
+
   deleteUser(){
     var user = firebase.auth().currentUser;
     user.delete().then(function() {
@@ -107,6 +111,8 @@ export class SettingsPage implements OnInit {
     this.router.navigate(['login'])
 
   }
+
+
 
   
 
