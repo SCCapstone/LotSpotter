@@ -131,7 +131,9 @@ export class BackendService {
   }
   updateFavorites(name:string){
     this.setFavorites();
-    this.favorites.push(name);
+    if(this.favorites.indexOf(name) == -1) {
+       this.favorites.push(name);
+    }
     firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
     .update({favorites: this.favorites});
   }
