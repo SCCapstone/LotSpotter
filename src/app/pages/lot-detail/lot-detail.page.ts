@@ -93,7 +93,7 @@ export class LotDetailPage implements OnInit {
   }
 
   addFavorites(lotName:string) {
-   this.backend.updateFavorites(lotName);
+      this.backend.updateFavorites(lotName);
   }
 
   showChart(curr_lot) {
