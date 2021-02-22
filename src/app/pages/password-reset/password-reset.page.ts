@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {AngularFireAuth} from '@angular/fire/auth';
+import firebase from 'firebase';
 
 @Component({
   selector: 'app-password-reset',
@@ -7,9 +9,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PasswordResetPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    public afAuth: AngularFireAuth,
+  ) { }
 
   ngOnInit() {
+  }
+
+  resetPassword(email, oldPassword, newPassword, confirmNewPassword) {
+    const user = firebase.auth().currentUser;
+    const credential = firebase.auth.EmailAuthProvider.credential(
+    user.email, 
+    oldPassword
+);
+// Now you can use that to reauthenticate
+  user.reauthenticateWithCredential(credential).then(
+  
+  )
   }
 
 }
