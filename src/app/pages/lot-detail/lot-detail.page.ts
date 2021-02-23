@@ -27,7 +27,7 @@ export class LotDetailPage implements OnInit {
   
   private openSpots:number = 0;
 
-  public currentLot:any = {
+  public currentLot:Lot = {
     name: "...",
     addr: "...",
     currCap: 0,
