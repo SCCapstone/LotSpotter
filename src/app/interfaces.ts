@@ -38,7 +38,8 @@ export interface Purchase {
 }
 
 export interface Pass {
-    pass_type: string,
+    type: string,
     garage_name: string,
-    pass_exp_date: string
+    expiry: string
 }
+
