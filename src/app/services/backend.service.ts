@@ -16,7 +16,7 @@ import { AuthenticationService } from "./authentication-service";
 export class BackendService {
 
   private database = firebase.firestore();
-  public favorites:Array<string>;
+  public favorites:Array<string> = [];
 
   constructor(public authService: AuthenticationService,
               public afAuth: AngularFireAuth) { }
@@ -128,15 +128,16 @@ export class BackendService {
       self.favorites = querySnapshot.data().favorites;
     })
     console.log("Favorites: "+this.favorites);
+    return this.favorites;
   }
   updateFavorites(name:string){
     this.setFavorites();
-    if(this.favorites.indexOf(name) == -1) {
-       this.favorites.push(name);
+    var index = this.favorites.indexOf(name);
+    if(index == -1) {
+      this.favorites.push(name);
     }
     firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
     .update({favorites: this.favorites});
+
   }
-
-
 }
