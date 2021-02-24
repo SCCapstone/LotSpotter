@@ -58,6 +58,7 @@ export class HomePage {
    var self = this;
    this.afAuth.signOut().then( function() { 
      console.log("logged out")
+     self.authService.setLoginState(false);
      self.router.navigate(["/login"]);
    })
   }
