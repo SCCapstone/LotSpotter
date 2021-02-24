@@ -4,6 +4,7 @@ import { browser, by, element } from 'protractor';
 import { BackendService } from 'src/app/services/backend.service';
 import firebase from 'firebase';
 import {AngularFireAuth} from '@angular/fire/auth';
+import { AuthenticationService } from 'src/app/services/authentication-service';
 
 
 @Component({
@@ -19,6 +20,7 @@ export class LoginPage implements OnInit {
     public router: Router,
     private backend: BackendService,
     public afAuth: AngularFireAuth,
+    private auth: AuthenticationService,
   ) { }
 
   ngOnInit() {
@@ -28,7 +30,7 @@ export class LoginPage implements OnInit {
   logIn(email, password){
   	var self=this;
     this.validCreds = true;
-	this.afAuth.signInWithEmailAndPassword(email.value, password.value).catch(function(error) {
+	  this.afAuth.signInWithEmailAndPassword(email.value, password.value).catch(function(error) {
 		// Handle Errors here.
 		var errorCode = error.code;
 		var errorMessage = error.message;
@@ -45,32 +47,32 @@ export class LoginPage implements OnInit {
           console.log(error);
   
 		}
-	).then(function(result){
-    var user= firebase.auth().currentUser;
-        console.log("login succeeded");
-        console.log(user.uid);
+    ).then(function(result){
+      var user= firebase.auth().currentUser;
+      console.log("login succeeded");
+      console.log(user.uid);
+      
+      self.auth.setLoginState(true);
 
-        //get my users from database 
-        firebase.firestore().collection("users").where("uid", "==", user.uid)
-          .get()
-          .then(function(querySnapshot) {
-              querySnapshot.forEach(function(doc) {
-                  console.log(doc.id, " => ", doc.data());
-                  var type = doc.data().usertype;
-                  console.log("usertype:"+type);
-                  self.backend.setUsertype(type);
+      //get my users from database 
+      firebase.firestore().collection("users").where("uid", "==", user.uid)
+        .get()
+        .then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+                console.log(doc.id, " => ", doc.data());
+                var type = doc.data().usertype;
+                console.log("usertype:"+type);
+                self.backend.setUsertype(type);
 
-                  if(self.validCreds){
-                    self.router.navigate(['home']);
-                  }
-              });
-          })
-          .catch(function(error) {
-              console.log("Error getting documents: ", error);
-          });
-
-          
-	});
+                if(self.validCreds){
+                  self.router.navigate(['home']);
+                }
+            });
+        })
+        .catch(function(error) {
+            console.log("Error getting documents: ", error);
+        });
+    });
   }
 
   signupNav() {
