@@ -86,6 +86,7 @@ export class LotDetailPage implements OnInit {
       } else {
         this.visible = true;
       }
+      
       console.log("visible = "+this.visible);
       // TODO: Call the image API request.
     }).catch((message) => {

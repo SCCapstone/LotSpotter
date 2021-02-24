@@ -3,6 +3,7 @@ import { Router } from "@angular/router";
 import { AuthenticationService } from "../../services/authentication-service";
 import {AngularFireAuth} from '@angular/fire/auth';
 import { serializeNodes } from '@angular/compiler/src/i18n/digest';
+import { BackendService } from 'src/app/services/backend.service';
 
 @Component({
   selector: 'app-home',
@@ -16,11 +17,13 @@ export class HomePage {
     public authService: AuthenticationService,
     public router: Router,
     public afAuth: AngularFireAuth,
+    public backend: BackendService
   
   ) {}
 
   ngOnInit() {
     this.logo = "../assets/images/USC_logo.png";
+    this.backend.setFavorites();
   }
 
   avaliableLotsNav() {
