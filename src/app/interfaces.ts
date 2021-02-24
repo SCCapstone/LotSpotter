@@ -18,3 +18,28 @@ export interface Stat {
     currCap: number;
     time: firebase.firestore.Timestamp;
 }
+
+export interface Purchase {
+    pass_type: string,
+    garage_name: string,
+    shipping_name: string,
+    street_address: string,
+    apt_number: string,
+    shipping_zip_code: string,
+    city: string,
+    state: string,
+    country: string,
+    pick_up_pass: boolean,
+    card_name: string,
+    card_number: string,
+    exp_date: string,
+    cvv: string,
+    card_zip_code: string,
+}
+
+export interface Pass {
+    type: string,
+    garage_name: string,
+    expiry: string
+}
+

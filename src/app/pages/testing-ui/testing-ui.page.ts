@@ -69,16 +69,18 @@ export class TestingUiPage implements OnInit {
     });
   }
 
+
+  // I don't think this does anything, but apparently I wrote it -Cassidy
  
-  getLotInfo(name){
-    this.backend.getLotData(name).then((res) => {
-      this.currentLot = res; 
-      // TODO: Call the image API request.
-    }).catch((message) => {
-      console.log("Could not get lot data.")
-    });
-    console.log("Viewing Lot: " + name);
-  }
+  // getLotInfo(name){
+  //   this.backend.getLotData(name).then((res) => {
+  //     this.currentLot = res; 
+  //     // TODO: Call the image API request.
+  //   }).catch((message) => {
+  //     console.log("Could not get lot data.")
+  //   });
+  //   console.log("Viewing Lot: " + name);
+  // }
   
   async updateLot(value){
     console.log(value)

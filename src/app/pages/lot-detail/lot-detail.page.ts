@@ -12,6 +12,10 @@ import { AuthenticationService } from "../../services/authentication-service";
 import { Chart } from 'chart.js';
 import { parseI18nMeta } from '@angular/compiler/src/render3/view/i18n/meta';
 
+import { SMS } from '@ionic-native/sms/ngx';
+import { compileComponentFromMetadata } from '@angular/compiler';
+
+
 @Component({
   selector: 'app-lot-detail',
   templateUrl: './lot-detail.page.html',
@@ -27,7 +31,7 @@ export class LotDetailPage implements OnInit {
   
   private openSpots:number = 0;
 
-  public currentLot:any = {
+  public currentLot:Lot = {
     name: "...",
     addr: "...",
     currCap: 0,
@@ -48,7 +52,8 @@ export class LotDetailPage implements OnInit {
   constructor( private router: Router, private route: ActivatedRoute,
                private backend: BackendService,
                private locServ: LocationService,
-               public authService: AuthenticationService) { 
+               public authService: AuthenticationService,
+               private sms: SMS) { 
   }
 
   ngOnInit() {
@@ -89,7 +94,15 @@ export class LotDetailPage implements OnInit {
   }
 
   getImage() {
+    // TODO: get the static api request for each lot.
+  }
 
+  share(lot:Lot):void {
+    let mesg:string = "Go park in " + lot.name + ". There's " + 
+        (lot.maxCap-lot.currCap) + " spaces remaining. It's located at:\n " +
+        lot.addr + "\n\n-From your friends, LotSpotter";
+    // console.log(mesg);
+    this.sms.send('', mesg);
   }
 
   addFavorites(lotName:string) {

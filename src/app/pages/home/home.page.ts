@@ -36,7 +36,7 @@ export class HomePage {
   }
 
   purchaseAPassNav() {
-    this.router.navigate(['purchase-a-pass']);
+    this.router.navigate(['purchase-a-pass-select']);
   }
 
   settingsNav() {

@@ -1,0 +1,20 @@
+ion-content{
+    --padding-start: 10px;
+    --padding-end: 10px;
+}
+
+h1:after {
+    content:' ';
+    display:block;
+    border:2px solid #c4c4c4;
+    border-radius:4px;
+    -webkit-border-radius:4px;
+    -moz-border-radius:4px;
+    box-shadow:inset 0 1px 1px rgba(0, 0, 0, .05);
+    -webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, .05);
+    -moz-box-shadow:inset 0 1px 1px rgba(0, 0, 0, .05);
+}
+
+p.thicker{
+    font-weight: 600;
+}

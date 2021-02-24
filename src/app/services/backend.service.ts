@@ -101,26 +101,21 @@ export class BackendService {
   } 
 
   // pulled updateItem from 546 class code
-  docID: any;
   updateItem(newValues){
     // console.log(newValues.id);
 
     let newInfo = this.database.collection("lots").doc(newValues.id).update(newValues);
-    // this.events.publish('dataloaded',Date.now());
-
-    // let itemIndex = this.items.findIndex(item => item.id == newValues.id);
-    
-    // if(newValues.img == undefined){
-    // 	newValues.img = this.items[itemIndex].img
-    // }
-
-    // this.items[itemIndex] = newValues;
-    // console.log(newValues.img);
-
-    // console.log("now saving all items:");
-    // let usersStringifiedObj = JSON.stringify(this.items);
-    // localStorage.setItem("items", usersStringifiedObj);
+  
   }
+
+  newPurchase(purchase){
+    this.database.collection('purchases').add(purchase)
+  }
+
+
+  // updateUser(pass){
+
+  //   let newInfo = this.database.collection("users").doc(newValues.id).update(pass);
 
   setUsertype(type) {
     

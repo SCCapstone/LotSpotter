@@ -4,20 +4,18 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
-import { TestingUiPageRoutingModule } from './testing-ui-routing.module';
+import { PurchaseAPassPaymentPageRoutingModule } from './purchase-a-pass-payment-routing.module';
 
-import { TestingUiPage } from './testing-ui.page';
-
-
+import { PurchaseAPassPaymentPage } from './purchase-a-pass-payment.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    TestingUiPageRoutingModule,
     ReactiveFormsModule,
+    PurchaseAPassPaymentPageRoutingModule
   ],
-  declarations: [TestingUiPage]
+  declarations: [PurchaseAPassPaymentPage]
 })
-export class TestingUiPageModule {}
+export class PurchaseAPassPaymentPageModule {}
