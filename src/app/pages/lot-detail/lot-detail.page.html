@@ -9,8 +9,9 @@
 <ion-content>
   <!-- Header and Favorite Button -->
   <ion-item>
-    <button ion-button slot="end">
-      <ion-icon name="star-outline" color="warning" size="large" (click)="addFavorites(currentLot.name)"></ion-icon>
+    <button ion-button slot="end" (click)="toggle(currentLot.name)">
+      <ion-icon *ngIf="!visible" name="star-outline" color="warning" size="large" (click)="addFavorites(currentLot.name)"></ion-icon>
+      <ion-icon *ngIf="visible" name="star" color="warning" size="large" (click)="removeFavorites(currentLot.name)"></ion-icon>      
     </button>
 
     <ion-label>

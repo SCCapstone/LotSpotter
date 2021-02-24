@@ -30,6 +30,7 @@ export class LotDetailPage implements OnInit {
   &key=AIzaSyB7Xv6-oY-j1-PuLSfpd6WA4gDORz1WVmE"
   
   private openSpots:number = 0;
+  private visible:boolean = true;
 
   public currentLot:Lot = {
     name: "...",
@@ -58,6 +59,7 @@ export class LotDetailPage implements OnInit {
 
   ngOnInit() {
     this.fetchLotData();
+    this.backend.setFavorites();
   }
 
   async fetchLotData() {
@@ -75,6 +77,17 @@ export class LotDetailPage implements OnInit {
         id:res.id
       }
       this.openSpots = res.maxCap - res.currCap;
+
+      // For favorites star
+      var starred:Array<string> = this.backend.setFavorites();
+      console.log("Starred: "+starred);
+      if(starred.indexOf(this.currentLot.name) == -1) {
+        this.visible = false;
+      } else {
+        this.visible = true;
+      }
+      
+      console.log("visible = "+this.visible);
       // TODO: Call the image API request.
     }).catch((message) => {
       console.log("Could not get lot data.")
@@ -106,6 +119,10 @@ export class LotDetailPage implements OnInit {
   }
 
   addFavorites(lotName:string) {
+      this.backend.updateFavorites(lotName);
+  }
+
+  removeFavorites(lotName:string) {
       this.backend.updateFavorites(lotName);
   }
 
@@ -141,6 +158,10 @@ export class LotDetailPage implements OnInit {
           }
       }
   });
+  }
+
+  toggle(lotName:string) {
+    this.visible = !this.visible;
   }
 
 }
