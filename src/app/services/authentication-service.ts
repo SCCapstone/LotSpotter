@@ -43,17 +43,6 @@ export class AuthenticationService {
     this.loggedIn2 = new BehaviorSubject<boolean>(false);
   }
 
-  // Login in with email/password
-  SignIn(email, password) {
-    if(this.DEBUG) console.log("in Signin()"); 
-    return this.ngFireAuth.signInWithEmailAndPassword(email, password)
-    .then((result)=> {
-      //localStorage.setItem('user', result.user)
-    }).catch((error) => {
-      window.alert(error)
-    })
-  }
-
   // Register user with email/password
   RegisterUser(email, password) {
     if(this.DEBUG) console.log("in RegisterUser()"); 

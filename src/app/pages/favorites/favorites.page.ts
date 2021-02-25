@@ -3,6 +3,8 @@ import firebase from 'firebase';
 import { BackendService } from 'src/app/services/backend.service';
 import { Lot } from '../../interfaces';
 import { LocationService } from '../../services/location.service';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { AuthenticationService } from 'src/app/services/authentication-service';
 
 @Component({
   selector: 'app-favorites',
@@ -24,13 +26,21 @@ export class FavoritesPage implements OnInit {
     lotType: "...",
     id: "..."
   };
+  private loginState:boolean;
 
-  constructor( private locServ: LocationService, private backend: BackendService) 
-  { }
+  constructor( private locServ: LocationService,
+               private backend: BackendService,
+               private auth: AuthenticationService) { 
+    this.auth.getLoginState().subscribe(value => {
+      this.loginState = value;
+    });
+  }
 
   ngOnInit() {
-    this.backend.setFavorites();
-    this.fetch();
+    if (this.loginState) {
+      this.backend.setFavorites();
+      this.fetch();
+    }
   }
 
   toLot(location:firebase.firestore.GeoPoint):void {
@@ -49,7 +59,7 @@ export class FavoritesPage implements OnInit {
     this.backend.setFavorites();
     var self = this;
     this.database.collection('users').doc(firebase.auth().currentUser.uid)
-    .onSnapshot(function(querySnapshot) {
+     .onSnapshot(function(querySnapshot) {
       self.lots = [];
       querySnapshot.data().favorites.forEach(function(doc) {
         console.log(doc);
@@ -68,4 +78,5 @@ export class FavoritesPage implements OnInit {
       });
     });
   }
+
 }

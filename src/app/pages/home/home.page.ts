@@ -12,18 +12,25 @@ import { BackendService } from 'src/app/services/backend.service';
 })
 export class HomePage {
   logo: String;
+  private loginState:boolean;
 
   constructor(
     public authService: AuthenticationService,
     public router: Router,
     public afAuth: AngularFireAuth,
-    public backend: BackendService
-  
-  ) {}
+    public backend: BackendService,
+    private auth: AuthenticationService
+  ) {
+    this.auth.getLoginState().subscribe(value => {
+      this.loginState = value;
+    });
+  }
 
   ngOnInit() {
     this.logo = "../assets/images/USC_logo.png";
-    this.backend.setFavorites();
+    if(this.loginState) {
+      this.backend.setFavorites();
+    }
   }
 
   avaliableLotsNav() {
