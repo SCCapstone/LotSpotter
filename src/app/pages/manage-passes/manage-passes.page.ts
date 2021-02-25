@@ -36,7 +36,7 @@ export class ManagePassesPage implements OnInit {
               let temp:Pass = {
                 type: doc.data().type,
                 garage_name: doc.data().garage_name,
-                expiry: doc.data().expiry,
+                expire: doc.data().expire,
               };
               self.permits.push(temp);
           });

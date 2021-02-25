@@ -20,7 +20,7 @@
           <ion-select slot="end" (ionChange) = "garage_name($event)">
             <ion-select-option *ngFor="let item of lots" [value]="item.name" >{{item.name}}</ion-select-option>
           </ion-select>
-          <ion-button expand="block" (click)="garagePaymentRoute()">Purchase</ion-button>
+          <ion-button expand="block" (click)="garagePaymentRoute()">Purchase Garage Pass</ion-button>
         </ion-card-content>
         <!-- <ion-item>
           <ion-button expand="block" slot="end" (click)="paymentRoute()">Purchase</ion-button>
@@ -35,7 +35,7 @@
       </div>
 
       <ion-card-content>
-        <ion-button expand="block" (click)="lotPaymentRoute()">Continue to Shipping</ion-button>
+        <ion-button expand="block" (click)="lotPaymentRoute()">Purchase Lot Pass</ion-button>
       </ion-card-content>
     </ion-card>
 </ion-content>

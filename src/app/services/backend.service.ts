@@ -4,7 +4,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import firebase from 'firebase';
 //import { stat } from 'fs';
 
-import { Lot } from '../interfaces';
+import { Lot, Pass } from '../interfaces';
 import { Stat } from '../interfaces';
 import { AuthenticationService } from "./authentication-service";
 
@@ -17,6 +17,7 @@ export class BackendService {
 
   private database = firebase.firestore();
   public favorites:Array<string> = [];
+  public permits:Array<Pass> = [];
 
   constructor(public authService: AuthenticationService,
               public afAuth: AngularFireAuth) { }
@@ -113,9 +114,6 @@ export class BackendService {
   }
 
 
-  // updateUser(pass){
-
-  //   let newInfo = this.database.collection("users").doc(newValues.id).update(pass);
 
   setUsertype(type) {
     
@@ -142,5 +140,28 @@ export class BackendService {
     firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
     .update({favorites: this.favorites});
     this.setFavorites();
+  }
+
+  setPermits(){
+    var self = this;
+    firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
+    .onSnapshot(function (querySnapshot) {
+      self.permits = querySnapshot.data().permits;
+    })
+    console.log("Permits: "+this.permits);
+    return this.permits;
+  }
+  updatePermits(permit:Pass){
+    this.setPermits();
+    var index = this.permits.indexOf(permit);
+    if(index == -1) {
+      this.permits.push(permit);
+    } else {
+      this.permits.splice(index, 1);
+    }
+    console.log("Changes made");
+    firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
+    .update({permits: this.permits});
+    this.setPermits();
   }
 }
