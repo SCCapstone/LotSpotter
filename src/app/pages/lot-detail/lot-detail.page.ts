@@ -32,7 +32,7 @@ export class LotDetailPage implements OnInit {
   private openSpots:number = 0;
   private visible:boolean = true;
   private statistics:Array<Stat> = [];
-  private times:Array<firebase.firestore.Timestamp> = [];
+  private times:Array<Date> = [];
   private capacity:Array<Number> = [];
 
   public currentLot:Lot = {
@@ -137,26 +137,21 @@ export class LotDetailPage implements OnInit {
       this.statistics = res;
     })
 
-    var datapoints = [];  
     for(var i = 0; i < this.statistics.length; i++) {
-      this.times.push(this.statistics[i].time);
+      this.times.push(this.statistics[i].time.toDate());
       this.capacity.push(this.statistics[i].currCap);
-      datapoints.push({x: this.statistics[i].time, y: this.statistics[i].currCap});
     }
-    console.log(datapoints);
 
     var myChart = new Chart("myChart", {
       type: 'line',
-      data: [{dataPoints: datapoints}],
+      data: {
+        datasets: [{
+          data: this.capacity
+        }],
+        labels: this.times
+      },
       options: {
-        title: param,
-          scales: {
-              yAxes: [{
-                  ticks: {
-                      beginAtZero: true
-                  }
-              }]
-          }
+        showLines: true
       }
   });
   }
