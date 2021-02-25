@@ -3,6 +3,7 @@ import { Router } from "@angular/router";
 import { AuthenticationService } from "../../services/authentication-service";
 import {AngularFireAuth} from '@angular/fire/auth';
 import { serializeNodes } from '@angular/compiler/src/i18n/digest';
+import { BackendService } from 'src/app/services/backend.service';
 
 @Component({
   selector: 'app-home',
@@ -11,16 +12,25 @@ import { serializeNodes } from '@angular/compiler/src/i18n/digest';
 })
 export class HomePage {
   logo: String;
+  private loginState:boolean;
 
   constructor(
     public authService: AuthenticationService,
     public router: Router,
     public afAuth: AngularFireAuth,
-  
-  ) {}
+    public backend: BackendService,
+    private auth: AuthenticationService
+  ) {
+    this.auth.getLoginState().subscribe(value => {
+      this.loginState = value;
+    });
+  }
 
   ngOnInit() {
     this.logo = "../assets/images/USC_logo.png";
+    if(this.loginState) {
+      this.backend.setFavorites();
+    }
   }
 
   avaliableLotsNav() {
@@ -58,6 +68,7 @@ export class HomePage {
    var self = this;
    this.afAuth.signOut().then( function() { 
      console.log("logged out")
+     self.authService.setLoginState(false);
      self.router.navigate(["/login"]);
    })
   }

@@ -38,7 +38,17 @@ export interface Purchase {
 }
 
 export interface Pass {
-    pass_type: string,
+    type: string,
     garage_name: string,
-    pass_exp_date: string
+    expire: Date
 }
+
+export interface User {
+    uid: string;
+    email: string;
+    displayName: string;
+    photoURL: string;
+    emailVerified: boolean;
+    userType: string;
+ }
+

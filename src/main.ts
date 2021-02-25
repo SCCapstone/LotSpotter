@@ -10,5 +10,3 @@ if (environment.production) {
 
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.log(err));
-
-  // This is a comment for abigail's merge test!

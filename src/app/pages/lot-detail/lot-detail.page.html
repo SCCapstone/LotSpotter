@@ -9,8 +9,9 @@
 <ion-content>
   <!-- Header and Favorite Button -->
   <ion-item>
-    <button ion-button slot="end">
-      <ion-icon name="star-outline" color="warning" size="large" (click)="addFavorites(currentLot.name)"></ion-icon>
+    <button ion-button slot="end" (click)="toggle(currentLot.name)">
+      <ion-icon *ngIf="!visible" name="star-outline" color="warning" size="large" (click)="addFavorites(currentLot.name)"></ion-icon>
+      <ion-icon *ngIf="visible" name="star" color="warning" size="large" (click)="removeFavorites(currentLot.name)"></ion-icon>      
     </button>
 
     <ion-label>
@@ -37,6 +38,12 @@
       <canvas id="myChart"></canvas>
     </div>
   </ion-card> 
+
+  <ion-card>
+    <div style="display: block">
+      <canvas id="myChart2"></canvas>
+    </div>
+  </ion-card>
 </ion-content>
 
 <ion-footer>
@@ -45,5 +52,9 @@
     <ion-label>
       <h1> Open Spots - {{ openSpots }} </h1> 
     </ion-label>
+
+    <ion-button (click)="share(currentLot)">
+      <ion-icon name="share-outline"></ion-icon>
+    </ion-button>
   </ion-item>
 </ion-footer>
