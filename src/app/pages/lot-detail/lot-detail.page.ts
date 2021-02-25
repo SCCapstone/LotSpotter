@@ -13,7 +13,9 @@ import { Chart } from 'chart.js';
 import { parseI18nMeta } from '@angular/compiler/src/render3/view/i18n/meta';
 
 import { SMS } from '@ionic-native/sms/ngx';
-import { compileComponentFromMetadata } from '@angular/compiler';
+import { analyzeFile, compileComponentFromMetadata } from '@angular/compiler';
+// import { DatePipe } from '@angular/common';
+
 
 
 @Component({
@@ -32,6 +34,7 @@ export class LotDetailPage implements OnInit {
   private openSpots:number = 0;
   private visible:boolean = true;
   private statistics:Array<Stat> = [];
+  private datetimes:Array<Date> = [];
   private times:Array<Date> = [];
   private capacity:Array<Number> = [];
 
@@ -50,7 +53,7 @@ export class LotDetailPage implements OnInit {
     action: 0,
     lot: "...",
     currCap: 0,
-    time: firebase.firestore.Timestamp.fromDate(new Date()),
+    time: firebase.firestore.Timestamp.fromDate(new Date())
   }
 
   constructor( private router: Router, private route: ActivatedRoute,
@@ -101,8 +104,9 @@ export class LotDetailPage implements OnInit {
     // console.log("Address Second is: "+ this.currentLot.addr)
 
     console.log(Number(this.openSpots),"  ",Number(this.currentLot.currCap),"  ",Number(this.currentLot.maxCap))
+    this.showChart2(this.currentLot);
+    // ASYNC CHART : 
     this.showChart();
-
   }
 
   toLot(location:firebase.firestore.GeoPoint):void {
@@ -129,7 +133,7 @@ export class LotDetailPage implements OnInit {
       this.backend.updateFavorites(lotName);
   }
 
-  async showChart() {
+  async showChart() { 
     let param:string = this.route.snapshot.paramMap.get("name");
     console.log("Getting stats from "+param);
 
@@ -137,8 +141,10 @@ export class LotDetailPage implements OnInit {
       this.statistics = res;
     })
 
+
     for(var i = 0; i < this.statistics.length; i++) {
-      this.times.push(this.statistics[i].time.toDate());
+      this.datetimes.push(this.statistics[i].time.toDate());
+      this.times.push(this.statistics[i].time.toDate().toLocaleDateString());
       this.capacity.push(this.statistics[i].currCap);
     }
 
@@ -146,11 +152,17 @@ export class LotDetailPage implements OnInit {
       type: 'line',
       data: {
         datasets: [{
+          label: ("Capacity Over Time"),
           data: this.capacity
         }],
         labels: this.times
       },
       options: {
+        plugins:{
+          datalabels:{
+            display:false
+          }
+        },
         showLines: true
       }
   });
@@ -160,4 +172,38 @@ export class LotDetailPage implements OnInit {
     this.visible = !this.visible;
   }
 
-}
+  showChart2(curr_lot) {
+    var myChart = new Chart("myChart2", {
+      type: 'bar',
+      data: {
+          labels: ['Spots','Taken', 'Free'],
+          datasets: [{
+              label: (curr_lot.name + " Current"),
+              data: [Number(curr_lot.maxCap), Number(curr_lot.currCap), Number(this.openSpots)],
+              backgroundColor: [
+                  'rgba(255, 99, 97, 0.2)',
+                  'rgba(185, 23, 195, 0.2)',
+                  'rgba(97, 255, 99, 0.2)'
+              ],
+              borderColor: [
+                  'rgba(255, 99, 97, 1)',
+                  'rgba(185, 23, 195, 1)',
+                  'rgba(97, 255, 99, 1)'
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+        title: curr_lot.name,
+          scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero: true
+                  }
+              }]
+          }
+      }
+  });
+  }
+
+ }
