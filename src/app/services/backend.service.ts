@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 
 import firebase from 'firebase';
+import { STATUS_CODES } from 'http';
 //import { stat } from 'fs';
 
 import { Lot } from '../interfaces';
@@ -17,6 +18,7 @@ export class BackendService {
 
   private database = firebase.firestore();
   public favorites:Array<string> = [];
+
 
   constructor(public authService: AuthenticationService,
               public afAuth: AngularFireAuth) { }
@@ -64,35 +66,29 @@ export class BackendService {
     });
   }
 
-  async getStats(lotName:string):Promise<Stat> {
+  async getStats(lotName:string):Promise<Array<Stat>> {
+    let stats:Array<Stat> = [];
     let stat:Stat = null;
-    let counter:number = 0;
 
     var self = this;
     await this.database.collection("stats").where("lot", "==", lotName)
     .get().then(function(querySnapshot) {
         querySnapshot.forEach( (doc) => {
-            counter++;
             let a = doc.data();
             stat = { action: a.action,
                     lot: a.lot,
                     currCap: a.currCap,
                     time: a.time,
             }
-            // console.log(lot.id)
+            stats.push(stat);
         });
     })
     .catch(function(error) {
         console.log("Error getting documents: ", error);
     });
     
-    return new Promise<Stat>((resolve, reject) => {
-      // Each lot has an original name; there shouldn't be more than 1.
-      if (counter == 1) {
-        resolve(stat);
-      } else {
-        reject("failed");
-      }
+    return new Promise<Array<Stat>>((resolve, reject) => {
+      resolve(stats);
     });
   }
 
