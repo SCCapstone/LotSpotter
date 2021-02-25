@@ -134,7 +134,7 @@ export class LotDetailPage implements OnInit {
     console.log("Getting stats from "+param);
 
     await this.backend.getStats(param).then((res) => {
-      this.statistics = res;
+      // this.statistics = res;
     })
 
     for(var i = 0; i < this.statistics.length; i++) {
