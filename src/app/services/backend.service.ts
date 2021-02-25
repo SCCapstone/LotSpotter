@@ -2,10 +2,9 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 
 import firebase from 'firebase';
-import { STATUS_CODES } from 'http';
 //import { stat } from 'fs';
 
-import { Lot } from '../interfaces';
+import { Lot, Pass } from '../interfaces';
 import { Stat } from '../interfaces';
 import { AuthenticationService } from "./authentication-service";
 
@@ -18,7 +17,7 @@ export class BackendService {
 
   private database = firebase.firestore();
   public favorites:Array<string> = [];
-
+  public permits:Array<Pass> = [];
 
   constructor(public authService: AuthenticationService,
               public afAuth: AngularFireAuth) { }
@@ -66,29 +65,35 @@ export class BackendService {
     });
   }
 
-  async getStats(lotName:string):Promise<Array<Stat>> {
-    let stats:Array<Stat> = [];
+  async getStats(lotName:string):Promise<Stat> {
     let stat:Stat = null;
+    let counter:number = 0;
 
     var self = this;
     await this.database.collection("stats").where("lot", "==", lotName)
     .get().then(function(querySnapshot) {
         querySnapshot.forEach( (doc) => {
+            counter++;
             let a = doc.data();
             stat = { action: a.action,
                     lot: a.lot,
                     currCap: a.currCap,
                     time: a.time,
             }
-            stats.push(stat);
+            // console.log(lot.id)
         });
     })
     .catch(function(error) {
         console.log("Error getting documents: ", error);
     });
     
-    return new Promise<Array<Stat>>((resolve, reject) => {
-      resolve(stats);
+    return new Promise<Stat>((resolve, reject) => {
+      // Each lot has an original name; there shouldn't be more than 1.
+      if (counter == 1) {
+        resolve(stat);
+      } else {
+        reject("failed");
+      }
     });
   }
 
@@ -109,9 +114,6 @@ export class BackendService {
   }
 
 
-  // updateUser(pass){
-
-  //   let newInfo = this.database.collection("users").doc(newValues.id).update(pass);
 
   setUsertype(type) {
     
@@ -138,5 +140,28 @@ export class BackendService {
     firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
     .update({favorites: this.favorites});
     this.setFavorites();
+  }
+
+  setPermits(){
+    var self = this;
+    firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
+    .onSnapshot(function (querySnapshot) {
+      self.permits = querySnapshot.data().permits;
+    })
+    console.log("Permits: "+this.permits);
+    return this.permits;
+  }
+  updatePermits(permit:Pass){
+    this.setPermits();
+    var index = this.permits.indexOf(permit);
+    if(index == -1) {
+      this.permits.push(permit);
+    } else {
+      this.permits.splice(index, 1);
+    }
+    console.log("Changes made");
+    firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
+    .update({permits: this.permits});
+    this.setPermits();
   }
 }

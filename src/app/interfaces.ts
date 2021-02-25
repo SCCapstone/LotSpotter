@@ -40,7 +40,7 @@ export interface Purchase {
 export interface Pass {
     type: string,
     garage_name: string,
-    expiry: string
+    expire: Date
 }
 
 export interface User {
@@ -51,3 +51,4 @@ export interface User {
     emailVerified: boolean;
     userType: string;
  }
+
