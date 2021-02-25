@@ -31,6 +31,9 @@ export class LotDetailPage implements OnInit {
   
   private openSpots:number = 0;
   private visible:boolean = true;
+  private statistics:Array<Stat> = [];
+  private times:Array<firebase.firestore.Timestamp> = [];
+  private capacity:Array<Number> = [];
 
   public currentLot:Lot = {
     name: "...",
@@ -98,7 +101,7 @@ export class LotDetailPage implements OnInit {
     // console.log("Address Second is: "+ this.currentLot.addr)
 
     console.log(Number(this.openSpots),"  ",Number(this.currentLot.currCap),"  ",Number(this.currentLot.maxCap))
-    this.showChart(this.currentLot);
+    this.showChart();
 
   }
 
@@ -126,29 +129,27 @@ export class LotDetailPage implements OnInit {
       this.backend.updateFavorites(lotName);
   }
 
-  showChart(curr_lot) {
+  async showChart() {
+    let param:string = this.route.snapshot.paramMap.get("name");
+    console.log("Getting stats from "+param);
+
+    await this.backend.getStats(param).then((res) => {
+      this.statistics = res;
+    })
+
+    var datapoints = [];  
+    for(var i = 0; i < this.statistics.length; i++) {
+      this.times.push(this.statistics[i].time);
+      this.capacity.push(this.statistics[i].currCap);
+      datapoints.push({x: this.statistics[i].time, y: this.statistics[i].currCap});
+    }
+    console.log(datapoints);
+
     var myChart = new Chart("myChart", {
-      type: 'bar',
-      data: {
-          labels: ['Max','Taken', 'Free'],
-          datasets: [{
-              label: curr_lot.name,
-              data: [Number(curr_lot.maxCap), Number(curr_lot.currCap), Number(this.openSpots)],
-              backgroundColor: [
-                  'rgba(255, 99, 97, 0.2)',
-                  'rgba(185, 23, 195, 0.2)',
-                  'rgba(97, 255, 99, 0.2)'
-              ],
-              borderColor: [
-                  'rgba(255, 99, 97, 1)',
-                  'rgba(185, 23, 195, 1)',
-                  'rgba(97, 255, 99, 1)'
-              ],
-              borderWidth: 1
-          }]
-      },
+      type: 'line',
+      data: [{dataPoints: datapoints}],
       options: {
-        title: curr_lot.name,
+        title: param,
           scales: {
               yAxes: [{
                   ticks: {
