@@ -80,4 +80,8 @@ export class LoginPage implements OnInit {
   this.router.navigate(['signup']);
   }
 
+  forgotPasswordNav() {
+    this.router.navigate(['forgot-password'])
+  }
+
 }
