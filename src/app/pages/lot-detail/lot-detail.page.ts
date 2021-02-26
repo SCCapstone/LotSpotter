@@ -34,7 +34,10 @@ export class LotDetailPage implements OnInit {
   private openSpots:number = 0;
   private visible:boolean = true;
   private statistics:Array<Stat> = [];
+<<<<<<< HEAD
   private datetimes:Array<Date> = [];
+=======
+>>>>>>> e108313ba19233d3175822fb06b9a45d189de153
   private times:Array<Date> = [];
   private capacity:Array<Number> = [];
 
@@ -104,9 +107,14 @@ export class LotDetailPage implements OnInit {
     // console.log("Address Second is: "+ this.currentLot.addr)
 
     console.log(Number(this.openSpots),"  ",Number(this.currentLot.currCap),"  ",Number(this.currentLot.maxCap))
+<<<<<<< HEAD
     this.showChart2(this.currentLot);
     // ASYNC CHART : 
     this.showChart();
+=======
+    this.showChart();
+
+>>>>>>> e108313ba19233d3175822fb06b9a45d189de153
   }
 
   toLot(location:firebase.firestore.GeoPoint):void {
@@ -133,11 +141,16 @@ export class LotDetailPage implements OnInit {
       this.backend.updateFavorites(lotName);
   }
 
+<<<<<<< HEAD
   async showChart() { 
+=======
+  async showChart() {
+>>>>>>> e108313ba19233d3175822fb06b9a45d189de153
     let param:string = this.route.snapshot.paramMap.get("name");
     console.log("Getting stats from "+param);
 
     await this.backend.getStats(param).then((res) => {
+<<<<<<< HEAD
       this.statistics = res;
     })
 
@@ -145,6 +158,13 @@ export class LotDetailPage implements OnInit {
     for(var i = 0; i < this.statistics.length; i++) {
       this.datetimes.push(this.statistics[i].time.toDate());
       this.times.push(this.statistics[i].time.toDate().toLocaleDateString());
+=======
+      // this.statistics = res;
+    })
+
+    for(var i = 0; i < this.statistics.length; i++) {
+      this.times.push(this.statistics[i].time.toDate());
+>>>>>>> e108313ba19233d3175822fb06b9a45d189de153
       this.capacity.push(this.statistics[i].currCap);
     }
 
@@ -152,17 +172,23 @@ export class LotDetailPage implements OnInit {
       type: 'line',
       data: {
         datasets: [{
+<<<<<<< HEAD
           label: ("Capacity Over Time"),
+=======
+>>>>>>> e108313ba19233d3175822fb06b9a45d189de153
           data: this.capacity
         }],
         labels: this.times
       },
       options: {
+<<<<<<< HEAD
         plugins:{
           datalabels:{
             display:false
           }
         },
+=======
+>>>>>>> e108313ba19233d3175822fb06b9a45d189de153
         showLines: true
       }
   });
