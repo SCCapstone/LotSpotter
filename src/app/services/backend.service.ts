@@ -65,7 +65,8 @@ export class BackendService {
     });
   }
 
-  async getStats(lotName:string):Promise<Stat> {
+  async getStats(lotName:string):Promise<Array<Stat>> {
+    let stats:Array<Stat> = [];
     let stat:Stat = null;
     let counter:number = 0;
 
@@ -81,19 +82,17 @@ export class BackendService {
                     time: a.time,
             }
             // console.log(lot.id)
+            stats.push(stat);
+
         });
     })
     .catch(function(error) {
         console.log("Error getting documents: ", error);
     });
     
-    return new Promise<Stat>((resolve, reject) => {
-      // Each lot has an original name; there shouldn't be more than 1.
-      if (counter == 1) {
-        resolve(stat);
-      } else {
-        reject("failed");
-      }
+ 
+    return new Promise<Array<Stat>>((resolve, reject) => {
+      resolve(stats);
     });
   }
 
