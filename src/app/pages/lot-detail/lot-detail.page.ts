@@ -134,7 +134,7 @@ export class LotDetailPage implements OnInit {
     console.log("Getting stats from "+param);
 
     await this.backend.getStats(param).then((res) => {
-      this.statistics = res;
+      // this.statistics = res;
     })
 
     for(var i = 0; i < this.statistics.length; i++) {
@@ -160,4 +160,38 @@ export class LotDetailPage implements OnInit {
     this.visible = !this.visible;
   }
 
-}
+  showChart2(curr_lot) {
+    var myChart = new Chart("myChart2", {
+      type: 'bar',
+      data: {
+          labels: ['Spots','Taken', 'Free'],
+          datasets: [{
+              label: (curr_lot.name + " Current"),
+              data: [Number(curr_lot.maxCap), Number(curr_lot.currCap), Number(this.openSpots)],
+              backgroundColor: [
+                  'rgba(255, 99, 97, 0.2)',
+                  'rgba(185, 23, 195, 0.2)',
+                  'rgba(97, 255, 99, 0.2)'
+              ],
+              borderColor: [
+                  'rgba(255, 99, 97, 1)',
+                  'rgba(185, 23, 195, 1)',
+                  'rgba(97, 255, 99, 1)'
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+        title: curr_lot.name,
+          scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero: true
+                  }
+              }]
+          }
+      }
+  });
+  }
+
+ }
