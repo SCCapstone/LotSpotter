@@ -3,6 +3,7 @@ import {AngularFireAuth} from '@angular/fire/auth';
 import firebase from 'firebase';
 import { Validators, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
+import { AuthenticationService } from "../../services/authentication-service";
 import { serializeNodes } from '@angular/compiler/src/i18n/digest';
 import { Router } from "@angular/router";
 
@@ -19,7 +20,8 @@ export class PasswordResetPage implements OnInit {
     public afAuth: AngularFireAuth,
     public formBuilder: FormBuilder,
     public alertController: AlertController,
-    public router: Router
+    public router: Router,
+    public authService: AuthenticationService,
   ) { }
 
   ngOnInit() {
@@ -55,6 +57,14 @@ export class PasswordResetPage implements OnInit {
     console.log(result);
   }
 
+  signOut(){
+    var self = this;
+    this.afAuth.signOut().then( function() { 
+      console.log("logged out")
+      self.authService.setLoginState(false);
+    })
+   }
+
   async passwordChangeSuccess() {
     const alert = await this.alertController.create({
       message: 'Your password has successfully been changed. Signing you out and routing you to the login page!',
@@ -62,6 +72,7 @@ export class PasswordResetPage implements OnInit {
         {
           text: 'OK',
           handler: () => {
+            this.signOut();  
             this.router.navigate(["/login"])
           }
         }
