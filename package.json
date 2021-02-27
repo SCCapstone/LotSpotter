@@ -33,6 +33,8 @@
     "chart.js": "^2.9.4",
     "cordova-android": "9.0.0",
     "cordova-browser": "6.0.0",
+    "cordova-plugin-androidx": "^3.0.0",
+    "cordova-plugin-androidx-adapter": "^1.1.3",
     "firebase": "^8.2.7",
     "jasmine": "^3.6.4",
     "rxjs": "~6.5.5",
@@ -85,7 +87,9 @@
         "API_KEY_FOR_ANDROID": "AIzaSyA4gpqIrlhwjFpfkqm2e2lnnm-xxbJZXMQ"
       },
       "cordova-sms-plugin": {},
-      "cordova-plugin-x-socialsharing": {}
+      "cordova-plugin-x-socialsharing": {},
+      "cordova-plugin-androidx": {},
+      "cordova-plugin-androidx-adapter": {}
     },
     "platforms": [
       "browser",
