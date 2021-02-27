@@ -70,7 +70,10 @@ export class HomePage {
      console.log("logged out")
      self.authService.setLoginState(false);
      self.router.navigate(["/login"]);
-   })
+   });
+  }
+  signIn(){
+    this.router.navigate(['/login']);
   }
 
 }

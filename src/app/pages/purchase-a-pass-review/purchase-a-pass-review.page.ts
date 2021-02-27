@@ -9,6 +9,7 @@ import { DatePipe, formatDate } from '@angular/common';
 import { AlertController } from '@ionic/angular';
 import { LocationService } from '../../services/location.service'; 
 import { AuthenticationService } from '../../services/authentication-service';
+
 @Component({
   selector: 'app-purchase-a-pass-review',
   templateUrl: './purchase-a-pass-review.page.html',
@@ -26,6 +27,8 @@ export class PurchaseAPassReviewPage implements OnInit {
   private fallStart = new Date(this.year, 7, 2);
   private fallEnd = new Date(this.year, 11, 31);
 
+  private loginState: boolean;
+  private db = firebase.firestore();
 
   private permitDetails:Pass = {
     type: "",
@@ -40,10 +43,14 @@ export class PurchaseAPassReviewPage implements OnInit {
     private backend:BackendService,
     public alertController:AlertController,
     private auth: AuthenticationService) { 
-      this.route.queryParams.subscribe(params => {
+
+    this.route.queryParams.subscribe(params => {
         this.purchase = JSON.parse(params["purchase"]);
     });
 
+    this.auth.getLoginState().subscribe(value => {
+      this.loginState = value;
+    });
   }
 
 
@@ -98,6 +105,15 @@ export class PurchaseAPassReviewPage implements OnInit {
     } 
 
     this.backend.updatePermits(this.permitDetails);
+
+    // TODO: Fix this to use the permits in 'users', not 'pass'
+    // For now though, this will be a quick fix.
+    this.db.collection('pass').add({
+      type:this.purchase.pass_type,
+      garage_name:this.purchase.garage_name,
+      expire: this.permitDetails.expire.toDateString(),
+      uid: this.auth.userData.uid
+    });
 
     // Display purchase successful
     const alert = await this.alertController.create({

@@ -101,7 +101,9 @@
     
   </ion-grid>
 
-  <ion-button type="submit" (click)="signOut()" expand="block"
-    >Logout</ion-button
-  >
+  <ion-button *ngIf="loginState==true; else log" type="submit" (click)="signOut()" expand="block"> Logout </ion-button>
 </ion-content>
+
+<ng-template #log>
+  <ion-button type="submit" (click)="signIn()" expand="block"> Login </ion-button>
+</ng-template>

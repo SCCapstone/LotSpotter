@@ -81,16 +81,13 @@ export class BackendService {
                     currCap: a.currCap,
                     time: a.time,
             }
-            // console.log(lot.id)
             stats.push(stat);
-
         });
     })
     .catch(function(error) {
         console.log("Error getting documents: ", error);
     });
     
- 
     return new Promise<Array<Stat>>((resolve, reject) => {
       resolve(stats);
     });
