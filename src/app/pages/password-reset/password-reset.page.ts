@@ -90,35 +90,32 @@ export class PasswordResetPage implements OnInit {
 
 
   changePassword(form) {
-
     var self = this;
     const user = firebase.auth().currentUser;
-    const credential = firebase.auth.EmailAuthProvider.credential(user.email, form.oldPassword)
-    console.log("Here is the old password:" + form.oldPassword)
-
-  user.reauthenticateWithCredential(credential).catch(error => {
+    
+    if (user.email != form.email) {
       self.wrongEmailOrPasswordAlert();
-  }).then( success => {
+    } 
 
-    if(form.newPassword == form.confirmNewPassword){
-      user.updatePassword(form.confirmNewPassword).then(function(){
+    if (user.email == form.email) {
+      const credential = firebase.auth.EmailAuthProvider.credential(user.email, form.oldPassword)
+      user.reauthenticateWithCredential(credential).catch(error => {
+        self.wrongEmailOrPasswordAlert();
+      }).then( success => {
+        if (form.newPassword != form.confirmNewPassword) {
+          self.newPasswordsDontMatch();
+        }
 
-        self.passwordChangeSuccess();
-        console.log("password reset")
+        if(form.newPassword == form.confirmNewPassword) {
+          user.updatePassword(form.confirmNewPassword).then(function(){
+            self.passwordChangeSuccess();
+          })
 
-      }).catch(function(error) {
-        console.log("there was an error: " + error)
+        }
       })
 
-    } else if (form.newPassword != form.confirmNewPassword){
-      self.newPasswordsDontMatch();
+      
     }
-    }
-    
-
-  )
   }
 
-  }
-
-
+}
