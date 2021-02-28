@@ -99,9 +99,7 @@ export class PasswordResetPage implements OnInit {
 
     if (user.email == form.email) {
       const credential = firebase.auth.EmailAuthProvider.credential(user.email, form.oldPassword)
-      user.reauthenticateWithCredential(credential).catch(error => {
-        self.wrongEmailOrPasswordAlert();
-      }).then( success => {
+      user.reauthenticateWithCredential(credential).then( success => {
         if (form.newPassword != form.confirmNewPassword) {
           self.newPasswordsDontMatch();
         }
@@ -112,6 +110,8 @@ export class PasswordResetPage implements OnInit {
           })
 
         }
+      }).catch(error => {
+        self.wrongEmailOrPasswordAlert();
       })
 
       
