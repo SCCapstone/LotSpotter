@@ -48,9 +48,8 @@ export class LoginPage implements OnInit {
   
 		}
     ).then(function(result){
-      console.log("HEREEE");
       var user= firebase.auth().currentUser;
-      console.log("login succeeded");
+      console.log("Login succeeded.");
       console.log(user.uid);
       
       self.auth.setLoginState(true);

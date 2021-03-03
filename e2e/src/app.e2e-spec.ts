@@ -16,4 +16,8 @@ describe('Basic Functionality', () => {
    
   });
 
+<<<<<<< HEAD
 });
+=======
+});
+>>>>>>> master

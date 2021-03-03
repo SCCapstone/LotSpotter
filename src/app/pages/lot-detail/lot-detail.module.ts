@@ -8,6 +8,7 @@ import { SMS } from '@ionic-native/sms/ngx';
 import { LotDetailPageRoutingModule } from './lot-detail-routing.module';
 
 import { LotDetailPage } from './lot-detail.page';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 @NgModule({
   imports: [
@@ -17,6 +18,6 @@ import { LotDetailPage } from './lot-detail.page';
     LotDetailPageRoutingModule
   ],
   declarations: [LotDetailPage],
-  providers: [SMS]
+  providers: [ SocialSharing ]
 })
 export class LotDetailPageModule {}

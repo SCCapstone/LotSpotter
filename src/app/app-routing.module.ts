@@ -87,6 +87,10 @@ const routes: Routes = [
     path: 'forgot-password',
     loadChildren: () => import('./forgot-password/forgot-password.module').then( m => m.ForgotPasswordPageModule)
   },
+  {
+    path: 'add-permit',
+    loadChildren: () => import('./pages/add-permit/add-permit.module').then( m => m.AddPermitPageModule)
+  },
 ];
 
 @NgModule({
