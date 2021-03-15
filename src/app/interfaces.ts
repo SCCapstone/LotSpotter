@@ -52,3 +52,9 @@ export interface User {
     userType: string;
  }
 
+ export interface MapPin {
+     name: string;
+     lat: number;
+     long: number;
+ }
+

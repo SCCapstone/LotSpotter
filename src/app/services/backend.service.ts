@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
+import { FirebaseAppConfig } from '@angular/fire';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 import firebase from 'firebase';
-//import { stat } from 'fs';
-
-import { Lot, Pass } from '../interfaces';
+import { Lot, MapPin, Pass } from '../interfaces';
 import { Stat } from '../interfaces';
 import { AuthenticationService } from "./authentication-service";
 
@@ -62,6 +62,36 @@ export class BackendService {
       } else {
         reject("failed");
       }
+    });
+  }
+  /* @breif: getCoordinates() will return document data from every
+             lot in our "lots" collection from firestore. They have 
+             thier own type, MapPin, for simplicity of moving data.
+             This supports the Map page.
+
+     @returns: a LOT interface object, if the Promise is resolved.   
+  */
+  async getCoordinates():Promise<Array<MapPin>> {
+    let coords:Array<MapPin> = [];
+    let pin:MapPin = null;
+
+    await this.database.collection("lots").get().then(function(query) {
+      query.forEach((doc) => {
+        let temp = doc.data();
+        let coord:firebase.firestore.GeoPoint = temp.loc;
+        pin = {
+          name: temp.name,
+          lat: coord.latitude,
+          long: coord.longitude,
+        }
+        coords.push(pin);
+      })
+    }).catch((error) => {
+      console.log("Error getting coordinate data.");
+    });
+    
+    return new Promise<Array<MapPin>>((resolve, reject) => {
+      resolve(coords);
     });
   }
 
@@ -160,4 +190,5 @@ export class BackendService {
     .update({permits: this.permits});
     this.setPermits();
   }
+
 }
