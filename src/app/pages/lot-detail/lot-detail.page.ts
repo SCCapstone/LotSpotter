@@ -153,6 +153,8 @@ export class LotDetailPage implements OnInit {
 
     await this.backend.getStats(param).then((res) => {
       this.statistics = res;
+      
+      this.statistics.sort((a,b) => a.time.toDate().getTime() - b.time.toDate().getTime());
     })
 
     for(var i = 0; i < this.statistics.length; i++) {
@@ -164,12 +166,28 @@ export class LotDetailPage implements OnInit {
       type: 'line',
       data: {
         datasets: [{
+          label: "Capacity",
           data: this.capacity
         }],
         labels: this.times
       },
       options: {
-        showLines: true
+        scales: {
+          xAxes: [ {
+              display: true,
+              type: 'time',
+              time: {
+                parser: 'MM/DD/YYYY HH:mm',
+                tooltipFormat: 'll HH:mm',
+                unit: 'day',
+                unitStepSize: 1,
+                displayFormats: {
+                  'day': 'MM/DD/YYYY'
+                }
+              }
+            }
+          ]
+        }
       }
   });
   }
