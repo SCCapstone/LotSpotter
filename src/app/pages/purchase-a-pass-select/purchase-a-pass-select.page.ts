@@ -6,6 +6,9 @@ import { Router, ActivatedRoute, NavigationExtras,ParamMap } from '@angular/rout
 
 import { LocationService } from '../../services/location.service';
 import { type } from 'os';
+import { ToastController } from '@ionic/angular';
+import { AuthenticationService } from 'src/app/services/authentication-service';
+
 // import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -19,7 +22,7 @@ export class PurchaseAPassSelectPage implements OnInit {
 
   private database = firebase.firestore();
   private lots:Lot[] = [];
-
+  private loginState:boolean;
   private set_garage_name = '';
  
   purchase = {
@@ -45,9 +48,13 @@ export class PurchaseAPassSelectPage implements OnInit {
     private locServ: LocationService,
     private route: ActivatedRoute,
     private router: Router,
+    private toast: ToastController,
+    private auth: AuthenticationService
   ) 
   { 
-    
+    this.auth.getLoginState().subscribe(value => {
+      this.loginState = value;
+    });
   }
 
   ngOnInit() {
@@ -82,6 +89,11 @@ export class PurchaseAPassSelectPage implements OnInit {
 
   garagePaymentRoute(){
 
+    if (!this.loginState) {
+      this.showToast("middle");
+      return;
+    }
+
     this.purchase.pass_type = "Garage";
 
     if(this.set_garage_name != null){
@@ -101,7 +113,11 @@ export class PurchaseAPassSelectPage implements OnInit {
   
   lotPaymentRoute() {
    
-
+    if (!this.loginState) {
+      this.showToast("middle");
+      return;
+    }
+    
     this.purchase.pass_type = "Lot";
 
     let navigationExtras: NavigationExtras = {
@@ -113,4 +129,14 @@ export class PurchaseAPassSelectPage implements OnInit {
     this.router.navigate(['purchase-a-pass-shipping'], navigationExtras);
   }
 
+
+  async showToast(position: any) {
+    const toast = await this.toast.create({
+      message: 'Please log in to add permits.',
+      duration: 1000,
+      position,
+      cssClass: 'toast-1-css',
+    });
+    toast.present();
+  }
 }

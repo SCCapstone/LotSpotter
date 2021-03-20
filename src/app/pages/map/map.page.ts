@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-
+import { BackendService } from 'src/app/services/backend.service';
+import { Lot, MapPin, Pass } from '../../interfaces';
 
 @Component({
   templateUrl: './map.page.html',
@@ -9,8 +10,11 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 
   export class MapPage {
     public zoom: number = 14;
+    private pins: Array<MapPin> = [];
   
-    constructor( private geolocation: Geolocation) {
+    constructor( private geolocation: Geolocation,
+                 private backend: BackendService) {
+
       let options = { timeout: 10000, enableHighAccuracy: true, maximumAge: 3600 };
       this.geolocation
         .getCurrentPosition(options)
@@ -20,6 +24,16 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
         });
       let watch = this.geolocation.watchPosition();
      
+    }
+
+    ngOnInit() {
+      this.getMapPins();    
+    }
+
+    async getMapPins() {
+      await this.backend.getCoordinates().then((res) => {
+        this.pins = res;
+      })
     }
   }
   

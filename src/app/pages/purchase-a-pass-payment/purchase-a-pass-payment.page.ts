@@ -7,6 +7,9 @@ import { BackendService } from 'src/app/services/backend.service';
 import { formatDate } from '@angular/common';
 
 import { LocationService } from '../../services/location.service'; 
+import { AuthenticationService } from 'src/app/services/authentication-service';
+import { ToastController } from '@ionic/angular';
+
 @Component({
   selector: 'app-purchase-a-pass-payment',
   templateUrl: './purchase-a-pass-payment.page.html',
@@ -15,17 +18,21 @@ import { LocationService } from '../../services/location.service';
 export class PurchaseAPassPaymentPage implements OnInit {
 
   payment_information: FormGroup;
- 
   purchase = {} as any;
+  private loginState:boolean;
 
   constructor(private router: Router, 
     public formBuilder:FormBuilder,
-    private route:ActivatedRoute) { 
+    private route:ActivatedRoute,
+    private auth: AuthenticationService,
+    private toast: ToastController ) { 
+
       this.route.queryParams.subscribe(params => {
         this.purchase = JSON.parse(params["purchase"]);
         console.log(this.purchase)
         console.log(typeof this.purchase)
-    });
+      });
+
       this.payment_information = formBuilder.group({
         card_name:['', Validators.required],
         card_number:['',Validators.required],
@@ -33,13 +40,17 @@ export class PurchaseAPassPaymentPage implements OnInit {
         cvv:['', Validators.required],
         card_zip_code: ['',Validators.required]
       });
+
+      this.auth.getLoginState().subscribe(value => {
+        this.loginState = value;
+      });
    
   }
 
   ngOnInit() {
   }
 
-  async goToReview(value){
+  async goToReview(value) {
 
     console.log(value)
     console.log(value.name_on_card)
@@ -62,6 +73,14 @@ export class PurchaseAPassPaymentPage implements OnInit {
     
   }
 
-  
+  async showToast(position: any) {
+    const toast = await this.toast.create({
+      message: 'Please log in to purchase a parking pass.',
+      duration: 1000,
+      position,
+      cssClass: 'toast-1-css',
+    });
+    toast.present();
+  }
 
 }

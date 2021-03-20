@@ -5,6 +5,7 @@ import firebase from 'firebase';
 
 import { AuthenticationService } from '../../services/authentication-service';
 import { Observable } from 'rxjs';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-manage-passes',
@@ -19,6 +20,7 @@ export class ManagePassesPage implements OnInit {
   private loginState:boolean;
 
   constructor(private router: Router,
+              private toast: ToastController,
               private auth: AuthenticationService) {
     this.auth.getLoginState().subscribe(value => {
       this.loginState = value;
@@ -33,6 +35,7 @@ export class ManagePassesPage implements OnInit {
       self.db.collection("pass").where("uid","==",self.uid).onSnapshot(function(querySnapshot) {
           self.permits=[];
           querySnapshot.forEach(function(doc) {
+              console.log(doc.data());
               let temp:Pass = {
                 type: doc.data().type,
                 garage_name: doc.data().garage_name,
@@ -45,7 +48,21 @@ export class ManagePassesPage implements OnInit {
   }
 
   toAddPermit() {
-    this.router.navigate(['']);
+    if (this.loginState) {
+      this.router.navigate(['/add-permit']);
+    } else {
+      this.showToast('middle');
+    }
+  }
+
+  async showToast(position: any) {
+    const toast = await this.toast.create({
+      message: 'Please log in to add permits.',
+      duration: 1000,
+      position,
+      cssClass: 'toast-1-css',
+    });
+    toast.present();
   }
 
 }

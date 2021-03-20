@@ -14,7 +14,9 @@ import { parseI18nMeta } from '@angular/compiler/src/render3/view/i18n/meta';
 
 import { SMS } from '@ionic-native/sms/ngx';
 import { compileComponentFromMetadata } from '@angular/compiler';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx'; 
 
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-lot-detail',
@@ -57,7 +59,8 @@ export class LotDetailPage implements OnInit {
                private backend: BackendService,
                private locServ: LocationService,
                public authService: AuthenticationService,
-               private sms: SMS) { 
+               private social: SocialSharing,
+               private alert: AlertController) { 
   }
 
   ngOnInit() {
@@ -119,7 +122,21 @@ export class LotDetailPage implements OnInit {
         (lot.maxCap-lot.currCap) + " spaces remaining. It's located at:\n " +
         lot.addr + "\n\n-From your friends, LotSpotter";
     // console.log(mesg);
-    this.sms.send('', mesg);
+    this.social.shareViaSMS(mesg,"").then((res) =>{
+      this.showAlert("Going to messages...");
+      console.log(res);
+    }).catch((err) => {
+      this.showAlert("We could not share this.");
+    });
+
+  }
+
+  async showAlert(text:string) {
+    const temp = await this.alert.create({
+      message: text,
+      buttons: ["OK"]
+    });
+    await temp.present();
   }
 
   addFavorites(lotName:string) {
