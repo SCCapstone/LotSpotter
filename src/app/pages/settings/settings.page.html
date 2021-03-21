@@ -19,8 +19,16 @@
     </ion-refresher-content>
   </ion-refresher>
 
-  <ion-label>Current Position: {{curr_ut}}</ion-label>
-  <ion-button fill = "solid" expand="full" (click) = "ChangeTypeAlert()">Change Position</ion-button>
+  <ion-label>Current Standing: {{curr_ut}}</ion-label>
+  <ion-select interface=popover formControlName="newusertype" (ionChange) = cUT(newusertype>
+  <ion-select-option value = "Undergraduate Student">Undergraduate Student</ion-select-option>
+    <ion-select-option value = "Graduate Student">Graduate Student</ion-select-option>
+    <ion-select-option value = "Alumni">Alumni</ion-select-option>
+    <ion-select-option value = "FacStaff">Faculty</ion-select-option>
+    <ion-select-option value = "FacStaff">Staff</ion-select-option>
+  </ion-select>
+
+  <!-- <ion-button fill = "solid" expand="full" (click) = "ChangeTypeAlert()">Change Position</ion-button> -->
   
   <ion-button fill="solid" expand="full" (click)="testinguiNav()">Testing UI</ion-button>
   <ion-button fill= "solid" expand= "full" (click)="passwordResetNav()">Reset Password</ion-button>

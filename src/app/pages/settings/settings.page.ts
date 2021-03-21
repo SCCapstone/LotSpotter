@@ -3,6 +3,7 @@ import { Router } from "@angular/router";
 import { AuthenticationService } from "../../services/authentication-service";
 import { AlertController } from '@ionic/angular';
 import firebase from 'firebase';
+import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -12,12 +13,17 @@ import firebase from 'firebase';
 })
 export class SettingsPage implements OnInit {
 
-  curr_ut:any = "Unknown"
+  curr_ut:any = "Unknown Academic Standing"
+  new_usertype_form: FormGroup;
+  newusert:any = ""
 
-  constructor( public authService: AuthenticationService, public router: Router, public alertc: AlertController) { }
+  constructor( public authService: AuthenticationService, public FormBuilder: FormBuilder, public router: Router, public alertc: AlertController) { }
 
   ngOnInit() {
       this.curr_ut = this.authService.gUserType();
+      this.new_usertype_form = this.FormBuilder.group({
+        newusert: new FormControl('',Validators.required),
+      });
   }
   ngOnChanges(){
     this.curr_ut = this.authService.gUserType();
