@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { BackendService } from 'src/app/services/backend.service';
 import { Lot, MapPin, Pass } from '../../interfaces';
+
 
 @Component({
   templateUrl: './map.page.html',
@@ -13,7 +15,8 @@ import { Lot, MapPin, Pass } from '../../interfaces';
     private pins: Array<MapPin> = [];
   
     constructor( private geolocation: Geolocation,
-                 private backend: BackendService) {
+                 private backend: BackendService,
+                 private router: Router) {
 
       let options = { timeout: 10000, enableHighAccuracy: true, maximumAge: 3600 };
       this.geolocation
@@ -34,6 +37,10 @@ import { Lot, MapPin, Pass } from '../../interfaces';
       await this.backend.getCoordinates().then((res) => {
         this.pins = res;
       })
+    }
+
+    toLot(name:string):void {
+      this.router.navigate(["/lot-detail",name]);
     }
   }
   

@@ -83,6 +83,7 @@ export class BackendService {
           name: temp.name,
           lat: coord.latitude,
           long: coord.longitude,
+          spots: "" + (temp.maxCap - temp.currCap)
         }
         coords.push(pin);
       })

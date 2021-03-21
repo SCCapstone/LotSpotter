@@ -56,5 +56,6 @@ export interface User {
      name: string;
      lat: number;
      long: number;
+     spots: string;
  }
 
