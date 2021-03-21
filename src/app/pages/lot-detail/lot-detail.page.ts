@@ -25,18 +25,17 @@ import { AlertController } from '@ionic/angular';
 export class LotDetailPage implements OnInit {
 
   public lotdata: number[];
- 
-  private map = "https://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap \
-  &markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318 \
-  &markers=color:red%7Clabel:C%7C40.718217,-73.998284 \
-  &key=AIzaSyB7Xv6-oY-j1-PuLSfpd6WA4gDORz1WVmE"
   
   private openSpots:number = 0;
   private visible:boolean = true;
   private statistics:Array<Stat> = [];
   private times:Array<Date> = [];
   private capacity:Array<Number> = [];
+  // coords and map are for the static map. 
+  private coords:string = "";
+  private map;
 
+  
   public currentLot:Lot = {
     name: "...",
     addr: "...",
@@ -83,6 +82,12 @@ export class LotDetailPage implements OnInit {
         id:res.id
       }
       this.openSpots = res.maxCap - res.currCap;
+      // This is used for the static map.
+      this.coords = "" + this.currentLot.loc.latitude + "," + this.currentLot.loc.longitude;
+      this.map = "https://maps.googleapis.com/maps/api/staticmap?center=Univeristy+of+South+Carolina,Columbia,SC\
+      &zoom=14&size=600x300&maptype=roadmap \
+      &markers=color:blue%7Clabel:Here%7C" + this.coords +
+      "&key=AIzaSyB7Xv6-oY-j1-PuLSfpd6WA4gDORz1WVmE";
 
       // For favorites star
       var starred:Array<string> = this.backend.setFavorites();
