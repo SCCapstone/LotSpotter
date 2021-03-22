@@ -48,9 +48,8 @@ export class LoginPage implements OnInit {
   
 		}
     ).then(function(result){
-      console.log("HEREEE");
       var user= firebase.auth().currentUser;
-      console.log("login succeeded");
+      console.log("Login succeeded.");
       console.log(user.uid);
       
       self.auth.setLoginState(true);
@@ -78,6 +77,10 @@ export class LoginPage implements OnInit {
 
   signupNav() {
   this.router.navigate(['signup']);
+  }
+
+  forgotPasswordNav() {
+    this.router.navigate(['forgot-password'])
   }
 
 }

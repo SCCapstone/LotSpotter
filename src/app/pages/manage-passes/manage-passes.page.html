@@ -5,6 +5,9 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Manage Passes</ion-title>
+    <!--<ion-button slot="end" (click)="toAddPermit()">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-button>-->
   </ion-toolbar>
 </ion-header>
 <!-- We need someone to be logged in to find thier passes.-->
@@ -13,7 +16,7 @@
     <ion-card *ngFor="let item of permits">
         <ion-item>
           <ion-label>{{item.type}}</ion-label>
-          <ion-text slot="end"> Expires: {{item.expiry}} </ion-text>
+          <ion-text slot="end"> Expires: {{item.expire}} </ion-text>
         </ion-item>
       
         <ion-card-content>
@@ -37,7 +40,7 @@
       <ion-card-content>
           <ion-row>
             <ion-col>
-              <ion-label> Are you logged in? </ion-label>
+              <ion-label> Are you logged in? Have you added any? </ion-label>
             </ion-col>
           </ion-row>
       </ion-card-content>

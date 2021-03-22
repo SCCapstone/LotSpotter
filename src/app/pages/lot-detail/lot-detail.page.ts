@@ -13,10 +13,10 @@ import { Chart } from 'chart.js';
 import { parseI18nMeta } from '@angular/compiler/src/render3/view/i18n/meta';
 
 import { SMS } from '@ionic-native/sms/ngx';
-import { analyzeFile, compileComponentFromMetadata } from '@angular/compiler';
-// import { DatePipe } from '@angular/common';
+import { compileComponentFromMetadata } from '@angular/compiler';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx'; 
 
-
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-lot-detail',
@@ -25,18 +25,17 @@ import { analyzeFile, compileComponentFromMetadata } from '@angular/compiler';
 export class LotDetailPage implements OnInit {
 
   public lotdata: number[];
- 
-  private map = "https://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap \
-  &markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318 \
-  &markers=color:red%7Clabel:C%7C40.718217,-73.998284 \
-  &key=AIzaSyB7Xv6-oY-j1-PuLSfpd6WA4gDORz1WVmE"
   
   private openSpots:number = 0;
   private visible:boolean = true;
   private statistics:Array<Stat> = [];
   private times:Array<Date> = [];
   private capacity:Array<Number> = [];
+  // coords and map are for the static map. 
+  private coords:string = "";
+  private map;
 
+  
   public currentLot:Lot = {
     name: "...",
     addr: "...",
@@ -59,7 +58,8 @@ export class LotDetailPage implements OnInit {
                private backend: BackendService,
                private locServ: LocationService,
                public authService: AuthenticationService,
-               private sms: SMS) { 
+               private social: SocialSharing,
+               private alert: AlertController) { 
   }
 
   ngOnInit() {
@@ -82,6 +82,12 @@ export class LotDetailPage implements OnInit {
         id:res.id
       }
       this.openSpots = res.maxCap - res.currCap;
+      // This is used for the static map.
+      this.coords = "" + this.currentLot.loc.latitude + "," + this.currentLot.loc.longitude;
+      this.map = "https://maps.googleapis.com/maps/api/staticmap?center=Univeristy+of+South+Carolina,Columbia,SC\
+      &zoom=14&size=600x300&maptype=roadmap \
+      &markers=color:blue%7Clabel:Here%7C" + this.coords +
+      "&key=AIzaSyB7Xv6-oY-j1-PuLSfpd6WA4gDORz1WVmE";
 
       // For favorites star
       var starred:Array<string> = this.backend.setFavorites();
@@ -104,6 +110,7 @@ export class LotDetailPage implements OnInit {
 
     console.log(Number(this.openSpots),"  ",Number(this.currentLot.currCap),"  ",Number(this.currentLot.maxCap))
     this.showChart();
+    this.showChart2(this.currentLot);
 
   }
 
@@ -120,7 +127,21 @@ export class LotDetailPage implements OnInit {
         (lot.maxCap-lot.currCap) + " spaces remaining. It's located at:\n " +
         lot.addr + "\n\n-From your friends, LotSpotter";
     // console.log(mesg);
-    this.sms.send('', mesg);
+    this.social.shareViaSMS(mesg,"").then((res) =>{
+      this.showAlert("Going to messages...");
+      console.log(res);
+    }).catch((err) => {
+      this.showAlert("We could not share this.");
+    });
+
+  }
+
+  async showAlert(text:string) {
+    const temp = await this.alert.create({
+      message: text,
+      buttons: ["OK"]
+    });
+    await temp.present();
   }
 
   addFavorites(lotName:string) {
@@ -136,7 +157,9 @@ export class LotDetailPage implements OnInit {
     console.log("Getting stats from "+param);
 
     await this.backend.getStats(param).then((res) => {
-      // this.statistics = res;
+      this.statistics = res;
+      
+      this.statistics.sort((a,b) => a.time.toDate().getTime() - b.time.toDate().getTime());
     })
 
     for(var i = 0; i < this.statistics.length; i++) {
@@ -148,12 +171,28 @@ export class LotDetailPage implements OnInit {
       type: 'line',
       data: {
         datasets: [{
+          label: "Capacity",
           data: this.capacity
         }],
         labels: this.times
       },
       options: {
-        showLines: true
+        scales: {
+          xAxes: [ {
+              display: true,
+              type: 'time',
+              time: {
+                parser: 'MM/DD/YYYY HH:mm',
+                tooltipFormat: 'll HH:mm',
+                unit: 'day',
+                unitStepSize: 1,
+                displayFormats: {
+                  'day': 'MM/DD/YYYY'
+                }
+              }
+            }
+          ]
+        }
       }
   });
   }
