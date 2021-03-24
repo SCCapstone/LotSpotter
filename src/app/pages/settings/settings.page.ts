@@ -36,59 +36,61 @@ export class SettingsPage implements OnInit {
     }, 1000);
   }
 
-  async ChangeTypeAlert(){
-    const alert = await this.alertc.create({
-      cssClass: 'UserType',
-      header:'Position',
-      inputs:[
-        {
-          name: 'Undergraduate Student',
-          type: 'radio',
-          label: 'Undergraduate Student',
-          value: 'Undergraduate Student',
-          checked: true
-        },  {
-          name: 'Graduate Student',
-          type: 'radio',
-          label: 'Graduate Student',
-          value: 'Graduate Student',
-        },  {
-          name: 'Alumni',
-          type: 'radio',
-          label: 'Alumni',
-          value: 'Alumni',
-        },  {
-          name: 'Faculty',
-          type: 'radio',
-          label: 'Faculty',
-          value: 'FacStaff',
-        },  {
-          name: 'Staff',
-          type: 'radio',
-          label: 'Staff',
-          value: 'FacStaff',
-        },
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => {console.log("Alert Operation Cancelled")}
-        },
-        {
-          text:'Confirm',
-          handler: value => {
-            console.log("Alert Operation Accepted")
-            this.cUT(value);
-          }
-        }
-      ]
-    });
-    await alert.present();
-  }
+  // async ChangeTypeAlert(){
+  //   const alert = await this.alertc.create({
+  //     cssClass: 'UserType',
+  //     header:'Position',
+  //     inputs:[
+  //       {
+  //         name: 'Undergraduate Student',
+  //         type: 'radio',
+  //         label: 'Undergraduate Student',
+  //         value: 'Undergraduate Student',
+  //         checked: true
+  //       },  {
+  //         name: 'Graduate Student',
+  //         type: 'radio',
+  //         label: 'Graduate Student',
+  //         value: 'Graduate Student',
+  //       },  {
+  //         name: 'Alumni',
+  //         type: 'radio',
+  //         label: 'Alumni',
+  //         value: 'Alumni',
+  //       },  {
+  //         name: 'Faculty',
+  //         type: 'radio',
+  //         label: 'Faculty',
+  //         value: 'FacStaff',
+  //       },  {
+  //         name: 'Staff',
+  //         type: 'radio',
+  //         label: 'Staff',
+  //         value: 'FacStaff',
+  //       },
+  //     ],
+  //     buttons: [
+  //       {
+  //         text: 'Cancel',
+  //         role: 'cancel',
+  //         handler: () => {console.log("Alert Operation Cancelled")}
+  //       },
+  //       {
+  //         text:'Confirm',
+  //         handler: value => {
+  //           console.log("Alert Operation Accepted")
+  //           this.cUT(value);
+  //         }
+  //       }
+  //     ]
+  //   });
+  //   await alert.present();
+  // }
 
-  cUT(newusertype){
-    this.authService.cUserType(newusertype)
+  async cUT(newusertype){
+    console.log("User Type Changed to " + newusertype.newusert)
+    this.authService.cUserType(newusertype.newusert)
+    this.curr_ut = newusertype.newusert
   }
 
   testinguiNav() {
