@@ -10,11 +10,19 @@
 
 <ion-content>
 
-  <h1>Pass Type</h1>
+  <div>
+    <h1>Pass Type</h1>
+    <ion-button shape="round" (click)="editLotType()" class="button-style">Edit</ion-button>
+  </div>
   <p>Pass Type: {{this.purchase.pass_type}}</p>
   <p *ngIf="this.purchase.garage_name != ''">Garage Name: {{this.purchase.garage_name}}</p>
 
-  <h1>Shipping Information</h1>
+  <div>
+    <h1>Shipping Information</h1> 
+    <ion-button shape="round" (click)="editShipping()" class="button-style">Edit</ion-button>
+      
+  </div>
+  
   <p *ngIf="this.purchase.pick_up_pass==false">
     Address: <br>
     {{this.purchase.shipping_name}} <br>
@@ -26,7 +34,12 @@
   <p *ngIf="this.purchase.pick_up_pass==true">1501 Pendleton St. <br>
     Columbia, SC 29208 <br></p>
 
-  <h1>Payment Information</h1>
+
+  
+  <div>
+    <h1>Payment Information</h1>
+    <ion-button shape="round" (click)="editCard()" class="button-style">Edit</ion-button>
+  </div>
   <p>Card Name: {{this.purchase.card_name}} <br>
      Card Number: {{this.purchase.card_number}} <br>
      Expiration Date: {{this.purchase.exp_date}} <br>

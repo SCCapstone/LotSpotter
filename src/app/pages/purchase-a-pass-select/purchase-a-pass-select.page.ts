@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { discardPeriodicTasks } from '@angular/core/testing';
 import firebase from 'firebase';
-import { Lot } from '../../interfaces';
+import { Lot, Purchase } from '../../interfaces';
 import { Router, ActivatedRoute, NavigationExtras,ParamMap } from '@angular/router';
 
 import { LocationService } from '../../services/location.service';
@@ -25,7 +25,7 @@ export class PurchaseAPassSelectPage implements OnInit {
   private loginState:boolean;
   private set_garage_name = '';
  
-  purchase = {
+  purchase:Purchase = {
     pass_type: '',
     garage_name: '',
     shipping_name: '',
@@ -41,20 +41,24 @@ export class PurchaseAPassSelectPage implements OnInit {
     exp_date: '',
     cvv: '',
     card_zip_code: '',
-  }
-
+  };
   // purchase = {} as any;
   constructor( 
     private locServ: LocationService,
     private route: ActivatedRoute,
     private router: Router,
     private toast: ToastController,
-    private auth: AuthenticationService
-  ) 
-  { 
-    this.auth.getLoginState().subscribe(value => {
-      this.loginState = value;
-    });
+    private auth: AuthenticationService,
+    
+  ) {
+      if(this.route.snapshot.paramMap.get('purchase')!= null){
+        this.purchase = JSON.parse(this.route.snapshot.paramMap.get('purchase'));
+        console.log(this.purchase)
+      }
+  
+      this.auth.getLoginState().subscribe(value => {
+        this.loginState = value;
+      });
   }
 
   ngOnInit() {
@@ -100,15 +104,7 @@ export class PurchaseAPassSelectPage implements OnInit {
       this.purchase.garage_name = this.set_garage_name; 
     }
 
-  
-
-    let navigationExtras: NavigationExtras = {
-      queryParams: {
-          "purchase":JSON.stringify(this.purchase),
-  
-      }
-    }
-    this.router.navigate(['purchase-a-pass-shipping'], navigationExtras);
+    this.router.navigate(['purchase-a-pass-shipping', {purchase:JSON.stringify(this.purchase)}]);
   }
   
   lotPaymentRoute() {
@@ -120,13 +116,7 @@ export class PurchaseAPassSelectPage implements OnInit {
     
     this.purchase.pass_type = "Lot";
 
-    let navigationExtras: NavigationExtras = {
-      queryParams: {
-          "purchase":JSON.stringify(this.purchase),
-  
-      }
-    }
-    this.router.navigate(['purchase-a-pass-shipping'], navigationExtras);
+    this.router.navigate(['purchase-a-pass-shipping', {purchase:JSON.stringify(this.purchase)}]);
   }
 
 

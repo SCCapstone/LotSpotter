@@ -3,7 +3,7 @@ ion-content{
     --padding-end: 10px;
 }
 
-h1:after {
+div:after {
     content:' ';
     display:block;
     border:2px solid #c4c4c4;
@@ -17,4 +17,19 @@ h1:after {
 
 p.thicker{
     font-weight: 600;
+}
+
+button-style{
+    right: 0px;
+    padding-right: 0px;
+    text-align: right;
+}
+
+same-line{
+    display: inline;
+}
+
+
+h1{
+    display: inline-block;
 }

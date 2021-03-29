@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import firebase from 'firebase';
-import { Lot } from '../../interfaces';
+import { Lot, Purchase } from '../../interfaces';
 import { Router, ActivatedRoute, ParamMap, NavigationExtras } from '@angular/router';
 import { BackendService } from 'src/app/services/backend.service';
 
@@ -16,25 +16,41 @@ export class PurchaseAPassShippingPage implements OnInit {
 
   shipping_information: FormGroup;
  
-  purchase = {} as any;
+  purchase:Purchase = {
+    pass_type: '',
+    garage_name: '',
+    shipping_name: '',
+    street_address: '',
+    apt_number: '',
+    shipping_zip_code: '',
+    city: '',
+    state: '',
+    country: '',
+    pick_up_pass: false,
+    card_name: '',
+    card_number: '',
+    exp_date: '',
+    cvv: '',
+    card_zip_code: '',
+  };
 
   constructor(private router: Router, 
     public formBuilder:FormBuilder,
     private route:ActivatedRoute) { 
-      this.route.queryParams.subscribe(params => {
-        this.purchase = JSON.parse(params["purchase"]);
+
+      if(this.route.snapshot.paramMap.get('purchase')!= null){
+        this.purchase = JSON.parse(this.route.snapshot.paramMap.get('purchase'));
         console.log(this.purchase)
-        console.log(typeof this.purchase)
-    });
+      }
       this.shipping_information = formBuilder.group({
-        shipping_name: [''],
-        street_address: [''],
-        apt_number: [''],
-        shipping_zip_code: [''],
-        city: [''],
-        state: [''],
-        country: [''],
-        pick_up_pass: [false],
+        shipping_name: [this.purchase.shipping_name],
+        street_address: [this.purchase.street_address],
+        apt_number: [this.purchase.apt_number],
+        shipping_zip_code: [this.purchase.shipping_zip_code],
+        city: [this.purchase.city],
+        state: [this.purchase.state],
+        country: [this.purchase.country],
+        pick_up_pass: [this.purchase.pick_up_pass],
       });
    
   }
@@ -55,15 +71,9 @@ export class PurchaseAPassShippingPage implements OnInit {
     this.purchase.pick_up_pass = value.pick_up_pass;
     this.purchase.city = value.city;
 
-    let navigationExtras: NavigationExtras = {
-      queryParams: {
-          "purchase":JSON.stringify(this.purchase),
-  
-      }
-    }
-    this.router.navigate(['purchase-a-pass-payment'], navigationExtras);
+
     
-    
+    this.router.navigate(['purchase-a-pass-payment', {purchase:JSON.stringify(this.purchase)}]);
   }
 
 }

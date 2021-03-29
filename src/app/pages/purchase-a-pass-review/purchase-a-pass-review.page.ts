@@ -36,44 +36,40 @@ export class PurchaseAPassReviewPage implements OnInit {
     expire: new Date()
   };
 
-  purchase = {} as any;
+  purchase:Purchase = {
+    pass_type: '',
+    garage_name: '',
+    shipping_name: '',
+    street_address: '',
+    apt_number: '',
+    shipping_zip_code: '',
+    city: '',
+    state: '',
+    country: '',
+    pick_up_pass: false,
+    card_name: '',
+    card_number: '',
+    exp_date: '',
+    cvv: '',
+    card_zip_code: '',
+  };
+  
   constructor(private router: Router, 
     public formBuilder:FormBuilder,
     private route:ActivatedRoute,
     private backend:BackendService,
     public alertController:AlertController,
-    private auth: AuthenticationService) { 
+    private auth: AuthenticationService) {
 
-    this.route.queryParams.subscribe(params => {
-        this.purchase = JSON.parse(params["purchase"]);
-    });
-
-    this.auth.getLoginState().subscribe(value => {
-      this.loginState = value;
-    });
+      if(this.route.snapshot.paramMap.get('purchase')!= null){
+        this.purchase = JSON.parse(this.route.snapshot.paramMap.get('purchase'));
+        console.log(this.purchase)
+      }
+      this.auth.getLoginState().subscribe(value => {
+        this.loginState = value;
+      });
   }
 
-
-
-  // Maybe edit all of the purchase stuff to be an interface rather than an object
-
-  // private currentPurchase:Purchase = {
-  //   pass_type: this.purchase.pass_,
-  //   garage_name: "",
-  //   shipping_name: "",
-  //   street_address: "",
-  //   apt_number: "",
-  //   shipping_zip_code: "",
-  //   city: "",
-  //   state: "",
-  //   country: "",
-  //   pick_up_pass: false,
-  //   card_name: "",
-  //   card_number: "",
-  //   exp_date: "",
-  //   cvv: "",
-  //   card_zip_code: ""
-  // }; 
   
   ngOnInit() {
     this.backend.setPermits()
@@ -127,4 +123,17 @@ export class PurchaseAPassReviewPage implements OnInit {
     this.router.navigate(['home']);
 
   }
+
+async editLotType(){
+  this.router.navigate(['purchase-a-pass-select', {purchase:JSON.stringify(this.purchase)}]);
+}
+
+async editShipping(){
+  this.router.navigate(['purchase-a-pass-shipping', {purchase:JSON.stringify(this.purchase)}]);
+}
+
+async editCard(){
+  this.router.navigate(['purchase-a-pass-payment', {purchase:JSON.stringify(this.purchase)}]);
+}
+
 }
