@@ -51,7 +51,7 @@ export class LotDetailPage implements OnInit {
     action: 0,
     lot: "...",
     currCap: 0,
-    time: firebase.firestore.Timestamp.fromDate(new Date()),
+    time: firebase.firestore.Timestamp.fromDate(new Date())
   }
 
   constructor( private router: Router, private route: ActivatedRoute,

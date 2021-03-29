@@ -19,6 +19,7 @@ export class BackendService {
   public favorites:Array<string> = [];
   public permits:Array<Pass> = [];
 
+
   constructor(public authService: AuthenticationService,
               public afAuth: AngularFireAuth) { }
 
@@ -99,13 +100,11 @@ export class BackendService {
   async getStats(lotName:string):Promise<Array<Stat>> {
     let stats:Array<Stat> = [];
     let stat:Stat = null;
-    let counter:number = 0;
 
     var self = this;
     await this.database.collection("stats").where("lot", "==", lotName)
     .get().then(function(querySnapshot) {
         querySnapshot.forEach( (doc) => {
-            counter++;
             let a = doc.data();
             stat = { action: a.action,
                     lot: a.lot,
