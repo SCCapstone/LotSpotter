@@ -1,9 +1,12 @@
+import { typeSourceSpan } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+
 import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authentication-service';
 import { BackendService } from 'src/app/services/backend.service';
 import { Pass } from '../../interfaces';
+import firebase from 'firebase';
 
 @Component({
   selector: 'app-add-permit',
@@ -11,27 +14,47 @@ import { Pass } from '../../interfaces';
   styleUrls: ['./add-permit.page.scss'],
 })
 export class AddPermitPage implements OnInit {
+  
+  private date = "";
+  private gar_name = "";
+  private type = "";
 
-  permit_information: FormGroup;
-  /* NOTE: This page is unused as of Feb 27th. We might revisit adding this in the future. */
+  private loginState: boolean;
+  private db = firebase.firestore();
+
   constructor( private router: Router,
-               private formBuilder:FormBuilder,
                private auth: AuthenticationService,
-               private back: BackendService ) { 
-
-    this.permit_information = formBuilder.group({
-      type:['', Validators.required],
-      garage_name:[''],
-      expire:['', Validators.required],
+               private back: BackendService,
+               private alertController:AlertController ) { 
+    this.auth.getLoginState().subscribe(value => {
+      this.loginState = value;
     });
-
   }
 
   ngOnInit() {
   }
   
-  submit():void {
+  async submit() {
+    if(this.loginState == false) {
+      const alert = await this.alertController.create({
+        message: 'Please login before you save your password.',
+        buttons: ['OK']
+      });
+  
+      await alert.present();
+      let result = await alert.onDidDismiss();
+      return;
+    }
+    // Nav to manage passes.
+    this.db.collection('pass').add({
+      type:this.type,
+      garage_name:this.gar_name,
+      expire: new Date(this.date).toDateString(),
+      uid: this.auth.userData.uid
+    });
 
+    this.router.navigate(["/manage-passes"]);
   }
+  
 
 }

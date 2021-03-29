@@ -8,25 +8,28 @@
 </ion-header>
 
 <ion-content class="margin">
-  <form [formGroup]="permit_information">
-    
-    <ion-label class="margin">Type</ion-label>
+  <ion-list>
     <ion-item>
-      <ion-input formControlName="type"></ion-input>
+      <ion-label> Type of Permit </ion-label>
+      <ion-select placeholder="Select One" [(ngModel)]="type">
+        <ion-select-option value="Garage"> Garage </ion-select-option>
+        <ion-select-option value="Lot"> Lot </ion-select-option>
+      </ion-select>
     </ion-item>
 
-    <ion-label> Garage Name </ion-label>
     <ion-item>
-      <ion-input formControlName="garage_name"></ion-input>
+      <ion-label> Garage Name </ion-label>
+      <ion-input placeholder="Only applicable for garage passes." [(ngModel)]="gar_name"></ion-input>
     </ion-item>
 
-    <ion-label> Expiration Date: </ion-label>
     <ion-item>
-      <!-- Change this to be three years from the current year -->
-      <ion-datetime displayFormat="MM/YYYY" formControlName="expire" pickerFormat="MMMM YYYY" max="2999"></ion-datetime>
-    </ion-item>
+      <ion-label>Expriation Date</ion-label>
+      <ion-datetime placeholder="Select Date" [(ngModel)]="date"></ion-datetime>
+    </ion-item> 
 
-  </form>
+  </ion-list>
+
+  <!-- Add a Date Picker -->
 </ion-content>
 
-<ion-button class="submit-btn" expand="block" type="submit" (click)="submit(permit_information.value)"> Add It! </ion-button> 
+<ion-button class="submit-btn" expand="block" type="submit" (click)="submit()"> Add It! </ion-button> 
