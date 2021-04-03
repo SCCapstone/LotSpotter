@@ -18,6 +18,7 @@ import { environment } from 'src/environments/environment';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { AgmCoreModule } from '@agm/core';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -35,12 +36,13 @@ import { AgmCoreModule } from '@agm/core';
     })
   ],
   providers: [
+    NativeStorage,
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     AngularFirestore,
     AngularFirestoreModule,
-    Geolocation
+    Geolocation,
   ],
   bootstrap: [AppComponent]
 })
