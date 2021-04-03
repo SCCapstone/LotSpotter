@@ -6,6 +6,8 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { BackendService } from 'src/app/services/backend.service';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { trimTrailingNulls } from '@angular/compiler/src/render3/view/util';
+import { AlertController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-testing-ui',
@@ -29,12 +31,14 @@ export class TestingUiPage implements OnInit {
   new_capacity: any;
   private database = firebase.firestore();
   private lots:Lot[] = [];
+  private converted_number_of_vehicles_2: any
 
   constructor(
     private formBuilder: FormBuilder,
     private backend: BackendService,
     private route: ActivatedRoute,
     private router: Router,
+    public alertController: AlertController
   ) { 
     this.edit_lot_form = formBuilder.group({
       lot_name:['', Validators.required],
@@ -96,6 +100,7 @@ export class TestingUiPage implements OnInit {
     console.log("Viewing Lot: " + value.lot_name);
     
     var converted_number_of_vehicles = Number(value.number_of_vehicles)
+    this.converted_number_of_vehicles_2 = converted_number_of_vehicles;
     var action = 0;
     if(value.operation == "add"){
       action = 1;
@@ -136,12 +141,35 @@ export class TestingUiPage implements OnInit {
     console.log(newValues.id)
     this.backend.updateItem(newValues);
     this.backend.addStat(stats);
+    await this.lotDataAlert(converted_number_of_vehicles);
 
-    this.goToAllLots();
   }
 
   goToAllLots(){
     this.router.navigate(['all-lots']);
+  }
+
+
+  async lotDataAlert(converted_number_of_vehicles) { 
+    const alert = await this.alertController.create({
+      message: this.currentLot.name + " had " + (this.currentLot.currCap - converted_number_of_vehicles) +
+                " and now has " + this.currentLot.currCap + " spaces filled.", 
+      buttons: [
+        {
+          text: 'Ok',
+          handler: () => {
+
+            this.goToAllLots()
+          }
+        }
+      ],
+      
+    });
+    await alert.present();
+    let result = await alert.onDidDismiss();
+    
+    console.log(result);
+
   }
 
   // Plans for later on:
