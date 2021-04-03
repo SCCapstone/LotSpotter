@@ -20,6 +20,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { AgmCoreModule } from '@agm/core';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
