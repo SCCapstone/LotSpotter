@@ -16,7 +16,7 @@
 <!-- We need someone to be logged in to find thier passes.-->
 <ion-content *ngIf="loginState==true&&permits!=[]; else notification"> 
   <ion-list>
-    <ion-card *ngFor="let item of permits">
+    <ion-card *ngFor="let item of permits" (click)="cardClick(item)">
         <ion-item>
           <ion-label>{{item.type}}</ion-label>
           <ion-text slot="end"> Expires: {{item.expire}} </ion-text>
