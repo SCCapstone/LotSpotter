@@ -5,6 +5,7 @@ import { BackendService } from 'src/app/services/backend.service';
 import firebase from 'firebase';
 import {AngularFireAuth} from '@angular/fire/auth';
 import { AuthenticationService } from 'src/app/services/authentication-service';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 
 @Component({
@@ -15,22 +16,37 @@ import { AuthenticationService } from 'src/app/services/authentication-service';
 export class LoginPage implements OnInit {
   logo: String;
   validCreds: boolean = false;
+  rememberCreds: any;
+  email: string;
+  password: string;
 
   constructor(
     public router: Router,
     private backend: BackendService,
     public afAuth: AngularFireAuth,
     private auth: AuthenticationService,
+    private nativeStorage: NativeStorage
   ) { }
 
   ngOnInit() {
     this.logo = "../../../assets/uofscbanner_red.png";
+    console.log("login ngOnInIt")
+    var self = this;
+    this.nativeStorage.getItem('creds').then(
+      data => this.logIn(data.storedEmail, data.storedPassword)
+    );
+    var d = new Date()
+    console.log("login NgOnInIt Time: " + d.getTime())
+  }
+
+  ionViewDidLoad(){
+    this.ngOnInit();
   }
 
   logIn(email, password){
   	var self=this;
     this.validCreds = true;
-	  this.afAuth.signInWithEmailAndPassword(email.value, password.value).catch(function(error) {
+	  this.afAuth.signInWithEmailAndPassword(email, password).catch(function(error) {
 		// Handle Errors here.
 		var errorCode = error.code;
 		var errorMessage = error.message;
@@ -54,6 +70,15 @@ export class LoginPage implements OnInit {
       
       self.auth.setLoginState(true);
 
+      if (self.rememberCreds) {
+        self.nativeStorage.setItem('creds', {storedEmail: email, storedPassword: password })
+          .then(
+            () => console.log('Stored Credentials'),
+            error => console.error('Error storing item', error)
+          );
+        
+       }
+
       //get my users from database 
       firebase.firestore().collection("users").where("uid", "==", user.uid)
         .get()
@@ -73,7 +98,15 @@ export class LoginPage implements OnInit {
             console.log("Error getting documents: ", error);
         });
     });
+
+
+  
+
+
+
   }
+
+
 
   signupNav() {
   this.router.navigate(['signup']);

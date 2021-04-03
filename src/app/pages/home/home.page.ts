@@ -4,6 +4,7 @@ import { AuthenticationService } from "../../services/authentication-service";
 import {AngularFireAuth} from '@angular/fire/auth';
 import { serializeNodes } from '@angular/compiler/src/i18n/digest';
 import { BackendService } from 'src/app/services/backend.service';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +20,8 @@ export class HomePage {
     public router: Router,
     public afAuth: AngularFireAuth,
     public backend: BackendService,
-    private auth: AuthenticationService
+    private auth: AuthenticationService,
+    public nativeStorage: NativeStorage
   ) {
     this.auth.getLoginState().subscribe(value => {
       this.loginState = value;
@@ -70,6 +72,7 @@ export class HomePage {
      console.log("logged out")
      self.authService.setLoginState(false);
      self.router.navigate(["/login"]);
+     self.nativeStorage.clear()
    });
   }
   signIn(){
