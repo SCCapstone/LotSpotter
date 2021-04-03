@@ -43,6 +43,16 @@ export interface Pass {
     expire: Date
 }
 
+/* This variant was needed for the manage-passes page,
+   to allow users to delete a specific document from 
+   firebase */
+export interface PassID {
+    type: string,
+    garage_name: string,
+    expire: Date,
+    id: string
+}
+
 export interface User {
     uid: string;
     email: string;
