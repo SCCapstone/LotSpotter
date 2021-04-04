@@ -60,11 +60,11 @@ export class AppComponent {
       url: 'map',
       icon: 'map'
     },
-    {
+    /*{
       title: 'Analytics',
       url: 'analytics',
       icon: 'bar-chart'
-    },
+    },*/
     {
       title: 'Favorites',
       url: 'favorites',

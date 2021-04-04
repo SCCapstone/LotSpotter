@@ -12,6 +12,18 @@
   <ion-grid>
     <ion-row>
       <ion-col>
+        <ion-card color="primary" (click)="allLotsNav()" class="ion-text-center">
+          <ion-card-content>
+            <ion-icon name="grid-outline"></ion-icon>
+            <div class = "ion-text-center">
+              <p>All Lots<p>
+              </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
         <ion-card color="primary" (click)="avaliableLotsNav()" class="ion-text-center"> 
           <ion-card-content>
             <ion-icon name="car-outline"></ion-icon>
@@ -22,11 +34,11 @@
         </ion-card>
       </ion-col>
       <ion-col>
-        <ion-card color="primary" (click)="allLotsNav()" class="ion-text-center">
+        <ion-card color="primary" (click)="favoritesNav()" class="ion-text-center">
           <ion-card-content>
-            <ion-icon name="grid-outline"></ion-icon>
+            <ion-icon name="star-outline"></ion-icon>
             <div class = "ion-text-center">
-              <p>All Lots<p>
+              <p>Favorites<p>
               </div>
           </ion-card-content>
         </ion-card>
@@ -76,29 +88,6 @@
         </ion-card>
       </ion-col>
     </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-card color="primary" (click)="analyticsNav()" class="ion-text-center">
-          <ion-card-content>
-            <ion-icon name="speedometer-outline"></ion-icon>
-            <div class = "ion-text-center">
-              <p>Analytics<p>
-              </div>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-      <ion-col>
-        <ion-card color="primary" (click)="favoritesNav()" class="ion-text-center">
-          <ion-card-content>
-            <ion-icon name="star-outline"></ion-icon>
-            <div class = "ion-text-center">
-              <p>Favorites<p>
-              </div>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-    
   </ion-grid>
 
   <ion-button *ngIf="loginState==true; else log" type="submit" (click)="signOut()" expand="block"> Logout </ion-button>

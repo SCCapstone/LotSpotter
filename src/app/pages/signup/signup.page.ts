@@ -32,23 +32,11 @@ export class SignupPage implements OnInit {
     var self = this;
     this.user.email = email.value;
     this.user.password = password.value;
-    console.log(this.user.email+" "+this.user.password);
 
-    this.afAuth.createUserWithEmailAndPassword(this.user.email, this.user.password).catch(
-  		function(error) {
-	  // Handle Errors here.
-	  console.log(error);
-	  var errorCode = error.code;
-	  var errorMessage = error.message;
-	  console.log(error.message);
-	  if(errorCode.length > 0){
-	  	console.log("Failed");
-	  }
-	  else{
-	  	console.log("signup ok")
-	  }
-	  // ...
-	}).then(function(result){
+
+
+
+    this.afAuth.createUserWithEmailAndPassword(this.user.email, this.user.password).then(function(result){
 			var user = firebase.auth().currentUser;
 			 var db = firebase.firestore();
 		          db.collection("users").doc(user.uid).set({
@@ -71,7 +59,30 @@ export class SignupPage implements OnInit {
         self.signUpNotification();
         self.router.navigate(["/login"]);
         
-	});
+	}).catch(error => {
+        switch (error.code) {
+           case 'auth/email-already-in-use':
+             var message = "This email is already in use by another account."
+             self.failedTosignUpNotification(message)
+             break;
+           case 'auth/invalid-email':
+            var message = "This email not valid."
+             self.failedTosignUpNotification(message)
+             break;
+           case 'auth/operation-not-allowed':
+            var message = "This operation is not allowed."
+            self.failedTosignUpNotification(message)
+             break;
+           case 'auth/weak-password':
+            var message = "This password is too weak."
+            self.failedTosignUpNotification(message)
+             break;
+           default:
+             console.log(error.message);
+             break;
+         }
+     });
+   
  
 
 
@@ -80,6 +91,18 @@ export class SignupPage implements OnInit {
   async signUpNotification() {
     let alert = await this.alertCtrl.create({
       message: 'Thank you for signing up, please input your information again on the next page to log in.',
+      buttons: [{
+        text: 'Dismiss',
+        handler: () => {
+          console.log('No clicked');
+        }}]
+    });
+    await alert.present();
+  }
+
+  async failedTosignUpNotification(message) {
+    let alert = await this.alertCtrl.create({
+      message: message,
       buttons: [{
         text: 'Dismiss',
         handler: () => {

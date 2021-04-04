@@ -6,6 +6,7 @@ import firebase from 'firebase';
 import {AngularFireAuth} from '@angular/fire/auth';
 import { AuthenticationService } from 'src/app/services/authentication-service';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { AlertController } from '@ionic/angular';
 
 
 @Component({
@@ -25,45 +26,23 @@ export class LoginPage implements OnInit {
     private backend: BackendService,
     public afAuth: AngularFireAuth,
     private auth: AuthenticationService,
-    private nativeStorage: NativeStorage
+    private nativeStorage: NativeStorage,
+    private alertCtrl: AlertController,
   ) { }
 
   ngOnInit() {
     this.logo = "../../../assets/uofscbanner_red.png";
-    console.log("login ngOnInIt")
     var self = this;
     this.nativeStorage.getItem('creds').then(
       data => this.logIn(data.storedEmail, data.storedPassword)
     );
-    var d = new Date()
-    console.log("login NgOnInIt Time: " + d.getTime())
-  }
-
-  ionViewDidLoad(){
-    this.ngOnInit();
   }
 
   logIn(email, password){
   	var self=this;
     this.validCreds = true;
-	  this.afAuth.signInWithEmailAndPassword(email, password).catch(function(error) {
-		// Handle Errors here.
-		var errorCode = error.code;
-		var errorMessage = error.message;
-		console.log(errorCode);
-    console.log("in error catch")
-    self.validCreds = false;
-
-  
-		if (errorCode === 'auth/wrong-password') {
-            alert('Wrong password.');
-          } else if (errorCode === 'auth/user-not-found'){
-            alert("User does not exist");
-          } 
-          console.log(error);
-  
-		}
-    ).then(function(result){
+	  this.afAuth.signInWithEmailAndPassword(email, password)
+      .then(function(result){
       var user= firebase.auth().currentUser;
       console.log("Login succeeded.");
       console.log(user.uid);
@@ -97,7 +76,42 @@ export class LoginPage implements OnInit {
         .catch(function(error) {
             console.log("Error getting documents: ", error);
         });
-    });
+    }).catch(error => {
+
+
+      switch (error.code) {
+        case 'auth/email-already-in-use':
+          var message = "This email is already in use by another account."
+          self.failedToLoginAlert(message)
+          break;
+        case 'auth/invalid-email':
+         var message = "This email not valid."
+          self.failedToLoginAlert(message)
+          break;
+        case 'auth/operation-not-allowed':
+         var message = "This operation is not allowed."
+         self.failedToLoginAlert(message)
+          break;
+        case 'auth/weak-password':
+         var message = "This password is too weak."
+         self.failedToLoginAlert(message)
+          break;
+        case 'auth/wrong-password':
+          var message = "This password is incorrect."  
+          self.failedToLoginAlert(message)
+          break;
+        case 'auth/user-not-found':
+          var message = "An account does not exist for this user."
+          self.failedToLoginAlert(message)
+          break;
+        default:
+          console.log(error.message);
+          break;
+      }
+      self.validCreds = false;
+  
+    
+      });
 
 
   
@@ -114,6 +128,18 @@ export class LoginPage implements OnInit {
 
   forgotPasswordNav() {
     this.router.navigate(['forgot-password'])
+  }
+
+  async failedToLoginAlert(message) {
+    let alert = await this.alertCtrl.create({
+      message: message,
+      buttons: [{
+        text: 'Dismiss',
+        handler: () => {
+          console.log('No clicked');
+        }}]
+    });
+    await alert.present();
   }
 
 }
