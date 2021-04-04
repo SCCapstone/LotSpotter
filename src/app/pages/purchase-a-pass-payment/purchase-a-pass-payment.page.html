@@ -23,7 +23,7 @@
     <ion-label>Expiration Date:</ion-label>
     <ion-item>
       <!-- Change this to be three years from the current year -->
-      <ion-datetime displayFormat="MM/YYYY" formControlName="exp_date" pickerFormat="MMMM YYYY" max="2999"></ion-datetime>
+      <ion-datetime displayFormat="MM/YYYY" formControlName="exp_date" pickerFormat="MMMM YYYY" [min]="this.minDate" [max]="this.maxDate"></ion-datetime>
     </ion-item>
 
     <ion-label>CVV:</ion-label>

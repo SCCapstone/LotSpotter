@@ -41,6 +41,10 @@ export class PurchaseAPassPaymentPage implements OnInit {
   private loginState:boolean;
   private card_exp;
 
+  private today = new Date();
+  private minDate = this.today.toISOString();
+  private maxDate = (new Date(this.today.getFullYear() + 4 , this.today.getMonth())).toISOString();
+ 
 
   constructor(private router: Router, 
     public formBuilder:FormBuilder,
@@ -81,6 +85,8 @@ export class PurchaseAPassPaymentPage implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.maxDate)
+    
   }
 
   async goToReview(value) {
