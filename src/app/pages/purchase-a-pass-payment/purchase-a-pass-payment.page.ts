@@ -23,6 +23,7 @@ export class PurchaseAPassPaymentPage implements OnInit {
   payment_information: FormGroup;
   purchase:Purchase = {
     pass_type: '',
+    semesters: [],
     garage_name: '',
     shipping_name: '',
     street_address: '',

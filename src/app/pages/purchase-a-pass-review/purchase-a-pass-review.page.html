@@ -22,6 +22,9 @@
   <ion-text>
   <p>Pass Type: {{this.purchase.pass_type}}</p>
   <p *ngIf="this.purchase.garage_name != ''">Garage Name: {{this.purchase.garage_name}}</p>
+  <p *ngIf="this.purchase.semesters.length == 2">Semesters: Fall & Spring</p>
+  <p *ngIf="this.purchase.semesters.length == 1 && this.purchase.semesters[0] == 'Fall'">Semesters: Fall</p>
+  <p *ngIf="this.purchase.semesters.length == 1 && this.purchase.semesters[0] == 'Spring'">Semesters: Spring</p>
   </ion-text>
 
 
@@ -62,9 +65,10 @@
      Zip Code: {{this.purchase.card_zip_code}} <br>
   </p>
 
-  <h1 *ngIf="this.purchase.pass_type=='Garage'">Order Total: $400</h1>
+  <h1 *ngIf="this.purchase.pass_type=='Garage' && this.purchase.semesters.length == 1">Order Total: $400</h1>
+  <h1 *ngIf="this.purchase.pass_tupe=='Garage' && this.purchase.semesters.length == 2">Order Total: $800</h1>
 
-  <h1 *ngIf="this.purchase.pass_type=='Lot'">Order Total: $70</h1>
+  <h1 *ngIf="this.purchase.pass_type=='Lot'">Order Total: $110</h1>
 
 
 </ion-content>
