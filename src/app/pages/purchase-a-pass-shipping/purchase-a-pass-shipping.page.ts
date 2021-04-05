@@ -18,6 +18,7 @@ export class PurchaseAPassShippingPage implements OnInit {
  
   purchase:Purchase = {
     pass_type: '',
+    semesters: [],
     garage_name: '',
     shipping_name: '',
     street_address: '',

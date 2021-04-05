@@ -38,6 +38,7 @@ export class PurchaseAPassReviewPage implements OnInit {
 
   purchase:Purchase = {
     pass_type: '',
+    semesters: [],
     garage_name: '',
     shipping_name: '',
     street_address: '',
@@ -97,10 +98,22 @@ export class PurchaseAPassReviewPage implements OnInit {
     
     }
     else if (this.currentDate >= this.fallStart && this.currentDate < this.springStart) {
-      this.permitDetails.expire = this.fallEnd;
+      if(this.purchase.semesters.length == 1){
+        if(this.purchase.semesters[0] == "Fall"){
+          this.permitDetails.expire = this.fallEnd;
+        }
+        else if(this.purchase.semesters[0] == "Spring"){
+          this.permitDetails.expire = this.springEnd;
+        }
+      }
+      else if(this.purchase.semesters.length == 2){
+        this.permitDetails.expire = this.springEnd;
+      }
     } 
 
     this.backend.updatePermits(this.permitDetails);
+
+    console.log(this.permitDetails)
 
     // TODO: Fix this to use the permits in 'users', not 'pass'
     // For now though, this will be a quick fix.

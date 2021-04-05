@@ -20,6 +20,7 @@
           <ion-select slot="end" (ionChange) = "garage_name($event)">
             <ion-select-option *ngFor="let item of lots" [value]="item.name" >{{item.name}}</ion-select-option>
           </ion-select>
+          <ion-alert-controller></ion-alert-controller>
           <ion-button expand="block" (click)="garagePaymentRoute()">Purchase Garage Pass</ion-button>
         </ion-card-content>
         <!-- <ion-item>
@@ -31,7 +32,7 @@
       <div class="format">
         <h1>Lot Permit</h1>
         <p>These permits provide the opportunity to park in any decal lots as well as the S lots. These permits do not guarantee a spot. There is no overnight parking with this permit.</p>
-        <p>Price: $70/Semester</p>
+        <p>Price: $110/Year</p>
       </div>
 
       <ion-card-content>

@@ -21,6 +21,7 @@ export interface Stat {
 
 export interface Purchase {
     pass_type: string,
+    semesters: string[],
     garage_name: string,
     shipping_name: string,
     street_address: string,
