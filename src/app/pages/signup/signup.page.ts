@@ -74,7 +74,7 @@ export class SignupPage implements OnInit {
             self.failedTosignUpNotification(message)
              break;
            case 'auth/weak-password':
-            var message = "This password is too weak."
+            var message = "Your password must be at least 6 characters."
             self.failedTosignUpNotification(message)
              break;
            default:
