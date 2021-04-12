@@ -23,7 +23,10 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    AgmCoreModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyB7Xv6-oY-j1-PuLSfpd6WA4gDORz1WVmE',
+      libraries: ['places']
+    }),
     MapPageRoutingModule,
     RouterModule.forChild(routes)
   ],
