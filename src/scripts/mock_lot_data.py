@@ -18,7 +18,7 @@ firebase_admin.initialize_app(CRED)
 db = firestore.client()
 #  Constants
 TIME_DELAY = False # Set to True if you'd like traffic to be less congested.
-COUNT = 100 # The number of documents to generate.
+COUNT = 40 # The number of documents to generate.
 
 # Read all of the lots from their collection at once. This will all be copied
 # into memory here to reduce the need for any fetches.
