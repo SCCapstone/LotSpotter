@@ -13,7 +13,7 @@ import { Chart } from 'chart.js';
 import { parseI18nMeta } from '@angular/compiler/src/render3/view/i18n/meta';
 
 import { SMS } from '@ionic-native/sms/ngx';
-import { compileComponentFromMetadata } from '@angular/compiler';
+import { compileComponentFromMetadata, rendererTypeName } from '@angular/compiler';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx'; 
 
 import { AlertController } from '@ionic/angular';
@@ -162,19 +162,27 @@ export class LotDetailPage implements OnInit {
       this.statistics.sort((a,b) => a.time.toDate().getTime() - b.time.toDate().getTime());
     })
 
+    // create today's date to only add stats within 30 days
+    var today = Date.now();
+    console.log("todays date: "+today);
+
+    // only add the stats to chart that are within 30 days
     for(var i = 0; i < this.statistics.length; i++) {
-      this.times.push(this.statistics[i].time.toDate());
-      this.capacity.push(this.statistics[i].currCap);
+      if((today - this.statistics[i].time.toDate().getTime())/(1000*60*60*24.0) <= 30){
+        this.times.push(this.statistics[i].time.toDate());
+        this.capacity.push(this.statistics[i].currCap);
+      }
     }
 
     var myChart = new Chart("myChart", {
       type: 'line',
       data: {
+        labels: this.times,
         datasets: [{
           label: "Capacity",
-          data: this.capacity
+          data: this.capacity,
+          backgroundColor: 'rgba(255, 99, 97, 0.2)'
         }],
-        labels: this.times
       },
       options: {
         scales: {
@@ -187,7 +195,7 @@ export class LotDetailPage implements OnInit {
                 unit: 'day',
                 unitStepSize: 1,
                 displayFormats: {
-                  'day': 'MM/DD/YYYY'
+                  'day': 'MM/DD'
                 }
               }
             }
