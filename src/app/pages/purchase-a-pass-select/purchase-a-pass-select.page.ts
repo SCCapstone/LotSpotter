@@ -34,6 +34,8 @@ export class PurchaseAPassSelectPage implements OnInit {
   private springEnd = new Date(this.year, 7, 1);
   private fallStart = new Date(this.year, 7, 2);
   private fallEnd = new Date(this.year, 11, 31);
+
+  private garages = ["Sumter Street Garage", "Hampton Garage", "Close-Hipp Garage", "Senate Street Garage", "Bull Street Garage", "Pendleton Street Garage", "Blossom Street Garage", "Athletic Village Garage"];
  
   purchase:Purchase = {
     pass_type: '',
@@ -105,21 +107,16 @@ export class PurchaseAPassSelectPage implements OnInit {
 
   async garagePaymentRoute(){
 
+    console.log(this.set_garage_name)
+
     if (!this.loginState) {
       this.showToast("middle");
       return;
     }
 
     this.purchase.pass_type = "Garage";
+    this.purchase.garage_name = this.set_garage_name;
 
-    if(this.set_garage_name != null){
-      this.purchase.garage_name = this.set_garage_name; 
-    }
-
-     // Calculate date the permit would expire by determining if a date is
-    // between January 1 and August 1 (spring and summer semester) or
-    // between August 2 and December 31 (fall and winter semester)
-    
     if(this.currentDate >= this.springStart && this.currentDate < this.fallStart){
       const alert = await this.alertController.create({
         header: 'Which semesters would you like your pass to be valid for?',
