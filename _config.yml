@@ -1,1 +1,4 @@
 theme: jekyll-theme-slate
+layout: page
+title: "About"
+permalink: https://sccapstone.github.io/LotSpotter/about
