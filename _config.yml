@@ -14,9 +14,9 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 title: LotSpotter
-email: your-email@example.com
+email: uofsclotspotter@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
-  LotSpotter is a parking lot occupancy traker built to help students, faculty, and staff make informed decisions on their morning commute to campus. 
+  A parking lot occupancy solution for the UofSC
 baseurl: "/LotSpotter" # the subpath of your site, e.g. /blog
 
 # Build settings
