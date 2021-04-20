@@ -21,7 +21,7 @@ baseurl: "/LotSpotter" # the subpath of your site, e.g. /blog
 
 # Build settings
 markdown: kramdown
-theme: slate
+theme: Slate theme
 plugins:
   - jekyll-feed
 
