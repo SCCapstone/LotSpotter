@@ -1,5 +1,5 @@
 # LotSpotter
-
+# This is a TEST
 LotSpotter is a parking lot occupancy traker built to help students, faculty, and
 staff make informed decisions on their morning commute to campus. This application 
 is built using [Ionic](https://ionicframework.com/)/[Angular](https://angular.io/) with a [FireBase BaaS](https://firebase.google.com/) and [Cordova](https://cordova.apache.org/plugins/) plugins.
