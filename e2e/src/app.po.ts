@@ -41,6 +41,12 @@ export class AppPage {
 
   validateMap() {
     var elem = element(by.xpath("//agm-map"));
+    browser.waitForAngularEnabled(false)
+    browser.driver.wait(function() {
+      return elem.isDisplayed().then(function(IsVisible) {
+          return IsVisible;
+      });
+  }, 10000);
   }
 
 }
