@@ -16,8 +16,14 @@ describe('Basic Functionality', () => {
    
   });
 
-<<<<<<< HEAD
+  it('The app should allow a user to navigate to the map page', () => {
+    page.login('test@test.com', 'testtest')
+    page.loadPage('/home');
+    page.click('Map');
+    page.loadPage('/map');
+    page.validateMap();
+    
+   });
+  
+
 });
-=======
-});
->>>>>>> master
