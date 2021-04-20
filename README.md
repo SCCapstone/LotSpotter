@@ -1,3 +1,6 @@
+.
+├── about.md        
+
 # LotSpotter
 
 ## Final Demo Video
