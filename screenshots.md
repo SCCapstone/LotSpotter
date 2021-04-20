@@ -1,2 +1,2 @@
 Sunflowers  
-![](images/sunflowers.jpeg)
+![](sunflowers.jpeg)
