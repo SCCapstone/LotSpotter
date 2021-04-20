@@ -1,5 +1,6 @@
-.
-├── about.md        
+layout: page
+title: "About"
+permalink: https://sccapstone.github.io/LotSpotter/about
 
 # LotSpotter
 
