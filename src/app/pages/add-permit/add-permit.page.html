@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title> Add a Parking Permit </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="margin">
+  <ion-list>
+    <ion-item>
+      <ion-label> Type of Permit </ion-label>
+      <ion-select placeholder="Select One" [(ngModel)]="type">
+        <ion-select-option value="Garage"> Garage </ion-select-option>
+        <ion-select-option value="Lot"> Lot </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label> Garage Name </ion-label>
+      <ion-input placeholder="Only applicable for garage passes." [(ngModel)]="gar_name"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Expriation Date</ion-label>
+      <ion-datetime placeholder="Select Date" max="2022" min="2020" [(ngModel)]="date"></ion-datetime>
+    </ion-item> 
+
+  </ion-list>
+</ion-content>
+
+<ion-button class="submit-btn" expand="block" type="submit" (click)="submit()"> Add It! </ion-button> 

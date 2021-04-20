@@ -1,0 +1,23 @@
+:host(.can-go-back) {
+  ion-header {
+    ion-toolbar {
+      ion-buttons {
+        ion-menu-button {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+:not(:host(.can-go-back)) {
+  ion-header {
+    ion-toolbar {
+      ion-buttons {
+        ion-back-button {
+          display: none;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-toolbar color="primary">
+     <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Review Your Order</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+
+  <!-- Pass Type -->
+
+  <ion-item>
+
+    <h1>Pass Type</h1>
+   
+    <ion-button shape="round" (click)="editLotType()" slot="end" size="medium">Edit</ion-button>
+
+  </ion-item>
+  <ion-text>
+  <p>Pass Type: {{this.purchase.pass_type}}</p>
+  <p *ngIf="this.purchase.garage_name != ''">Garage Name: {{this.purchase.garage_name}}</p>
+  <p *ngIf="this.purchase.semesters.length == 2">Semesters: Fall & Spring</p>
+  <p *ngIf="this.purchase.semesters.length == 1 && this.purchase.semesters[0] == 'Fall'">Semesters: Fall</p>
+  <p *ngIf="this.purchase.semesters.length == 1 && this.purchase.semesters[0] == 'Spring'">Semesters: Spring</p>
+  </ion-text>
+
+
+  <!-- Shipping Information -->
+
+  <ion-item>
+
+    <h1>Shipping Information</h1>
+   
+    <ion-button shape="round" (click)="editShipping()" slot="end" size="medium">Edit</ion-button>
+
+  </ion-item>
+  
+  <p *ngIf="this.purchase.pick_up_pass==false">
+    Address: <br>
+    {{this.purchase.shipping_name}} <br>
+    {{this.purchase.street_address}} {{this.purchase.apt_number}}<br>
+    {{this.purchase.city}} {{this.purchase.state}} {{this.purchase.country}} {{this.purchase.shipping_zip_code}}  <br>
+
+  </p>
+  <p class="thicker" *ngIf="this.purchase.pick_up_pass==true"> Pass will be picked up from Parking Services: </p>
+  <p *ngIf="this.purchase.pick_up_pass==true">1501 Pendleton St. <br>
+    Columbia, SC 29208 <br></p>
+
+  <!-- Payment Information -->
+  
+  <ion-item>
+
+    <h1>Payment Information</h1>
+     
+    <ion-button shape="round" (click)="editCard()" slot="end" size="medium">Edit</ion-button>
+  
+  </ion-item>
+  <p>Card Name: {{this.purchase.card_name}} <br>
+     Card Number: {{this.purchase.card_number}} <br>
+     Expiration Date: {{this.purchase.exp_date}} <br>
+     CVV: {{this.purchase.cvv}} <br>
+     Zip Code: {{this.purchase.card_zip_code}} <br>
+  </p>
+
+  <h1 *ngIf="this.purchase.pass_type=='Garage' && this.purchase.semesters.length == 1">Order Total: $400</h1>
+  <h1 *ngIf="this.purchase.pass_tupe=='Garage' && this.purchase.semesters.length == 2">Order Total: $800</h1>
+
+  <h1 *ngIf="this.purchase.pass_type=='Lot'">Order Total: $110</h1>
+
+
+</ion-content>
+<ion-button class="submit-btn" expand="block" type="submit" (click)="submitPurchase()">Submit Order</ion-button> 

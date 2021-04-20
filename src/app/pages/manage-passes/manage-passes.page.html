@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-sidemenu></ion-sidemenu>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Manage Passes</ion-title>
+    <ion-buttons slot="end">
+      <ion-toggle [(ngModel)]="show_expired" (ionChange)="toggler()"></ion-toggle>
+        <ion-button slot="end" (click)="toAddPermit()">
+          <ion-icon name="add-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<!-- We need someone to be logged in to find thier passes.-->
+<ion-content *ngIf="loginState==true&&permits!=[]; else notification"> 
+  <ion-list>
+    <ion-card *ngFor="let item of permits" (click)="cardClick(item)">
+        <ion-item>
+          <ion-label>{{item.type}}</ion-label>
+          <ion-text slot="end"> Expires: {{item.expire}} </ion-text>
+        </ion-item>
+      
+        <ion-card-content>
+            <ion-row>
+              <ion-col>
+                <ion-label> {{item.garage_name}} </ion-label>
+              </ion-col>
+            </ion-row>
+        </ion-card-content>
+      </ion-card>
+  </ion-list>
+</ion-content>
+
+<!-- If not logged in -->
+<ng-template #notification>
+  <ion-content>
+    <ion-card>
+      <ion-item>
+        <ion-label> We can't find your passes!  </ion-label>
+      </ion-item>
+      <ion-card-content>
+          <ion-row>
+            <ion-col>
+              <ion-label> Are you logged in? Have you added any? </ion-label>
+            </ion-col>
+          </ion-row>
+      </ion-card-content>
+    </ion-card>
+  </ion-content>
+</ng-template>

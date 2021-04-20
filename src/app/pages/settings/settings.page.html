@@ -1,0 +1,44 @@
+<ion-header [translucent]="true">
+  <ion-sidemenu></ion-sidemenu>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Settings</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-refresher slot="fixed" pullFactor="0.5" pullMin="100" pullMax="200" (ionRefresh)="refreshUsertype($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-down"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <form [formGroup]="new_usertype_form" (submit)="cUT(new_usertype_form.value)">
+    <ion-label>Current Standing: {{curr_ut}}</ion-label>
+    <ion-select interface=popover formControlName="newusert">
+    <ion-select-option value = "Undergraduate Student">Undergraduate Student</ion-select-option>
+      <ion-select-option value = "Graduate Student">Graduate Student</ion-select-option>
+      <ion-select-option value = "Alumni">Alumni</ion-select-option>
+      <ion-select-option value = "FacStaff">Faculty</ion-select-option>
+      <ion-select-option value = "FacStaff">Staff</ion-select-option>
+    </ion-select>
+
+    <ion-button fill="solid" class="submit-btn" expand="full" type="submit" [disabled]="!new_usertype_form.valid">Confirm Academic Standing Change</ion-button>
+  </form>
+ 
+
+  <!-- <ion-button fill = "solid" expand="full" (click) = "ChangeTypeAlert()">Change Position</ion-button> -->
+  
+  <ion-button fill="solid" expand="full" (click)="testinguiNav()">Testing UI</ion-button>
+  <ion-button fill= "solid" expand= "full" (click)="passwordResetNav()">Reset Password</ion-button>
+
+  <ion-button fill = "solid" expand="full" (click) = "QueDelete()">Delete User Account</ion-button>
+
+
+</ion-content>

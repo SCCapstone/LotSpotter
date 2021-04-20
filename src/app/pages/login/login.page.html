@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar>
+    <h1>
+    <ion-title>LotSpotter</ion-title>
+    </h1>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <h2>
+    <ion-img [src]="logo"></ion-img>
+  </h2>
+
+   
+    <ion-item lines="full">
+      <ion-label position="floating">Email</ion-label>
+      <ion-input type="text" [(ngModel)] = "email" required></ion-input>
+    </ion-item> 
+
+    <ion-item lines="full">
+      <ion-label position="floating">Password</ion-label>
+      <ion-input type="password" [(ngModel)] = "password" required></ion-input>
+    </ion-item>
+     <ion-item>
+      <ion-label>Keep me Logged in?</ion-label>
+      <ion-checkbox [(ngModel)] = "rememberCreds"></ion-checkbox>
+     </ion-item>
+    <ion-row>
+      <ion-col> 
+      <ion-button type="submit" (click)="logIn(email, password)" expand="block">Login</ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col> 
+      <ion-button type="submit" (click)="signupNav()" expand="block">Signup</ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col> 
+        <ion-button expand= "block" fill= "clear" color= "transparent" style= "text-align:center" class = "text-input" (click)= "forgotPasswordNav()">Forgot Password?</ion-button>
+      </ion-col>
+    </ion-row>
+ 
+</ion-content>

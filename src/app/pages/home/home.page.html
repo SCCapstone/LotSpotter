@@ -1,0 +1,98 @@
+<ion-header [translucent]="true">
+  <ion-sidemenu></ion-sidemenu>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title> Home </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-card color="primary" (click)="allLotsNav()" class="ion-text-center">
+          <ion-card-content>
+            <ion-icon name="grid-outline"></ion-icon>
+            <div class = "ion-text-center">
+              <p>All Lots<p>
+              </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-card color="primary" (click)="avaliableLotsNav()" class="ion-text-center"> 
+          <ion-card-content>
+            <ion-icon name="car-outline"></ion-icon>
+              <div class = "ion-text-center">
+              <p>Avaliable Lots<p>
+              </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col>
+        <ion-card color="primary" (click)="favoritesNav()" class="ion-text-center">
+          <ion-card-content>
+            <ion-icon name="star-outline"></ion-icon>
+            <div class = "ion-text-center">
+              <p>Favorites<p>
+              </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-card color="primary" (click)="managePassesNav()" class="ion-text-center">
+          <ion-card-content>
+            <ion-icon name="clipboard-outline"></ion-icon>
+            <div class = "ion-text-center">
+              <p>Manage Passes<p>
+              </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col>
+        <ion-card color="primary" (click)="purchaseAPassNav()" class="ion-text-center">
+          <ion-card-content>
+            <ion-icon name="card-outline"></ion-icon>
+            <div class = "ion-text-center">
+              <p>Purchase A Pass<p>
+              </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-card color="primary" (click)="settingsNav()" class="ion-text-center">
+          <ion-card-content>
+            <ion-icon name="settings-outline"></ion-icon>
+            <div class = "ion-text-center">
+              <p>Settings<p>
+              </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col>
+        <ion-card color="primary" (click)="mapNav()" class="ion-text-center">
+          <ion-card-content>
+            <ion-icon name="map-outline"></ion-icon>
+            <div class = "ion-text-center">
+              <p>Map<p>
+              </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-button *ngIf="loginState==true; else log" type="submit" (click)="signOut()" expand="block"> Logout </ion-button>
+</ion-content>
+
+<ng-template #log>
+  <ion-button type="submit" (click)="signIn()" expand="block"> Login </ion-button>
+</ng-template>

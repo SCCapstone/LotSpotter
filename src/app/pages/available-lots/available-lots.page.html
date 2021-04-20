@@ -1,0 +1,41 @@
+<ion-toolbar color = "primary">
+  <ion-buttons slot="start">
+    <ion-menu-button></ion-menu-button>
+  </ion-buttons>
+  <ion-title>Available Lots</ion-title>
+</ion-toolbar>
+
+<ion-content padding>
+  <ion-refresher slot="fixed" pullFactor="0.5" pullMin="100" pullMax="200" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-down"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list *ngIf="lots.length !=0">
+    <ion-card *ngFor="let item of lots" [routerLink]="['/lot-detail', item.name]">
+        <ion-item>
+          <ion-icon name="pin" slot="start"></ion-icon>
+          <ion-label>{{item.name}}</ion-label>
+          <ion-text slot="end">Spaces Open - {{item.maxCap - item.currCap}}</ion-text>
+        </ion-item>
+      
+        <ion-card-content>
+            <ion-row>
+              <ion-col>
+                <ion-button fill="outline" (click)="toLot(item.loc)">Directions</ion-button>
+              </ion-col>
+              <ion-col center>
+                <div class="container">
+                <ion-icon name="checkmark-circle" color="success"></ion-icon>
+                </div>
+              </ion-col>
+            </ion-row>
+        </ion-card-content>
+      </ion-card>
+  </ion-list>
+
+</ion-content>

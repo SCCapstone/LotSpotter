@@ -1,0 +1,45 @@
+<ion-header>
+  
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Testing UI</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form [formGroup]="edit_lot_form">
+    
+    <!-- Select lot/garage to edit occupancy of -->
+    <ion-label class="header-weight">Select a Garage/Lot:</ion-label>
+    <ion-item class="margin">
+      <ion-select slot="end" formControlName="lot_name">
+        <ion-select-option *ngFor="let item of lots" [value]="item.name">{{item.name}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-label class="header-weight">Select to Add or Remove vehicles in lot:</ion-label>
+    <ion-radio-group class="margin" formControlName="operation">
+
+      <ion-item>
+        <ion-label>Add - Decreases Remaining Capacity </ion-label>
+        <ion-radio value="add"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Remove - Increases Remaining Capacity</ion-label>
+        <ion-radio value="remove"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+
+    <ion-label class="header-weight">Number of Vehicles:</ion-label>
+    <ion-item class="margin">
+      <ion-input formControlName="number_of_vehicles"></ion-input>
+    </ion-item>
+
+    <ion-button class="submit-btn" expand="block" type="submit" (click)="updateLot(edit_lot_form.value)">Submit Changes</ion-button>
+  </form>
+
+</ion-content>

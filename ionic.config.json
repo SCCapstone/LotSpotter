@@ -1,0 +1,7 @@
+{
+  "name": "LotSpotter",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

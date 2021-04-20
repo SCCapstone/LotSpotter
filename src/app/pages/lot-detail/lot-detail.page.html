@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar>
+    <!-- <ion-menu-button slot="start"></ion-menu-button> -->
+    <ion-back-button slot="start"></ion-back-button>
+    <ion-title> Lot Details </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Header and Favorite Button -->
+  <ion-item>
+    <button ion-button slot="end" (click)="toggle(currentLot.name)">
+      <ion-icon *ngIf="!visible" name="star-outline" color="warning" size="large" (click)="addFavorites(currentLot.name)"></ion-icon>
+      <ion-icon *ngIf="visible" name="star" color="warning" size="large" (click)="removeFavorites(currentLot.name)"></ion-icon>      
+    </button>
+
+    <ion-label>
+      <h1> {{ currentLot.name }} - {{ currentLot.desc }} </h1> 
+    </ion-label>
+  </ion-item>
+
+  <!-- Map Container -->
+  <ion-card>
+    <ion-img [src]="map"></ion-img>
+  </ion-card> 
+
+  <ion-item>
+    <ion-icon slot="end" name="car" (click)="toLot(currentLot.loc)"></ion-icon>
+    <ion-label>
+      <h2> {{ currentLot.addr }} </h2>
+      <p> Columbia, SC 29201 </p>
+    </ion-label>
+  </ion-item>
+
+  <!-- Stats Container -->
+  <ion-card>
+    <div style="display: block">
+      <canvas id="myChart"></canvas>
+    </div>
+  </ion-card> 
+
+  <ion-card>
+    <div style="display: block">
+      <canvas id="myChart2"></canvas>
+    </div>
+  </ion-card>
+</ion-content>
+
+<ion-footer>
+  <ion-item color="medium">
+    <ion-icon slot="start" name="car"></ion-icon>
+    <ion-label>
+      <h1> Open Spots - {{ openSpots }} </h1> 
+    </ion-label>
+
+    <ion-button (click)="share(currentLot)">
+      <ion-icon name="share-outline"></ion-icon>
+    </ion-button>
+  </ion-item>
+</ion-footer>
