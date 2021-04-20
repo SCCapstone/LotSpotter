@@ -1,3 +1,7 @@
+---
+layout: page
+title: About
+---
 # Authors
 
  [Daniel Jones](https://github.com/Dojones98) - dojones@cec.sc.edu  
