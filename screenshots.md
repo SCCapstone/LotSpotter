@@ -3,5 +3,5 @@ layout: page
 title: Screenshots
 permalink: /Lotspotter/screenshots
 ---
-Sunflowers  
-![](sunflowers.jpeg)
+<h2>Login</h2>  
+![](login.jpg)
