@@ -1,5 +1,5 @@
 ---
 layout: page
-title: About
-url: https://github.com/SCCapstone/LotSpotter
+title: Check out our GitHub
+permalink: https://github.com/SCCapstone/LotSpotter
 ---
