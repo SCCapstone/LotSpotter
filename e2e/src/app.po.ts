@@ -36,7 +36,23 @@ export class AppPage {
   }
 
   click(elementText) {
-    element(by.xpath("//*[contains(text()," + elementText + ")]")).click();
+    element(by.xpath("//*[contains(text()," + elementText + ")][1]")).click();
+  }
+
+  clickLots() {
+    element(by.xpath("//*[contains(text(), 'All Lots')]")).click();
+  }
+
+  clickAvailable() {
+    element(by.xpath("//*[contains(text(), 'Available Lots')]")).click();
+  }
+
+  clickPurchase() {
+    element(by.xpath("//*[contains(text(), 'Purchase A Pass')]")).click();
+  }
+
+  clickSettings() {
+    element(by.xpath("//*[contains(text(), 'Settings')][1]")).click();
   }
 
   validateMap() {
@@ -49,4 +65,45 @@ export class AppPage {
   }, 10000);
   }
 
+  validateAllLots() {
+    var elem = element(by.xpath("//ion-label[text() = 'AD3']"));
+    browser.waitForAngularEnabled(false)
+    expect(elem.innerText = 'AD3');
+
+  }
+
+  validateAvailable() {
+    var elem = element(by.xpath("//ion-title[text() = 'Available Lots']"));
+    browser.waitForAngularEnabled(false)
+    expect(elem.innerText = 'Available Lots');
+
+  }
+
+  validateFavorites() {
+    var elem = element(by.xpath("//ion-title[text() = 'Favorites']"));
+    browser.waitForAngularEnabled(false)
+    expect(elem.innerText = 'Favorites');
+
+  }
+
+  validateManage() {
+    var elem = element(by.xpath("//ion-title[text() = 'Manage Passes']"));
+    browser.waitForAngularEnabled(false)
+    expect(elem.innerText = 'Manage Passes');
+
+  }
+
+  validatePurchase() {
+    var elem = element(by.xpath("//ion-title[text() = 'Purchase A Pass']"));
+    browser.waitForAngularEnabled(false)
+    expect(elem.innerText = 'Select Garage/Lot');
+
+  }
+
+  validateSettings() {
+    var elem = element(by.xpath("//ion-title[text() = 'Settings']"));
+    browser.waitForAngularEnabled(false)
+    expect(elem.innerText = 'Settings');
+
+  }
 }
