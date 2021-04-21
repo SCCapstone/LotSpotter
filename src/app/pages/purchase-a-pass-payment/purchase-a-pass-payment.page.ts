@@ -12,6 +12,7 @@ import { ToastController } from '@ionic/angular';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { stringify } from '@angular/compiler/src/util';
 import { parse } from 'path';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-purchase-a-pass-payment',
@@ -49,6 +50,7 @@ export class PurchaseAPassPaymentPage implements OnInit {
 
   constructor(private router: Router, 
     public formBuilder:FormBuilder,
+    public alertController:AlertController,
     private route:ActivatedRoute,
     private auth: AuthenticationService,
     private toast: ToastController ) { 
@@ -94,16 +96,111 @@ export class PurchaseAPassPaymentPage implements OnInit {
 
     console.log(value)
     console.log(value.name_on_card)
-    // console.log(value.ex )
-    var expiration_date = formatDate(value.exp_date,'MM/yyyy', 'en-US' )
+    
+    // Check that expiration date has been filled out in form
+    if(value.exp_date != ""){
+      var expiration_date = formatDate(value.exp_date,'MM/yyyy', 'en-US' )
+    }
     this.purchase.card_name = value.card_name;
     this.purchase.card_number = value.card_number;
     this.purchase.exp_date = expiration_date;
     this.purchase.cvv = value.cvv;
     this.purchase.card_zip_code = value.card_zip_code;
-    
-    this.router.navigate(['purchase-a-pass-review', {purchase:JSON.stringify(this.purchase)}]);
+
+    // Check that all field values are filled
+    if(this.purchase.card_name != "" && this.purchase.card_number != "" && this.purchase.exp_date != "" && this.purchase.cvv != "" && this.purchase.card_zip_code){
+
+      if(this.purchase.card_number.includes(' ')==true){
+
+        if(this.purchase.card_number.length == 19){
+          // Use / /g to replace all instances of " "
+          var card_without_spaces = this.purchase.card_number.replace(/ /g, '');
+          console.log(card_without_spaces)
+          if(!isNaN(Number(card_without_spaces))){
+            if(!isNaN(Number(this.purchase.cvv)) && (Number(this.purchase.cvv) >= 100 && Number(this.purchase.cvv) <= 999)){
+              console.log(Number(card_without_spaces))
+              this.router.navigate(['purchase-a-pass-review', {purchase:JSON.stringify(this.purchase)}]);
+            }
+            else{
+              const alert = await this.alertController.create({
+                header:'Input Error',
+                message: 'CVV is either incorrect length or contains alphabetic characters.',
+                buttons: ['OK']
+              });
+  
+              await alert.present();
+              let result = await alert.onDidDismiss();
+              console.log(result)
+            }
+          }
+          else{
+            const alert = await this.alertController.create({
+              header:'Input Error',
+              message: 'Card Number cannot contain alphabetic characters.',
+              buttons: ['OK']
+            });
+
+            await alert.present();
+            let result = await alert.onDidDismiss();
+            console.log(result)
+          }
+        }
+        else{
+          const alert = await this.alertController.create({
+            header:'Input Error',
+            message: 'Improper number of digits in card number.',
+            buttons: ['OK']
+          });
+
+          await alert.present();
+          let result = await alert.onDidDismiss();
+          console.log(result)
+        }
+      }
+      else{
+        if(this.purchase.card_number.length == 16 && !isNaN(Number(this.purchase.card_number))){
+          if(!isNaN(Number(this.purchase.cvv)) && (Number(this.purchase.cvv) >= 100 && Number(this.purchase.cvv) <= 999)){
+            this.router.navigate(['purchase-a-pass-review', {purchase:JSON.stringify(this.purchase)}]);
+          }
+          else{
+            const alert = await this.alertController.create({
+              header:'Input Error',
+              message: 'CVV is either incorrect length or contains alphabetic characters.',
+              buttons: ['OK']
+            });
+
+            await alert.present();
+            let result = await alert.onDidDismiss();
+            console.log(result)
+          }
+        }
+        else{
+          const alert = await this.alertController.create({
+            header:'Input Error',
+            message: 'Card number contains either improper number of characters or included alphabetic characters.',
+            buttons: ['OK']
+          });
+
+          await alert.present();
+          let result = await alert.onDidDismiss();
+          console.log(result)
+        }
+      }
+    }
+  else{
+    const alert = await this.alertController.create({
+      header:'Input Error',
+      message: 'Make sure that all fields are filled out.',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+    let result = await alert.onDidDismiss();
+    console.log(result)
   }
+
+  
+}
 
   async showToast(position: any) {
     const toast = await this.toast.create({

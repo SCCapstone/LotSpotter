@@ -4,7 +4,7 @@ import firebase from 'firebase';
 import { Lot, Purchase } from '../../interfaces';
 import { Router, ActivatedRoute, ParamMap, NavigationExtras } from '@angular/router';
 import { BackendService } from 'src/app/services/backend.service';
-
+import { AlertController } from '@ionic/angular';
 import { LocationService } from '../../services/location.service'; 
 
 @Component({
@@ -37,7 +37,8 @@ export class PurchaseAPassShippingPage implements OnInit {
 
   constructor(private router: Router, 
     public formBuilder:FormBuilder,
-    private route:ActivatedRoute) { 
+    private route:ActivatedRoute,
+    public alertController:AlertController) { 
 
       if(this.route.snapshot.paramMap.get('purchase')!= null){
         this.purchase = JSON.parse(this.route.snapshot.paramMap.get('purchase'));
@@ -59,6 +60,7 @@ export class PurchaseAPassShippingPage implements OnInit {
   ngOnInit() {
   }
 
+  // Function that sets object values to those user input into form and routes values & user to the payment page
   async goToPayment(value){
 
     console.log(value)
@@ -73,8 +75,23 @@ export class PurchaseAPassShippingPage implements OnInit {
     this.purchase.city = value.city;
 
 
-    
-    this.router.navigate(['purchase-a-pass-payment', {purchase:JSON.stringify(this.purchase)}]);
+    // Check that user has either filled in all shipping values or selected to pick up the pass from parking services before continuing
+    // to payement page.
+    if((this.purchase.shipping_name != "" && this.purchase.street_address != "" && this.purchase.shipping_zip_code != "" && this.purchase.state != ""
+        && this.purchase.country != "" && this.purchase.city != "") || this.purchase.pick_up_pass == true){    
+        
+          this.router.navigate(['purchase-a-pass-payment', {purchase:JSON.stringify(this.purchase)}]);
+    }
+    else{
+      const alert = await this.alertController.create({
+        header:'Input Error',
+        message: 'Either fill in the fields for shipping address or select to pick up the pass from parking services.',
+        buttons: ['OK']
+      });
+  
+      await alert.present();
+      let result = await alert.onDidDismiss();
+      console.log(result)
+    }
   }
-
 }
