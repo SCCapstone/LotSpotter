@@ -3,6 +3,7 @@ layout: page
 title: About
 permalink: /LotSpotter/about/
 ---
+Check out our [GitHub](https://github.com/SCCapstone/LotSpotter)
 
 # Authors
  [Daniel Jones](https://github.com/Dojones98) - dojones@cec.sc.edu  
