@@ -149,11 +149,10 @@ export class TestingUiPage implements OnInit {
     this.router.navigate(['all-lots']);
   }
 
-
   async lotDataAlert(converted_number_of_vehicles) { 
     const alert = await this.alertController.create({
-      message: this.currentLot.name + " had " + (this.currentLot.currCap - converted_number_of_vehicles) +
-                " and now has " + this.currentLot.currCap + " spaces filled.", 
+      message: this.currentLot.name + " had " + (this.currentLot.currCap) +
+                " and now has " + this.new_capacity + " spaces filled.", 
       buttons: [
         {
           text: 'Ok',
