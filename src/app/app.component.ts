@@ -50,21 +50,16 @@ export class AppComponent {
       url: 'manage-passes',
       icon: 'clipboard'
     },
-    /*{
+    {
       title: 'Purchase Pass',
-      url: 'purchase-a-pass',
+      url: 'purchase-a-pass-select',
       icon: 'card'
-    },*/
+    },
     {
       title: 'Map',
       url: 'map',
       icon: 'map'
     },
-    /*{
-      title: 'Analytics',
-      url: 'analytics',
-      icon: 'bar-chart'
-    },*/
     {
       title: 'Favorites',
       url: 'favorites',
