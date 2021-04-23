@@ -6,8 +6,7 @@ import firebase from 'firebase';
 import {AngularFireAuth} from '@angular/fire/auth';
 import { AuthenticationService } from 'src/app/services/authentication-service';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
-import { AlertController } from '@ionic/angular';
-
+import { AlertController, MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -28,6 +27,7 @@ export class LoginPage implements OnInit {
     private auth: AuthenticationService,
     private nativeStorage: NativeStorage,
     private alertCtrl: AlertController,
+    private menuCtrl: MenuController,
   ) { }
 
   ngOnInit() {
@@ -36,6 +36,13 @@ export class LoginPage implements OnInit {
     this.nativeStorage.getItem('creds').then(
       data => this.logIn(data.storedEmail, data.storedPassword)
     );
+  }
+  ionViewWillEnter() {
+    this.menuCtrl.enable(false);
+  }
+
+  ionViewDidLeave() {
+    this.menuCtrl.enable(true);
   }
 
   logIn(email, password){
