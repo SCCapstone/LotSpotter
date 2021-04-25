@@ -57,7 +57,7 @@ export class PurchaseAPassSelectPage implements OnInit {
     cvv: '',
     card_zip_code: '',
   };
-  // purchase = {} as any;
+
   constructor( 
     private locServ: LocationService,
     private route: ActivatedRoute,
@@ -69,9 +69,9 @@ export class PurchaseAPassSelectPage implements OnInit {
   ) {
       if(this.route.snapshot.paramMap.get('purchase')!= null){
         this.purchase = JSON.parse(this.route.snapshot.paramMap.get('purchase'));
-        console.log(this.purchase)
+        // console.log(this.purchase)
       }
-  
+      /* Auth protection */
       this.auth.getLoginState().subscribe(value => {
         this.loginState = value;
       });
@@ -81,7 +81,7 @@ export class PurchaseAPassSelectPage implements OnInit {
     this.fetch();
   }
 
-  // Gets current information in 'lots' database
+  // Gets current information in 'lots' database. Returns all documents from it.
   fetch() {
     var self = this;
     this.database.collection('lots').onSnapshot(function(querySnapshot) {
@@ -104,15 +104,15 @@ export class PurchaseAPassSelectPage implements OnInit {
 
   // Keeps track of the garage name as it is changed 
   garage_name($event){
-    console.log($event.detail.value);
+    // console.log($event.detail.value);
     this.set_garage_name = $event.detail.value;
-    console.log(this.set_garage_name)
+    //console.log(this.set_garage_name)
   }
 
   // Triggered if the user decides to purchase a garage pass
   async garagePaymentRoute(){
 
-    console.log(this.set_garage_name)
+    // console.log(this.set_garage_name)
 
     if (!this.loginState) {
       this.showToast("middle");
@@ -214,10 +214,8 @@ export class PurchaseAPassSelectPage implements OnInit {
           }
         ]
       });
-
       await alert.present();
     }
-
   }
   
   // Triggered if the user decides to purchase a lot pass

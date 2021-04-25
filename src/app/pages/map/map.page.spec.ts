@@ -1,17 +1,18 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { MapPage } from './map.page';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('MapPage', () => {
   let component: MapPage;
   let fixture: ComponentFixture<MapPage>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
   
     TestBed.configureTestingModule({
       declarations: [ MapPage ],
-      imports: [IonicModule.forRoot()],
+      imports: [IonicModule.forRoot(), RouterTestingModule],
       providers: [ Geolocation ]
     }).compileComponents();
 
@@ -19,9 +20,12 @@ describe('MapPage', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
-  /*
-  it('should create', () => {
+  
+  it('should create', function(done) {
     expect(component).toBeTruthy();
   });
-  */
+  
+  it('should get coordinates', function(done) {
+    expectAsync(component.getMapPins()).toBeResolved();
+  })
 });

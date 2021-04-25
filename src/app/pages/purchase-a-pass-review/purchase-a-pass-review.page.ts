@@ -7,7 +7,6 @@ import { Router, ActivatedRoute, ParamMap, NavigationExtras } from '@angular/rou
 import { BackendService } from 'src/app/services/backend.service';
 import { DatePipe, formatDate } from '@angular/common';
 import { AlertController } from '@ionic/angular';
-import { LocationService } from '../../services/location.service'; 
 import { AuthenticationService } from '../../services/authentication-service';
 
 @Component({
@@ -66,6 +65,8 @@ export class PurchaseAPassReviewPage implements OnInit {
         this.purchase = JSON.parse(this.route.snapshot.paramMap.get('purchase'));
         console.log(this.purchase)
       }
+
+      /* Local Authentication Protection */
       this.auth.getLoginState().subscribe(value => {
         this.loginState = value;
       });
@@ -76,14 +77,10 @@ export class PurchaseAPassReviewPage implements OnInit {
     this.auth.setPermits()
   }
 
-  setPermitDetails(){
-    
-  }
   async submitPurchase(){
 
     this.backend.newPurchase(this.purchase);
 
-    
     // Get permit details to add to user's list of permits
     this.permitDetails.type = this.purchase.pass_type;
     this.permitDetails.garage_name = this.purchase.garage_name;
@@ -116,7 +113,7 @@ export class PurchaseAPassReviewPage implements OnInit {
 
     this.auth.updatePermits(this.permitDetails);
 
-    console.log(this.permitDetails)
+    // console.log(this.permitDetails)
 
     // TODO: Fix this to use the permits in 'users', not 'pass'
     // For now though, this will be a quick fix.

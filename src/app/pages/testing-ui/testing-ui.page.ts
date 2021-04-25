@@ -51,8 +51,11 @@ export class TestingUiPage implements OnInit {
     this.fetch();
   }
 
-  // Get the current data in the 'lots' database
-  fetch() {
+ /* fetch() gets the lots from the collection in firebase.
+
+   Returns 1 if successful, 0 otherwise. */
+  fetch():number {
+    let status: number = 0;
     var self = this;
     this.database.collection('lots').onSnapshot(function(querySnapshot) {
       self.lots = [];
@@ -68,10 +71,14 @@ export class TestingUiPage implements OnInit {
                 lotType: a.lotType,
                 id: doc.id,
         }
-        // console.log(lot.id);
         self.lots.push(lot);
       });
     });
+
+    if(this.lots.length > 0) {
+      status = 1;
+    }
+    return status;
   }
 
   // Gets data input by user to increase/decrease the garage/lot capacity 
@@ -84,7 +91,6 @@ export class TestingUiPage implements OnInit {
     console.log(param)
     await this.backend.getLotData(value.lot_name).then((res) => {
       this.currentLot = res; 
-      // TODO: Call the image API request.
     }).catch((message) => {
       console.log("Could not get lot data.")
     });
@@ -133,7 +139,6 @@ export class TestingUiPage implements OnInit {
     });
 
     await this.lotDataAlert(converted_number_of_vehicles);
-
   }
 
   goToAllLots(){
@@ -153,13 +158,8 @@ export class TestingUiPage implements OnInit {
           }
         }
       ],
-      
     });
     await alert.present();
     let result = await alert.onDidDismiss();
-    
-    console.log(result);
-
   }
-
 }

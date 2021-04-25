@@ -48,13 +48,6 @@ describe('AppComponent', () => {
     }).compileComponents();
   }));
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
-  });
-
-
   it('should initialize the app', async () => {
     TestBed.createComponent(AppComponent);
     await platformReadySpy;

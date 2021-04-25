@@ -8,7 +8,6 @@ import { formatDate } from '@angular/common';
 import { Purchase } from '../../interfaces';
 import { LocationService } from '../../services/location.service'; 
 import { AuthenticationService } from 'src/app/services/authentication-service';
-import { ToastController } from '@ionic/angular';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { stringify } from '@angular/compiler/src/util';
 import { parse } from 'path';
@@ -52,10 +51,9 @@ export class PurchaseAPassPaymentPage implements OnInit {
     public formBuilder:FormBuilder,
     public alertController:AlertController,
     private route:ActivatedRoute,
-    private auth: AuthenticationService,
-    private toast: ToastController ) { 
+    private auth: AuthenticationService) { 
     
-
+      
       if(this.route.snapshot.paramMap.get('purchase')!= null){
         this.purchase = JSON.parse(this.route.snapshot.paramMap.get('purchase'));
         console.log(this.purchase)
@@ -80,25 +78,19 @@ export class PurchaseAPassPaymentPage implements OnInit {
         cvv:[this.purchase.cvv, Validators.required],
         card_zip_code: [this.purchase.card_zip_code,Validators.required]
       });
-
+      /* Authenication Login Protection: a user not logged in should NOT 
+         be able to purchase a pass. */
       this.auth.getLoginState().subscribe(value => {
         this.loginState = value;
       });
    
   }
 
-  ngOnInit() {
-    console.log(this.maxDate)
-    
-  }
+  ngOnInit() {}
 
   // Takes payment information entered by user, checks the validity, and passes it and 
   // all other purchase information to the review page
   async goToReview(value) {
-
-    console.log(value)
-    console.log(value.name_on_card)
-    
     // Check that expiration date has been filled out in form
     if(value.exp_date != ""){
       var expiration_date = formatDate(value.exp_date,'MM/yyyy', 'en-US' )
@@ -116,14 +108,13 @@ export class PurchaseAPassPaymentPage implements OnInit {
       // Length must be 19 numberic characters (including spaces)
       // CVV must be a three digit number 
       if(this.purchase.card_number.includes(' ')==true){
-
+        
         if(this.purchase.card_number.length == 19){
           // Use / /g to replace all instances of " "
           var card_without_spaces = this.purchase.card_number.replace(/ /g, '');
-          console.log(card_without_spaces)
           if(!isNaN(Number(card_without_spaces))){
             if(!isNaN(Number(this.purchase.cvv)) && (Number(this.purchase.cvv) >= 100 && Number(this.purchase.cvv) <= 999)){
-              console.log(Number(card_without_spaces))
+              // console.log(Number(card_without_spaces))
               this.router.navigate(['purchase-a-pass-review', {purchase:JSON.stringify(this.purchase)}]);
             }
             else{
@@ -135,7 +126,7 @@ export class PurchaseAPassPaymentPage implements OnInit {
   
               await alert.present();
               let result = await alert.onDidDismiss();
-              console.log(result)
+              // console.log(result)
             }
           }
           else{
@@ -147,7 +138,7 @@ export class PurchaseAPassPaymentPage implements OnInit {
 
             await alert.present();
             let result = await alert.onDidDismiss();
-            console.log(result)
+            // console.log(result)
           }
         }
         else{
@@ -159,7 +150,7 @@ export class PurchaseAPassPaymentPage implements OnInit {
 
           await alert.present();
           let result = await alert.onDidDismiss();
-          console.log(result)
+          // console.log(result)
         }
       }
       // Valid Case 2: User inputs card number as '1234567890123456'
@@ -179,7 +170,7 @@ export class PurchaseAPassPaymentPage implements OnInit {
 
             await alert.present();
             let result = await alert.onDidDismiss();
-            console.log(result)
+            // console.log(result)
           }
         }
         else{
@@ -191,33 +182,19 @@ export class PurchaseAPassPaymentPage implements OnInit {
 
           await alert.present();
           let result = await alert.onDidDismiss();
-          console.log(result)
+          // console.log(result)
         }
       }
     }
-  else{
-    const alert = await this.alertController.create({
-      header:'Input Error',
-      message: 'Make sure that all fields are filled out.',
-      buttons: ['OK']
-    });
+    else{
+      const alert = await this.alertController.create({
+        header:'Input Error',
+        message: 'Make sure that all fields are filled out.',
+        buttons: ['OK']
+      });
 
-    await alert.present();
-    let result = await alert.onDidDismiss();
-    console.log(result)
-  }
-
-  
-}
-
-  async showToast(position: any) {
-    const toast = await this.toast.create({
-      message: 'Please log in to purchase a parking pass.',
-      duration: 1000,
-      position,
-      cssClass: 'toast-1-css',
-    });
-    toast.present();
-  }
-
+      await alert.present();
+      let result = await alert.onDidDismiss();
+    }
+  } 
 }

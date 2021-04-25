@@ -63,9 +63,6 @@ export class PurchaseAPassShippingPage implements OnInit {
   // Function that sets object values to those user input into form and routes values & user to the payment page
   async goToPayment(value){
 
-    console.log(value)
-    console.log(value.name_on_card)
-
     // Sets the purchase values to the form values
     this.purchase.shipping_name = value.shipping_name;
     this.purchase.street_address = value.street_address;
@@ -93,7 +90,6 @@ export class PurchaseAPassShippingPage implements OnInit {
   
       await alert.present();
       let result = await alert.onDidDismiss();
-      console.log(result)
     }
   }
 }

@@ -18,9 +18,13 @@ export class SettingsPage implements OnInit {
   new_usertype_form: FormGroup;
   newusert:any = ""
 
-  constructor( public authService: AuthenticationService, public FormBuilder: FormBuilder, public router: Router, public alertc: AlertController) { }
+  constructor( public authService: AuthenticationService, 
+               public FormBuilder: FormBuilder, 
+               public router: Router, 
+               public alertc: AlertController) { }
 
   ngOnInit() {
+      /* Updates the local usertype */
       this.curr_ut = this.authService.gUserType();
       this.new_usertype_form = this.FormBuilder.group({
         newusert: new FormControl('',Validators.required),
@@ -54,12 +58,14 @@ export class SettingsPage implements OnInit {
     this.router.navigate(['password-reset'])
   }
 
+  /* deleteUser() allows for account deletion from within the app. This is use the
+     unique id assigned to each user to find their credentials and remove them from
+     authtication. */
   deleteUser(){
     // Fetch current user in the database
-    
     var user = firebase.auth().currentUser;
     user.delete().then(function() {
-      console.log(user.uid, " deleted");
+      // console.log(user.uid, " deleted");
       alert("Account deleted.")
     }, function(error) {
       console.log("error deleting user");
@@ -67,18 +73,13 @@ export class SettingsPage implements OnInit {
     // Delete current user by firebase unique user identification
 
     firebase.firestore().collection("users").doc(user.uid).delete().then(function() {
-      console.log("document successfully deleted");
-      console.log("User " + user.uid + "deleted");
+      // console.log("document successfully deleted");
+      // console.log("User " + user.uid + "deleted");
     }).catch(function (error) {
       console.error("Error removing document: " , error);
     })
-    this.router.navigate(['login'])
-
+    this.router.navigate(['login']);
   }
-
-
-
-  
 
   async QueDelete(){
     let alert = await this.alertc.create({
@@ -88,13 +89,13 @@ export class SettingsPage implements OnInit {
           text: 'No',
           role: 'cancel',
           handler: () => {
-            console.log('Cancel clicked');
+            // console.log('Cancel clicked');
           }
         },
         {
           text: 'Yes',
           handler: () => {
-            console.log('Delete clicked');
+            // console.log('Delete clicked');
             this.deleteUser();
           }
         }
@@ -102,7 +103,5 @@ export class SettingsPage implements OnInit {
     });
     await alert.present();
   }
-
-
 
 }
