@@ -13,6 +13,7 @@ import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms'
 })
 export class SettingsPage implements OnInit {
 
+  // Establish default user Academic Standing 
   curr_ut:any = "Unknown Academic Standing"
   new_usertype_form: FormGroup;
   newusert:any = ""
@@ -28,6 +29,8 @@ export class SettingsPage implements OnInit {
   ngOnChanges(){
     this.curr_ut = this.authService.gUserType();
   }
+
+  // Refresh Page
   refreshUsertype(event) {
     this.curr_ut = this.authService.gUserType();
     setTimeout(() => {
@@ -36,57 +39,7 @@ export class SettingsPage implements OnInit {
     }, 1000);
   }
 
-  // async ChangeTypeAlert(){
-  //   const alert = await this.alertc.create({
-  //     cssClass: 'UserType',
-  //     header:'Position',
-  //     inputs:[
-  //       {
-  //         name: 'Undergraduate Student',
-  //         type: 'radio',
-  //         label: 'Undergraduate Student',
-  //         value: 'Undergraduate Student',
-  //         checked: true
-  //       },  {
-  //         name: 'Graduate Student',
-  //         type: 'radio',
-  //         label: 'Graduate Student',
-  //         value: 'Graduate Student',
-  //       },  {
-  //         name: 'Alumni',
-  //         type: 'radio',
-  //         label: 'Alumni',
-  //         value: 'Alumni',
-  //       },  {
-  //         name: 'Faculty',
-  //         type: 'radio',
-  //         label: 'Faculty',
-  //         value: 'FacStaff',
-  //       },  {
-  //         name: 'Staff',
-  //         type: 'radio',
-  //         label: 'Staff',
-  //         value: 'FacStaff',
-  //       },
-  //     ],
-  //     buttons: [
-  //       {
-  //         text: 'Cancel',
-  //         role: 'cancel',
-  //         handler: () => {console.log("Alert Operation Cancelled")}
-  //       },
-  //       {
-  //         text:'Confirm',
-  //         handler: value => {
-  //           console.log("Alert Operation Accepted")
-  //           this.cUT(value);
-  //         }
-  //       }
-  //     ]
-  //   });
-  //   await alert.present();
-  // }
-
+  // Change User Type (Academic Standing)
   async cUT(newusertype){
     console.log("User Type Changed to " + newusertype.newusert)
     this.authService.cUserType(newusertype.newusert)
@@ -102,6 +55,8 @@ export class SettingsPage implements OnInit {
   }
 
   deleteUser(){
+    // Fetch current user in the database
+    
     var user = firebase.auth().currentUser;
     user.delete().then(function() {
       console.log(user.uid, " deleted");
@@ -109,6 +64,7 @@ export class SettingsPage implements OnInit {
     }, function(error) {
       console.log("error deleting user");
     })
+    // Delete current user by firebase unique user identification
 
     firebase.firestore().collection("users").doc(user.uid).delete().then(function() {
       console.log("document successfully deleted");

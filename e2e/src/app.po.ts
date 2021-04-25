@@ -5,6 +5,10 @@ export class AppPage {
    emailEl = element(by.xpath('/html/body/app-root/ion-app/ion-split-pane/ion-router-outlet/app-login/ion-content/ion-item[1]/ion-input/input'));
    passwordEl = element(by.xpath('/html/body/app-root/ion-app/ion-split-pane/ion-router-outlet/app-login/ion-content/ion-item[2]/ion-input/input'));
    loginEl = element(by.xpath("//*[contains(text(),'Login')]"));
+   signupEl = element(by.xpath('/html/body/app-root/ion-app/ion-split-pane/ion-router-outlet/app-login/ion-content/ion-row[2]/ion-col/ion-button'));
+   newemailEl = element(by.xpath('/html/body/app-root/ion-app/ion-split-pane/ion-router-outlet/app-signup/ion-content/form/ion-item[1]/ion-input'));
+   newpassEl = element(by.xpath('/html/body/app-root/ion-app/ion-split-pane/ion-router-outlet/app-signup/ion-content/form/ion-item[2]/ion-input'));
+   createEl = element(by.xpath('/html/body/app-root/ion-app/ion-split-pane/ion-router-outlet/app-signup/ion-content/form/ion-row/ion-col/ion-button'));
    logOutEl = element(by.className('md button button-block button-solid ion-activatable ion-focusable hydrated'));
   navigateTo() {
     return browser.get('/');
@@ -31,6 +35,18 @@ export class AppPage {
       this.loginEl.click()       
   }
 
+  signup(email, password) {
+    // this.signupEl.click()
+    this.newemailEl.clear().then(() => {
+      this.newemailEl.sendKeys(email)
+    })
+    this.newpassEl.clear().then(() => {
+      this.newpassEl.sendKeys(password)
+    })
+    this.createEl.click()
+    // this.login(email, password)
+  }
+
   logout() {
     this.logOutEl.click()
   }
@@ -53,6 +69,17 @@ export class AppPage {
 
   clickSettings() {
     element(by.xpath("//*[contains(text(), 'Settings')][1]")).click();
+  }
+  clickDeleteUserAccount() {
+    element(by.xpath('/html/body/app-root/ion-app/ion-split-pane/ion-router-outlet/app-settings/ion-content/ion-button[3]')).click();
+  }
+
+  confirmAlert() {
+    element(by.xpath('/html/body/app-root/ion-app/ion-alert/div[2]/div[3]/button[2]')).click();
+  }
+
+  confirmLoginError() {
+    element(by.xpath('//*[@id="alert-5-msg"]'))
   }
 
   validateMap() {
