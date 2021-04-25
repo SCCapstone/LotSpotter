@@ -35,13 +35,13 @@ export class AuthenticationService {
     this.loggedIn2 = new BehaviorSubject<boolean>(false);
   }
 
-  // Change User Type
+  // Change User Type locally
   cUserType(newtype) {
      if(this.DEBUG) console.log("in cUserType()"); 
      localStorage.setItem('user.userType', JSON.stringify(newtype));
      //  JSON.parse(localStorage.getItem('user'));
   }
-  // Get user type
+  // Get User Type of Current user locally
   gUserType(){
     if(this.DEBUG) console.log("in gUserType()"); 
     let currentUT = JSON.parse(localStorage.getItem("user.userType"));

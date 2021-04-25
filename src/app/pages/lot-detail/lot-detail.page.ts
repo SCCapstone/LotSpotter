@@ -24,6 +24,8 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./lot-detail.page.scss'],})
 export class LotDetailPage implements OnInit {
 
+  // Declare variables for charts and graphs
+
   public lotdata: number[];
   
   private openSpots:number = 0;
@@ -153,6 +155,7 @@ export class LotDetailPage implements OnInit {
   }
 
   async showChart() {
+    // Over time chart
     let param:string = this.route.snapshot.paramMap.get("name");
     console.log("Getting stats from "+param);
 
@@ -210,12 +213,14 @@ export class LotDetailPage implements OnInit {
   }
 
   showChart2(curr_lot) {
+    // Current standings chart
     var myChart = new Chart("myChart2", {
       type: 'bar',
       data: {
           labels: ['Spots','Taken', 'Free'],
           datasets: [{
               label: (curr_lot.name + " Current"),
+              // Compare maximum, current, and vacant spots
               data: [Number(curr_lot.maxCap), Number(curr_lot.currCap), Number(this.openSpots)],
               backgroundColor: [
                   'rgba(255, 99, 97, 0.2)',
