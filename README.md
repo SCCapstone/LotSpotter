@@ -69,9 +69,13 @@ Unit Tests are run with:
 ```
 npm test
 ```
-Our Unit Tests are located in `/src/app/tests/`. We are using [Jasmine](https://jasmine.github.io/) for our testing framework; [Karma](http://karma-runner.github.io/6.0/index.html) is the runnner. 
+Our Unit Tests are located within the directory of each component. This includes both:
+ * `src/app/*/*.spec.ts`
+ * `src/app/*/*/*.spec.ts`
+ 
+Running `ls` for each of these paths from the project's root will show the referenced test files. We're using [Jasmine](https://jasmine.github.io/) for our testing framework; [Karma](http://karma-runner.github.io/6.0/index.html) is the runnner. 
 
-_Note_: When npm test` was ran on an ubuntu machine, it didn't have enough child processes. This command fixed that issue:
+_Note_: When `npm test` was ran on an ubuntu machine, it didn't have enough child processes. This command fixed that issue:
  ```bash
  echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
  ```
