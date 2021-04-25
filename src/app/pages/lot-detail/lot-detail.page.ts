@@ -64,7 +64,7 @@ export class LotDetailPage implements OnInit {
 
   ngOnInit() {
     this.fetchLotData();
-    this.backend.setFavorites();
+    this.authService.setFavorites();
   }
 
   async fetchLotData() {
@@ -90,7 +90,7 @@ export class LotDetailPage implements OnInit {
       "&key=AIzaSyB7Xv6-oY-j1-PuLSfpd6WA4gDORz1WVmE";
 
       // For favorites star
-      var starred:Array<string> = this.backend.setFavorites();
+      var starred:Array<string> = this.authService.setFavorites();
       console.log("Starred: "+starred);
       if(starred.indexOf(this.currentLot.name) == -1) {
         this.visible = false;
@@ -145,11 +145,11 @@ export class LotDetailPage implements OnInit {
   }
 
   addFavorites(lotName:string) {
-      this.backend.updateFavorites(lotName);
+      this.authService.updateFavorites(lotName);
   }
 
   removeFavorites(lotName:string) {
-      this.backend.updateFavorites(lotName);
+      this.authService.updateFavorites(lotName);
   }
 
   async showChart() {

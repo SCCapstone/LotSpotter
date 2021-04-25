@@ -38,7 +38,7 @@ export class FavoritesPage implements OnInit {
 
   ngOnInit() {
     if (this.loginState) {
-      this.backend.setFavorites();
+      this.auth.setFavorites();
       this.fetch();
     }
   }
@@ -56,7 +56,7 @@ export class FavoritesPage implements OnInit {
   }
 
   async fetch() {
-    this.backend.setFavorites();
+    this.auth.setFavorites();
     var self = this;
     this.database.collection('users').doc(firebase.auth().currentUser.uid)
      .onSnapshot(function(querySnapshot) {

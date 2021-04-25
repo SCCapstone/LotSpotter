@@ -1,8 +1,10 @@
 import { BackendService } from '../services/backend.service';
 import firebase from 'firebase';
 
+
 describe('BackendServiceTest', () => {
   let backService: BackendService;
+
   // Expand this array for a more exhaustive approach to the test.
   let random:string[] = ["AD3", "S8", "AD1"]; 
   // I have to re-init firebase here, since the full app isn't built yet.

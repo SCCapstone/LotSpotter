@@ -3,6 +3,9 @@ import { IonicModule } from '@ionic/angular';
 
 import { PurchaseAPassShippingPage } from './purchase-a-pass-shipping.page';
 
+import { RouterTestingModule } from '@angular/router/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+
 describe('PurchaseAPassShippingPage', () => {
   let component: PurchaseAPassShippingPage;
   let fixture: ComponentFixture<PurchaseAPassShippingPage>;
@@ -10,7 +13,7 @@ describe('PurchaseAPassShippingPage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ PurchaseAPassShippingPage ],
-      imports: [IonicModule.forRoot()]
+      imports: [IonicModule.forRoot(), RouterTestingModule, ReactiveFormsModule]
     }).compileComponents();
 
     fixture = TestBed.createComponent(PurchaseAPassShippingPage);

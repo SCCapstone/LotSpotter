@@ -31,7 +31,7 @@ export class HomePage {
   ngOnInit() {
     this.logo = "../assets/images/USC_logo.png";
     if(this.loginState) {
-      this.backend.setFavorites();
+      this.auth.setFavorites();
     }
   }
 

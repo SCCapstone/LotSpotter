@@ -14,6 +14,7 @@ import { AlertController, MenuController } from '@ionic/angular';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
+
   logo: String;
   validCreds: boolean = false;
   rememberCreds: any;
@@ -70,11 +71,6 @@ export class LoginPage implements OnInit {
         .get()
         .then(function(querySnapshot) {
             querySnapshot.forEach(function(doc) {
-                console.log(doc.id, " => ", doc.data());
-                var type = doc.data().usertype;
-                console.log("usertype:"+type);
-                self.backend.setUsertype(type);
-
                 if(self.validCreds){
                   self.router.navigate(['home']);
                 }

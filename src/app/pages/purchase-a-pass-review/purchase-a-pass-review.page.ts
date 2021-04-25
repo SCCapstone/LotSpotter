@@ -73,7 +73,7 @@ export class PurchaseAPassReviewPage implements OnInit {
 
   
   ngOnInit() {
-    this.backend.setPermits()
+    this.auth.setPermits()
   }
 
   setPermitDetails(){
@@ -111,7 +111,7 @@ export class PurchaseAPassReviewPage implements OnInit {
       }
     } 
 
-    this.backend.updatePermits(this.permitDetails);
+    this.auth.updatePermits(this.permitDetails);
 
     console.log(this.permitDetails)
 
