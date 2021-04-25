@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import firebase from 'firebase';
+import { stat } from 'node:fs';
 import { Lot } from '../../interfaces';
 import { LocationService } from '../../services/location.service';
 
@@ -40,13 +41,13 @@ export class AvailableLotsPage implements OnInit {
      Unlike the fetch() in all-lots, this only populates a local
      list if lots have 70% of thier remaining spaces. 
 
-     Returns 1 if successful, 0 otherwise.
+     Returns PROMISE true if successful, false otherwise.
   */
-  fetch():number {
-    let status: number = 0;
-    
+  async fetch():Promise<boolean> {
+    let status: boolean = false;
     var self = this;
-    this.database.collection('lots').onSnapshot(function(querySnapshot) {
+
+    await this.database.collection('lots').onSnapshot(function(querySnapshot) {
       self.lots = [];
       querySnapshot.forEach(function(doc) {
         let a = doc.data();
@@ -62,13 +63,15 @@ export class AvailableLotsPage implements OnInit {
         if(lot.currCap < .7*lot.maxCap) {
           self.lots.push(lot);
         }
+        status = true; // At least one lot was correctly fetched.
       });
     });
 
-    if(this.lots.length > 0) {
-      status = 1;
-    }
-
-    return status;
+    return new Promise<boolean>((resolve, reject) => {
+      if (status) {
+        resolve(true);
+      }
+      resolve(false);
+    });
   }
 }

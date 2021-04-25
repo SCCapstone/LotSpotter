@@ -48,7 +48,9 @@ export class LoginPage implements OnInit {
 
   /* logIn() handles reading the ionic inputs, then logging into the 
      application with the inputs.*/
-  logIn(email, password){
+  logIn(email, password):boolean {
+    let status = false;
+
   	var self=this;
     this.validCreds = true;
 	  this.afAuth.signInWithEmailAndPassword(email, password)
@@ -76,6 +78,7 @@ export class LoginPage implements OnInit {
                   self.router.navigate(['home']);
                 }
             });
+          status = true;
         })
         .catch(function(error) {
             console.log("Error getting documents: ", error);
@@ -115,6 +118,8 @@ export class LoginPage implements OnInit {
       }
       self.validCreds = false;
     });
+
+    return status;
   }
 
   async failedToLoginAlert(message) {

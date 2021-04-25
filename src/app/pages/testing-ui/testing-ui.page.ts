@@ -53,11 +53,11 @@ export class TestingUiPage implements OnInit {
 
  /* fetch() gets the lots from the collection in firebase.
 
-   Returns 1 if successful, 0 otherwise. */
-  fetch():number {
-    let status: number = 0;
+   Returns PROMISE true if successful, false otherwise. */
+  async fetch():Promise<boolean> {
+    let status: boolean = false;
     var self = this;
-    this.database.collection('lots').onSnapshot(function(querySnapshot) {
+    await this.database.collection('lots').onSnapshot(function(querySnapshot) {
       self.lots = [];
       querySnapshot.forEach(function(doc) {
         let a = doc.data();
@@ -72,13 +72,16 @@ export class TestingUiPage implements OnInit {
                 id: doc.id,
         }
         self.lots.push(lot);
+        status = true;
       });
     });
 
-    if(this.lots.length > 0) {
-      status = 1;
-    }
-    return status;
+    return new Promise<boolean>((resolve, reject) => {
+      if (status) {
+        resolve(true);
+      }
+      resolve(false);
+    });
   }
 
   // Gets data input by user to increase/decrease the garage/lot capacity 

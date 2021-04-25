@@ -10,6 +10,10 @@ describe('PasswordResetPage', () => {
   let component: PasswordResetPage;
   let fixture: ComponentFixture<PasswordResetPage>;
 
+  beforeAll(() => {
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000
+  });
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ PasswordResetPage ],
@@ -33,11 +37,9 @@ describe('PasswordResetPage', () => {
     fixture.detectChanges();
   }));
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should render title', () => {
+    const comp = fixture.debugElement.nativeElement;
+    expect(comp.querySelector('ion-title').textContent).toContain("Reset Password");
   });
 
-  afterEach(()=> {
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 5000;
-  });
 });
