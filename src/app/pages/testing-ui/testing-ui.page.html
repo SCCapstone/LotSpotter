@@ -23,6 +23,7 @@
     <ion-label class="header-weight">Select to Add or Remove vehicles in lot:</ion-label>
     <ion-radio-group class="margin" formControlName="operation">
 
+      <!-- Tester decides whether to add vehicles to lot or remove vehicles from lot -->
       <ion-item>
         <ion-label>Add - Decreases Remaining Capacity </ion-label>
         <ion-radio value="add"></ion-radio>
@@ -39,6 +40,7 @@
       <ion-input formControlName="number_of_vehicles"></ion-input>
     </ion-item>
 
+    <!-- Submit the lot changes to the updateLot function -->
     <ion-button class="submit-btn" expand="block" type="submit" (click)="updateLot(edit_lot_form.value)">Submit Changes</ion-button>
   </form>
 

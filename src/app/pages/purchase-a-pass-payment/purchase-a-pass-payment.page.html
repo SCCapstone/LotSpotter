@@ -8,7 +8,9 @@
 </ion-header>
 
 <ion-content class="margin">
+  <!-- Form for Payment Information -->
   <form [formGroup]="payment_information">
+    <!-- Step 3 of the Progress Bar -->
     <div>
       <ion-icon color="primary" class="pass" name="car-sport"></ion-icon>
       <ion-icon color="primary" class="shipping" name="mail"></ion-icon>
@@ -29,7 +31,7 @@
 
     <ion-label>Expiration Date:</ion-label>
     <ion-item>
-      <!-- Change this to be three years from the current year -->
+      <!-- Date picker that can only be dates 3 years in the future -->
       <ion-datetime displayFormat="MM/YYYY" formControlName="exp_date" pickerFormat="MMMM YYYY" [min]="this.minDate" [max]="this.maxDate"></ion-datetime>
     </ion-item>
 
@@ -46,5 +48,5 @@
 
   </form>
 </ion-content>
-
+<!-- Submits payment information to the goToReview() function -->
 <ion-button class="submit-btn" expand="block" type="submit" (click)="goToReview(payment_information.value)">Review Order</ion-button> 

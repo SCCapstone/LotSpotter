@@ -65,6 +65,8 @@ export class PurchaseAPassShippingPage implements OnInit {
 
     console.log(value)
     console.log(value.name_on_card)
+
+    // Sets the purchase values to the form values
     this.purchase.shipping_name = value.shipping_name;
     this.purchase.street_address = value.street_address;
     this.purchase.apt_number = value.apt_number;

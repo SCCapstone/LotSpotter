@@ -9,7 +9,9 @@
 
 
 <ion-content>
+  <!-- Form for shipping information -->
   <form [formGroup]="shipping_information">
+    <!-- Step 2 of the Progress Bar -->
     <div>
       <ion-icon color="primary" class="pass" name="car-sport"></ion-icon>
       <ion-icon color="primary" class="shipping" name="mail-outline"></ion-icon>
@@ -55,7 +57,7 @@
       <ion-input formControlName="shipping_zip_code"></ion-input>
     </ion-item>
   
-    <!-- Figure out how to disable above input fields based on selection. Probably using async -->
+    <!-- User can opt to pick the pass up from parking services rather than having it shipped -->
     <ion-item>
       <ion-label>Pick up from Parking Services</ion-label>
       <ion-checkbox checked="true" formControlName="pick_up_pass"></ion-checkbox>
@@ -63,4 +65,5 @@
 
   </form>
 </ion-content>
+<!-- Submit the shipping information to the goToPayment() function -->
 <ion-button class="submit-btn" expand="block" type="submit" (click)="goToPayment(shipping_information.value)">Continue to Payment</ion-button> 

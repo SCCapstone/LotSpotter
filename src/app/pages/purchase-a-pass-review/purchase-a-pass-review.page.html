@@ -10,6 +10,7 @@
 
 <ion-content>
 
+  <!-- Step 4 of the Progress Bar -->
   <div>
     <ion-icon color="primary" class="pass" name="car-sport"></ion-icon>
     <ion-icon color="primary" class="shipping" name="mail"></ion-icon>
@@ -19,51 +20,59 @@
     </div>
   <br>
 
-  <!-- Pass Type -->
+  <!-- Pass Type: Displays the information user picked for their pass type and pass duration-->
 
   <ion-item>
 
     <h1>Pass Type</h1>
-   
+    <!-- Triggers editLotType() function -->
     <ion-button shape="round" (click)="editLotType()" slot="end" size="medium">Edit</ion-button>
 
   </ion-item>
   <ion-text>
   <p>Pass Type: {{this.purchase.pass_type}}</p>
+
+  <!-- Checks if garage name is not '' then it is displayed -->
   <p *ngIf="this.purchase.garage_name != ''">Garage Name: {{this.purchase.garage_name}}</p>
+
+  <!-- Check the length of the semesters the pass will be purchased for and display appropriate semesters -->
   <p *ngIf="this.purchase.semesters.length == 2">Semesters: Fall & Spring</p>
   <p *ngIf="this.purchase.semesters.length == 1 && this.purchase.semesters[0] == 'Fall'">Semesters: Fall</p>
   <p *ngIf="this.purchase.semesters.length == 1 && this.purchase.semesters[0] == 'Spring'">Semesters: Spring</p>
   </ion-text>
 
 
-  <!-- Shipping Information -->
+  <!-- Shipping Information: Displays the shipping information the user input or the choice to pick up 
+       from parking services -->
 
   <ion-item>
 
     <h1>Shipping Information</h1>
-   
+    <!-- Triggers editShipping() function -->
     <ion-button shape="round" (click)="editShipping()" slot="end" size="medium">Edit</ion-button>
 
   </ion-item>
   
+  <!-- If user did not choose to pick up the pass at parking services, their address information is displayed -->
   <p *ngIf="this.purchase.pick_up_pass==false">
     Address: <br>
     {{this.purchase.shipping_name}} <br>
     {{this.purchase.street_address}} {{this.purchase.apt_number}}<br>
     {{this.purchase.city}} {{this.purchase.state}} {{this.purchase.country}} {{this.purchase.shipping_zip_code}}  <br>
-
   </p>
+
+  <!-- If the user chose to pick up the pass at parking services, the address of parking services is displayed -->
   <p class="thicker" *ngIf="this.purchase.pick_up_pass==true"> Pass will be picked up from Parking Services: </p>
   <p *ngIf="this.purchase.pick_up_pass==true">1501 Pendleton St. <br>
     Columbia, SC 29208 <br></p>
 
-  <!-- Payment Information -->
+
+  <!-- Payment Information: Displays user payment information -->
   
   <ion-item>
 
     <h1>Payment Information</h1>
-     
+    <!-- Triggers the editCard() function -->
     <ion-button shape="round" (click)="editCard()" slot="end" size="medium">Edit</ion-button>
   
   </ion-item>
@@ -74,11 +83,14 @@
      Zip Code: {{this.purchase.card_zip_code}} <br>
   </p>
 
+  <!-- Displays the total for a garage pass based on number of semesters -->
   <h1 *ngIf="this.purchase.pass_type=='Garage' && this.purchase.semesters.length == 1">Order Total: $400</h1>
   <h1 *ngIf="this.purchase.pass_tupe=='Garage' && this.purchase.semesters.length == 2">Order Total: $800</h1>
 
+  <!-- Displays the total for a lot pass -->
   <h1 *ngIf="this.purchase.pass_type=='Lot'">Order Total: $110</h1>
 
 
 </ion-content>
+<!-- Submits the user's purchase -->
 <ion-button class="submit-btn" expand="block" type="submit" (click)="submitPurchase()">Submit Order</ion-button> 
