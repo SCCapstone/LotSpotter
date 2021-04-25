@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import firebase from 'firebase';
-import { Lot } from '../../interfaces';
+import { Lot, Stat } from '../../interfaces';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { BackendService } from 'src/app/services/backend.service';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
@@ -68,7 +68,7 @@ export class TestingUiPage implements OnInit {
                 lotType: a.lotType,
                 id: doc.id,
         }
-        console.log(lot.id);
+        // console.log(lot.id);
         self.lots.push(lot);
       });
     });
@@ -113,9 +113,15 @@ export class TestingUiPage implements OnInit {
       console.error("Capacity can't be greater than Max Capacity or less than 0");
       return;
     }
+    
+    this.backend.addStat({
+      action: action,
+      currCap: this.currentLot.currCap,
+      lot: this.currentLot.name,
+      time: firebase.firestore.Timestamp.fromDate(new Date())
+    });
 
-    // Update the lot data and stats
-    let newValues = {
+    this.backend.updateItem({
       name: this.currentLot.name,
       addr: this.currentLot.addr,
       currCap: this.new_capacity,
@@ -124,17 +130,8 @@ export class TestingUiPage implements OnInit {
       loc: this.currentLot.loc,
       lotType: this.currentLot.lotType,
       id: this.currentLot.id,
-    }
-    let stats = {
-      action: action,
-      currCap: this.currentLot.currCap,
-      lot: this.currentLot.name,
-      time: firebase.firestore.Timestamp.fromDate(new Date())
-    }
-    console.log(newValues)
-    console.log(newValues.id)
-    this.backend.updateItem(newValues);
-    this.backend.addStat(stats);
+    });
+
     await this.lotDataAlert(converted_number_of_vehicles);
 
   }

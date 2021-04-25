@@ -1,3 +1,4 @@
+import { StaticSymbol } from '@angular/compiler';
 import { Injectable, Query } from '@angular/core';
 
 import firebase from 'firebase';
@@ -89,7 +90,12 @@ export class BackendService {
       resolve(coords);
     });
   }
+  /* @breif: getStats() will return document data from every
+             lot in our "stats" collection from firestore. This is
+             used in chart/graph generation.
 
+     @returns: a an ARRAY of STAT interface objects, if the Promise is resolved.   
+  */
   async getStats(lotName:string):Promise<Array<Stat>> {
     let stats:Array<Stat> = [];
     let stat:Stat = null;
@@ -116,16 +122,51 @@ export class BackendService {
     });
   }
 
-  addStat(stats){
-    this.database.collection('stats').add(stats);
+  /* @breif: addStat() will insert an event into the "stats" collection,
+            simulating the entrance/exit from a lot. Used in the testing UI
+
+     @returns: a doc.id if added; a 0 otherwise. 
+  */
+  addStat(stats:Stat):string {
+    let status: string = "0"; 
+    this.database.collection('stats').add(stats).then((res) => {
+      status = res.id;
+    }).catch((err) => {
+      console.log("Could not add statistic.")
+    });
+
+    return status;
   } 
 
-  // pulled updateItem from 546 class code
-  updateItem(newValues){
-    let newInfo = this.database.collection("lots").doc(newValues.id).update(newValues);
+  /* @breif: updateItem() will update an event in the "lots" collection.
+
+     @returns: an "OK" if added; a "0" otherwise. 
+  */
+  updateItem(newValues):string {
+    let status:string = "0"
+    this.database.collection("lots").doc(newValues.id).update(newValues)
+      .then((res) => {
+          status = "OK"; 
+      }).catch((err) => {
+          console.log("Could not update item.") 
+      });
+
+    return status;
   }
 
+  /* @breif: newPurchase() will insert an event into the "purchase"
+             collection.
+
+     @returns: a doc.id if added; a 0 otherwise. 
+  */
   newPurchase(purchase){
-    this.database.collection('purchases').add(purchase)
+    let status: string = "0"; 
+    this.database.collection('purchases').add(purchase).then((res) => {
+      status = res.id;
+    }).catch((err) => {
+      console.log("Could not add purchase.")
+    });
+
+    return status;
   }
 }
