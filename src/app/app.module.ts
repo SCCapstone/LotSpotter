@@ -20,6 +20,25 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { AgmCoreModule } from '@agm/core';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
+import firebase from 'firebase'; 
+
+/*
+Error thrown on 4/25 for firebase not initing soon enough. This was the
+solution I found:
+https://stackoverflow.com/questions/40563140/error-no-firebase-app-default-has-been-created-call-firebase-app-initiali
+
+AS
+*/ 
+firebase.initializeApp({
+  apiKey: "AIzaSyAQN02izLyzeBTCBsBIADHoWSMu8nOfLWI",
+  authDomain: "lotspotter-ba109.firebaseapp.com",
+  databaseURL: "https://lotspotter-ba109.firebaseio.com",
+  projectId: "lotspotter-ba109",
+  storageBucket: "lotspotter-ba109.appspot.com",
+  messagingSenderId: "142655337490",
+  appId: "1:142655337490:web:986c04ebfa6dd8cbef14cb",
+  measurementId: "G-SBTVL9CDG0"
+});
 
 @NgModule({
   declarations: [AppComponent],
