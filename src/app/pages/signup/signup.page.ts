@@ -17,7 +17,6 @@ export class SignupPage implements OnInit {
     password:"",
     usertype:""
   }
-  
 
   constructor(
     private router: Router,
@@ -28,64 +27,57 @@ export class SignupPage implements OnInit {
 
   ngOnInit() {}
 
-   signUp(email, password){
+  /* signup() will take the info provided in the HTML to create an account in firebase. */
+  signUp(email, password){
     var self = this;
     this.user.email = email.value;
     this.user.password = password.value;
 
-
-
-
     this.afAuth.createUserWithEmailAndPassword(this.user.email, this.user.password).then(function(result){
-			var user = firebase.auth().currentUser;
-			 var db = firebase.firestore();
-		          db.collection("users").doc(user.uid).set({
-                'uid':user.uid,
-                'email':user.email,
-                'favorites':[],
-                'permits':[]
-		            		          
-		      })
-		      .then(function(docRef) {
-		          console.log("user written with ID: " + user.uid);
-		      })
-		      .catch(function(error) {
-		          console.error("Error adding document: ", error);
-		      });
+      let user = firebase.auth().currentUser;
+      let db = firebase.firestore();
+      // Create the user in firebase. 
+      db.collection("users").doc(user.uid).set({
+        'uid':user.uid,
+        'email':user.email,
+        'favorites':[],
+        'permits':[]
+      }).then(function(docRef) {
+        // console.log("user written with ID: " + user.uid);
+      }).catch(function(error) {
+        console.error("Error adding document: ", error);
+      });
+      // console.log("finished creating account")
+      // console.log("Account created with userID: "+user.uid)
+      self.signUpNotification();
+      self.router.navigate(["/login"]);
 
-		  	console.log("finished creating account")
-		  	console.log("Account created with userID: "+user.uid)
-
-        self.signUpNotification();
-        self.router.navigate(["/login"]);
-        
-	}).catch(error => {
-        switch (error.code) {
-           case 'auth/email-already-in-use':
-             var message = "This email is already in use by another account."
-             self.failedTosignUpNotification(message)
-             break;
-           case 'auth/invalid-email':
-            var message = "This email not valid."
-             self.failedTosignUpNotification(message)
-             break;
-           case 'auth/operation-not-allowed':
-            var message = "This operation is not allowed."
+    }).catch(error => {
+      /* Relate the error code to it's use for the user. A string of numbers
+         wouldn't be too useful for a user, so we need to do this. */
+      switch (error.code) {
+          case 'auth/email-already-in-use':
+            var message = "This email is already in use by another account."
             self.failedTosignUpNotification(message)
-             break;
-           case 'auth/weak-password':
-            var message = "Your password must be at least 6 characters."
+            break;
+          case 'auth/invalid-email':
+          var message = "This email not valid."
             self.failedTosignUpNotification(message)
-             break;
-           default:
-             console.log(error.message);
-             break;
-         }
-     });
-   
- 
-
-
+            break;
+          case 'auth/operation-not-allowed':
+          var message = "This operation is not allowed."
+          self.failedTosignUpNotification(message)
+            break;
+          case 'auth/weak-password':
+          var message = "Your password must be at least 6 characters."
+          self.failedTosignUpNotification(message)
+            break;
+          default:
+            console.log(error.message);
+            break;
+        }
+    });
+  
   }
 
   async signUpNotification() {

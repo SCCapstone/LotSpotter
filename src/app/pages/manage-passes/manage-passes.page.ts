@@ -1,8 +1,9 @@
+/* NOTE: This page populates with passes that are both purchased in the app
+   and passes that are added manually. */
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PassID } from '../../interfaces';
 import firebase from 'firebase';
-
 import { AuthenticationService } from '../../services/authentication-service';
 import { AlertController } from '@ionic/angular';
 
@@ -11,6 +12,7 @@ import { AlertController } from '@ionic/angular';
   templateUrl: './manage-passes.page.html',
   styleUrls: ['./manage-passes.page.scss'],
 })
+
 export class ManagePassesPage implements OnInit {
 
   private db = firebase.firestore();
@@ -23,6 +25,7 @@ export class ManagePassesPage implements OnInit {
   constructor(private router: Router,
               private alert: AlertController,
               private auth: AuthenticationService) {
+    /* Authtication protection: passes can only be displayed for a logged in user. */
     this.auth.getLoginState().subscribe(value => {
       this.loginState = value;
     });
@@ -32,6 +35,8 @@ export class ManagePassesPage implements OnInit {
     var self = this;
     if (this.loginState) {
       self.uid = this.auth.userData.uid;
+      /* Grab all the passes that the user owns from the 'pass' collection. Create a local copy 
+         for quick access and display. */
       self.db.collection("pass").where("uid","==",self.uid).onSnapshot(function(querySnapshot) {
           self.permits=[];
           querySnapshot.forEach(function(doc) {
@@ -41,13 +46,13 @@ export class ManagePassesPage implements OnInit {
                 expire: doc.data().expire,
                 id: doc.id
               };
-              
               self.permits.push(temp);
           });
       });
     }
   }
 
+  /* For routing, but with additional layers of auth protection. */
   toAddPermit() {
     if (this.loginState) {
       this.router.navigate(['/add-permit']);
@@ -56,7 +61,10 @@ export class ManagePassesPage implements OnInit {
     }
   }
 
+  /* toggler() handles the display of expired/current passes. This function needs 
+     to query firebase when it's updated.*/
   toggler():boolean {
+    // The case to show ALL owned passes, both current and expired. 
     if (this.show_expired) {
       var self = this;
       if (this.loginState) {
@@ -78,6 +86,7 @@ export class ManagePassesPage implements OnInit {
         this.showAlert("Not logged in. Not passes can be found.");
       }
       return true;
+    // The case to handle displaying only CURRENT passes.
     } else {
       var self = this;
       if (this.loginState) {
@@ -92,6 +101,8 @@ export class ManagePassesPage implements OnInit {
                   expire: doc.data().expire,
                   id: doc.id
                 };
+                /* Check today's date, compare to what's found on the document. If
+                   it's current--add it. */
                 let x = new Date(temp.expire);
                 if(self.today < x.getTime()) {
                   self.permits.push(temp);
@@ -103,7 +114,7 @@ export class ManagePassesPage implements OnInit {
       }
       return true;
     }
-    return false;
+    return false; // catch all
   }
 
   async showAlert(msg:string) {
@@ -115,6 +126,8 @@ export class ManagePassesPage implements OnInit {
     await alert.present();
   }
 
+  /* cardClick() handles the user's option to delete passes they could have entered incorrectly, 
+     or that could just not be desired anymore. */
   async cardClick(item) {
     const alert = await this.alert.create({
       message: "Would you like to delete this pass?",
@@ -135,6 +148,5 @@ export class ManagePassesPage implements OnInit {
     });
     alert.present();
   }
-
-
+  
 }

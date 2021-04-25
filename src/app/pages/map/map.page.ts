@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { BackendService } from 'src/app/services/backend.service';
-import { Lot, MapPin, Pass } from '../../interfaces';
+import { MapPin} from '../../interfaces';
 
 
 @Component({
@@ -15,7 +15,7 @@ import { Lot, MapPin, Pass } from '../../interfaces';
     public zoom: number = 14;
     private pins: Array<MapPin> = [];
 
-    private lat: number; 
+    private lat: number; // These are each bound values.
     private long: number; 
   
     constructor( private geolocation: Geolocation,
@@ -25,7 +25,7 @@ import { Lot, MapPin, Pass } from '../../interfaces';
 
     ngOnInit() {
       this.getMapPins();   
-      // Get a user's current location.
+      // Get a user's current location for the agm-cirle.
       let options = { timeout: 10000, enableHighAccuracy: true, maximumAge: 3600 };
       this.geolocation.getCurrentPosition(options).then(resp => {
           console.log(resp.coords)
@@ -37,17 +37,31 @@ import { Lot, MapPin, Pass } from '../../interfaces';
         });
     }
 
+    /* getMapPins() calls the backend service to get the Coordinates of lots
+       in firebase, then populates a local list to be read by the HTML.
+       
+       Returns a PROMISE with a 1 if successful, 0 otherwise. */
     async getMapPins() {
+      let status: number = 0;
       await this.backend.getCoordinates().then((res) => {
         this.pins = res;
-      })
+      });
+
+      if (this.pins.length > 0) {
+        status = 1;
+      }
+
+      return new Promise<number>((resolve, reject) => {
+        if (status != 0) resolve(status);
+        else reject(status)
+      });
     }
 
+    /* Navigation for the click of each pin, to it's detail page. */
     toLot(name:string):void {
       this.router.navigate(["/lot-detail",name]);
     }
 
-    
   }
   
 

@@ -34,70 +34,26 @@ export class PasswordResetPage implements OnInit {
 
   }
 
-
-  async wrongEmailOrPasswordAlert() {
-    const alert = await this.alertController.create({
-      message: 'The credentials you provided do not match the credentials of the currently logged in user.',
-      buttons: ['OK'],
-    });
-  
-    await alert.present();
-    let result = await alert.onDidDismiss();
-    console.log(result);
-  }
-
-
-  async newPasswordsDontMatch() {
-    const alert = await this.alertController.create({
-      message: 'The new passwords you provided do not match each other.',
-      buttons: ['OK']
-    });
-    await alert.present();
-    let result = await alert.onDidDismiss();
-    console.log(result);
-  }
-
   signOut(){
     var self = this;
     this.afAuth.signOut().then( function() { 
-      console.log("logged out")
+      // Change the login state for the authentication protections.
       self.authService.setLoginState(false);
     })
    }
-
-  async passwordChangeSuccess() {
-    const alert = await this.alertController.create({
-      message: 'Your password has successfully been changed. Signing you out and routing you to the login page!',
-      buttons: [
-        {
-          text: 'OK',
-          handler: () => {
-            this.signOut();  
-            this.router.navigate(["/login"])
-          }
-        }
-      ],
-      
-    });
-    await alert.present();
-    let result = await alert.onDidDismiss();
-    
-    console.log(result);
-  }
-
-  
-
-
 
   changePassword(form) {
     var self = this;
     const user = firebase.auth().currentUser;
     
+    /* The case for incorrect credentials */
     if (user.email != form.email) {
       self.wrongEmailOrPasswordAlert();
     } 
 
     if (user.email == form.email) {
+      /* Use firebase's auth API to hangle the change password.
+        each of these cases also sends a prompt to the user. */
       const credential = firebase.auth.EmailAuthProvider.credential(user.email, form.oldPassword)
       user.reauthenticateWithCredential(credential).then( success => {
         if (form.newPassword != form.confirmNewPassword) {
@@ -108,14 +64,51 @@ export class PasswordResetPage implements OnInit {
           user.updatePassword(form.confirmNewPassword).then(function(){
             self.passwordChangeSuccess();
           })
-
         }
       }).catch(error => {
         self.wrongEmailOrPasswordAlert();
       })
-
-      
     }
   }
+
+  /* The three below functions are alerts for the user to know the status of thier 
+     password reset. */
+     async wrongEmailOrPasswordAlert() {
+      const alert = await this.alertController.create({
+        message: 'The credentials you provided do not match the credentials of the currently logged in user.',
+        buttons: ['OK'],
+      });
+    
+      await alert.present();
+      let result = await alert.onDidDismiss();
+      console.log(result);
+    }
+  
+    async newPasswordsDontMatch() {
+      const alert = await this.alertController.create({
+        message: 'The new passwords you provided do not match each other.',
+        buttons: ['OK']
+      });
+      await alert.present();
+      let result = await alert.onDidDismiss();
+      console.log(result);
+    }
+  
+    async passwordChangeSuccess() {
+      const alert = await this.alertController.create({
+        message: 'Your password has successfully been changed. Signing you out and routing you to the login page!',
+        buttons: [
+          {
+            text: 'OK',
+            handler: () => {
+              this.signOut();  
+              this.router.navigate(["/login"])
+            }
+          }
+        ],  
+      });
+      await alert.present();
+      let result = await alert.onDidDismiss();
+    }
 
 }

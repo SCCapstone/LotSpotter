@@ -1,21 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-
 import { Router,ActivatedRoute } from '@angular/router';
 import firebase from 'firebase';
-
 import { BackendService } from '../../services/backend.service';
 import { Lot, Stat } from '../../interfaces';
 import { LocationService } from 'src/app/services/location.service';
-
 import { AuthenticationService } from "../../services/authentication-service";
-
 import { Chart } from 'chart.js';
 import { parseI18nMeta } from '@angular/compiler/src/render3/view/i18n/meta';
-
 import { SMS } from '@ionic-native/sms/ngx';
 import { compileComponentFromMetadata, rendererTypeName } from '@angular/compiler';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx'; 
-
 import { AlertController } from '@ionic/angular';
 
 @Component({
@@ -25,9 +19,7 @@ import { AlertController } from '@ionic/angular';
 export class LotDetailPage implements OnInit {
 
   // Declare variables for charts and graphs
-
   public lotdata: number[];
-  
   private openSpots:number = 0;
   private visible:boolean = true;
   private statistics:Array<Stat> = [];
@@ -69,9 +61,12 @@ export class LotDetailPage implements OnInit {
     this.authService.setFavorites();
   }
 
+  /* fetchLotData() uses the activated route to get the dynamic parameter from the
+     routing module, get the data from firebase, then populate the page's data. */
   async fetchLotData() {
-    // var self = this;
+    // We get to this page from an Activated Route
     let param:string = this.route.snapshot.paramMap.get("name"); // src: https://www.youtube.com/watch?v=DZrWzoW4_4M
+    
     await this.backend.getLotData(param).then((res) => {
       this.currentLot = {
         name:res.name,
@@ -83,52 +78,44 @@ export class LotDetailPage implements OnInit {
         lotType:res.lotType,
         id:res.id
       }
+      
       this.openSpots = res.maxCap - res.currCap;
       // This is used for the static map.
       this.coords = "" + this.currentLot.loc.latitude + "," + this.currentLot.loc.longitude;
+
       this.map = "https://maps.googleapis.com/maps/api/staticmap?center=Univeristy+of+South+Carolina,Columbia,SC\
       &zoom=14&size=600x300&maptype=roadmap \
       &markers=color:blue%7Clabel:Here%7C" + this.coords +
       "&key=AIzaSyB7Xv6-oY-j1-PuLSfpd6WA4gDORz1WVmE";
 
-      // For favorites star
+      // For favorites star in the top right, refresh favorites, then star it if needed.
       var starred:Array<string> = this.authService.setFavorites();
-      console.log("Starred: "+starred);
       if(starred.indexOf(this.currentLot.name) == -1) {
         this.visible = false;
       } else {
         this.visible = true;
       }
-      
-      console.log("visible = "+this.visible);
-      // TODO: Call the image API request.
     }).catch((message) => {
       console.log("Could not get lot data.")
     });
 
-    console.log("Viewing Lot: " + param);
-    // console.log("Address is: "+ this.currentLot.addr)
-    // console.log("Address Second is: "+ this.currentLot.addr)
-
-    console.log(Number(this.openSpots),"  ",Number(this.currentLot.currCap),"  ",Number(this.currentLot.maxCap))
-    this.showChart();
-    this.showChart2(this.currentLot);
-
+    this.lineChart(); 
+    this.barChart(this.currentLot); 
   }
 
+  /* Uses the icon on the page as a button to navigate the the user
+     to thier phone's maps app for directions. */
   toLot(location:firebase.firestore.GeoPoint):void {
     this.locServ.openMapsApp(location.latitude + "," + location.longitude); 
   }
 
-  getImage() {
-    // TODO: get the static api request for each lot.
-  }
-
+  /* share() is responsible for sending friends a text with the lots number of 
+     remaining spaces. This will prompt the user's messaging platform. */
   share(lot:Lot):void {
     let mesg:string = "Go park in " + lot.name + ". There's " + 
         (lot.maxCap-lot.currCap) + " spaces remaining. It's located at:\n " +
         lot.addr + "\n\n-From your friends, LotSpotter";
-    // console.log(mesg);
+
     this.social.shareViaSMS(mesg,"").then((res) =>{
       this.showAlert("Going to messages...");
       console.log(res);
@@ -138,6 +125,10 @@ export class LotDetailPage implements OnInit {
 
   }
 
+  /* A function for AlertController creation and prompt.
+  
+     Requires a text string for the dialog box in the alert.
+  */
   async showAlert(text:string) {
     const temp = await this.alert.create({
       message: text,
@@ -146,6 +137,8 @@ export class LotDetailPage implements OnInit {
     await temp.present();
   }
 
+  /* The two below functions are called by the star icon in the top of
+     the page, for favorites. */
   addFavorites(lotName:string) {
       this.authService.updateFavorites(lotName);
   }
@@ -154,14 +147,19 @@ export class LotDetailPage implements OnInit {
       this.authService.updateFavorites(lotName);
   }
 
-  async showChart() {
-    // Over time chart
-    let param:string = this.route.snapshot.paramMap.get("name");
-    console.log("Getting stats from "+param);
+  /* lineChart() will read all the simulated entries/exits in the
+     'stats' fb collection, sort them by time, parse for the specific
+     lot's stats, and create a graph over time.
 
+     This is an intensive function that could be delayed on page load.
+  */
+  async lineChart() {
+    // Grab lot name from the active route.
+    let param:string = this.route.snapshot.paramMap.get("name");
+
+    // Retrieve the collection of simulated lot entries and exits.
     await this.backend.getStats(param).then((res) => {
       this.statistics = res;
-      
       this.statistics.sort((a,b) => a.time.toDate().getTime() - b.time.toDate().getTime());
     })
 
@@ -212,7 +210,9 @@ export class LotDetailPage implements OnInit {
     this.visible = !this.visible;
   }
 
-  showChart2(curr_lot) {
+  /* barChart() plots the number of spaces open, remaining, and in use. 
+  */
+  barChart(curr_lot) {
     // Current standings chart
     var myChart = new Chart("myChart2", {
       type: 'bar',
@@ -245,7 +245,7 @@ export class LotDetailPage implements OnInit {
               }]
           }
       }
-  });
+    });
   }
 
- }
+}

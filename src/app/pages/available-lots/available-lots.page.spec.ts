@@ -15,6 +15,7 @@ describe('AvailableLotsPage', () => {
       imports: [IonicModule.forRoot(), RouterTestingModule]
     }).compileComponents();
 
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
     fixture = TestBed.createComponent(AvailableLotsPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -29,4 +30,9 @@ describe('AvailableLotsPage', () => {
 
     expect(temp).toBeGreaterThan(0);
   })
+
+  afterEach(()=> {
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 5000;
+  });
+  
 });

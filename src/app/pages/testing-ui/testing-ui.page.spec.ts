@@ -16,6 +16,7 @@ describe('TestingUiPage', () => {
       imports: [IonicModule.forRoot(),ReactiveFormsModule, RouterModule.forRoot([])]
     }).compileComponents();
 
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
     fixture = TestBed.createComponent(TestingUiPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -23,5 +24,14 @@ describe('TestingUiPage', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should populate lots', () => {
+    let temp:number = component.fetch();
+    expect(temp).toBeGreaterThan(0);
+  })
+
+  afterEach(() => {
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 5000;
   });
 });
