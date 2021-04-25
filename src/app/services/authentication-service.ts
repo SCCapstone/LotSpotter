@@ -1,6 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 import auth from "../../../node_modules/firebase"
-import { User } from "./../interfaces";
+import { User, Pass } from "./../interfaces";
 import { Router, ActivatedRoute} from "@angular/router";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
@@ -23,6 +23,9 @@ export class AuthenticationService {
   // I made this second login state value, because local storage is
   // acting very finnicky. - Austin
   private loggedIn2:BehaviorSubject<boolean>;
+
+  public favorites:Array<string> = [];
+  public permits:Array<Pass> = [];
 
   constructor(
     public afStore: AngularFirestore,
@@ -123,50 +126,51 @@ export class AuthenticationService {
     return this.loggedIn2.asObservable();
   }
 
+  setFavorites(){
+    var self = this;
+    firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
+    .onSnapshot(function (querySnapshot) {
+      self.favorites = querySnapshot.data().favorites;
+    })
+    console.log("Favorites: "+this.favorites);
+    return this.favorites;
+  }
+  
+  updateFavorites(name:string){
+    this.setFavorites();
+    var index = this.favorites.indexOf(name);
+    if(index == -1) {
+      this.favorites.push(name);
+    } else {
+      this.favorites.splice(index, 1);
+    }
+    console.log("Changes made");
+    firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
+    .update({favorites: this.favorites});
+    this.setFavorites();
+  }
+  
+  setPermits(){
+    var self = this;
+    firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
+    .onSnapshot(function (querySnapshot) {
+      self.permits = querySnapshot.data().permits;
+    })
+    console.log("Permits: "+ this.permits);
+    return this.permits;
+  }
+  
+  updatePermits(permit:Pass){
+    this.setPermits();
+    var index = this.permits.indexOf(permit);
+    if(index == -1) {
+      this.permits.push(permit);
+    } else {
+      this.permits.splice(index, 1);
+    }
+    console.log("Changes made");
+    firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
+    .update({permits: this.permits});
+    this.setPermits();
+  }
 }
-
-/* These weren't used.
-
-  // Login in with email/password
-  SignIn(email, password) {
-    if(this.DEBUG) console.log("in Signin()"); 
-    return this.ngFireAuth.signInWithEmailAndPassword(email, password)
-    .then((result)=> {
-      //localStorage.setItem('user', result.user)
-    }).catch((error) => {
-      window.alert(error)
-    })
-  }
-
-  // Sign-out 
-  SignOut() {
-    if(this.DEBUG) console.log("in SignOut()"); 
-    this.setLoginState(false);
-    return this.ngFireAuth.signOut().then(() => {
-      localStorage.removeItem('user');
-      localStorage.setItem('user.userType', JSON.stringify("Unknown"));
-      this.userData.email = "Not Logged In";
-      this.userData.uid = "";
-      this.router.navigate(['login']);
-      console.log("User sucessfully logged out");
-      console.log("User Type: "+this.userData.userType+"\nEmail: "+this.userData.email);
-    })
-  }
-
-  // Auth providers
-  AuthLogin(provider) {
-    if(this.DEBUG) console.log("in AuthLogin()"); 
-    this.setLoginState(true);
-    return this.ngFireAuth.signInWithPopup(provider)
-    .then((result) => {
-       this.ngZone.run(() => {
-          this.router.navigate(['home']);
-        })
-      this.SetUserData(result.user);
-    }).catch((error) => {
-      window.alert(error)
-    })
-  }
-
-}
-*/

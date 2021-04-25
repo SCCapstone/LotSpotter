@@ -3,6 +3,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { AvailableLotsPage } from './available-lots.page';
 
+import { RouterTestingModule } from '@angular/router/testing';
+
 describe('AvailableLotsPage', () => {
   let component: AvailableLotsPage;
   let fixture: ComponentFixture<AvailableLotsPage>;
@@ -10,7 +12,7 @@ describe('AvailableLotsPage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ AvailableLotsPage ],
-      imports: [IonicModule.forRoot()]
+      imports: [IonicModule.forRoot(), RouterTestingModule]
     }).compileComponents();
 
     fixture = TestBed.createComponent(AvailableLotsPage);

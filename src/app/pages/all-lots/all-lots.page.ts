@@ -6,6 +6,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import { LocationService } from '../../services/location.service';
 import { BackendService } from 'src/app/services/backend.service';
+import { AuthenticationService } from 'src/app/services/authentication-service';
 
 @Component({
   selector: 'app-all-lots',
@@ -17,12 +18,14 @@ export class AllLotsPage implements OnInit {
   private database = firebase.firestore();
   private lots:Lot[] = [];
 
-  constructor( private locServ: LocationService, private backend: BackendService) 
+  constructor( private locServ: LocationService, 
+                private backend: BackendService,
+                private auth: AuthenticationService) 
   { }
 
   ngOnInit() {
     this.fetch();
-    this.backend.setFavorites();
+    this.auth.setFavorites();
   }
 
   toLot(location:firebase.firestore.GeoPoint):void {

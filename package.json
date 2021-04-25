@@ -22,6 +22,7 @@
     "@angular/platform-browser": "~10.0.0",
     "@angular/platform-browser-dynamic": "~10.0.0",
     "@angular/router": "~10.0.0",
+    "@ionic-native-mocks/native-storage": "^2.0.12",
     "@ionic-native/core": "^5.30.0",
     "@ionic-native/geolocation": "^5.32.0",
     "@ionic-native/google-maps": "^5.27.0-beta-20200630",
