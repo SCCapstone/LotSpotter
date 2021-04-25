@@ -4,6 +4,8 @@ import firebase from 'firebase';
 import { BackendService } from 'src/app/services/backend.service';
 import { AlertController } from '@ionic/angular';
 import {AngularFireAuth} from '@angular/fire/auth';
+import { stat } from 'node:fs';
+import { StaticSymbol } from '@angular/compiler';
 
 @Component({
   selector: 'app-signup',
@@ -28,7 +30,8 @@ export class SignupPage implements OnInit {
   ngOnInit() {}
 
   /* signup() will take the info provided in the HTML to create an account in firebase. */
-  signUp(email, password){
+  signUp(email, password):boolean {
+    let status: boolean = false;
     var self = this;
     this.user.email = email.value;
     this.user.password = password.value;
@@ -43,7 +46,7 @@ export class SignupPage implements OnInit {
         'favorites':[],
         'permits':[]
       }).then(function(docRef) {
-        // console.log("user written with ID: " + user.uid);
+        status = true; // This is the point of a fully-completed successful login.
       }).catch(function(error) {
         console.error("Error adding document: ", error);
       });
@@ -77,6 +80,8 @@ export class SignupPage implements OnInit {
             break;
         }
     });
+
+    return status;
   
   }
 

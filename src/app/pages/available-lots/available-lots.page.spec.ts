@@ -31,6 +31,6 @@ describe('AvailableLotsPage', () => {
 
   it('should populate lots', () => {
     expectAsync(component.fetch()).toBeResolved();
-  })
+  });
   
 });

@@ -32,4 +32,8 @@ describe('SettingsPage', () => {
     fixture.detectChanges();
   }));
 
+  it('should render title', () => {
+    const comp = fixture.debugElement.nativeElement;
+    expect(comp.querySelector('ion-title').textContent).toContain("Settings");
+  });
 });
