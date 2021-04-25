@@ -92,6 +92,8 @@ export class PurchaseAPassPaymentPage implements OnInit {
     
   }
 
+  // Takes payment information entered by user, checks the validity, and passes it and 
+  // all other purchase information to the review page
   async goToReview(value) {
 
     console.log(value)
@@ -110,6 +112,9 @@ export class PurchaseAPassPaymentPage implements OnInit {
     // Check that all field values are filled
     if(this.purchase.card_name != "" && this.purchase.card_number != "" && this.purchase.exp_date != "" && this.purchase.cvv != "" && this.purchase.card_zip_code){
 
+      // Valid Case 1: User inputs card as '1234 5678 9012 3456'
+      // Length must be 19 numberic characters (including spaces)
+      // CVV must be a three digit number 
       if(this.purchase.card_number.includes(' ')==true){
 
         if(this.purchase.card_number.length == 19){
@@ -157,6 +162,9 @@ export class PurchaseAPassPaymentPage implements OnInit {
           console.log(result)
         }
       }
+      // Valid Case 2: User inputs card number as '1234567890123456'
+      // Length must be 16 numeric characters
+      // CVV must be three numeric characters
       else{
         if(this.purchase.card_number.length == 16 && !isNaN(Number(this.purchase.card_number))){
           if(!isNaN(Number(this.purchase.cvv)) && (Number(this.purchase.cvv) >= 100 && Number(this.purchase.cvv) <= 999)){

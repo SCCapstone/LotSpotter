@@ -8,6 +8,7 @@
 </ion-header>
 
 <ion-content padding>
+  <!-- Step 1 of the Progress Bar -->
   <div>
     <ion-icon color="primary" class="pass" name="car-sport-outline"></ion-icon>
     <ion-icon color="primary" class="shipping" name="mail-outline"></ion-icon>
@@ -16,26 +17,26 @@
     <ion-progress-bar color="primary" value="0.20"></ion-progress-bar>
     </div>
   <br>
+    <!-- Card for the Garage Permit -->
     <ion-card >
         <div class="format">
           <h1> Garage Permit</h1>
           <p>  These permits provide a guaranteed spot in a covered garage. They also allow overnight parking and access to any decal lots.</p>
           <p>  Price: $400/Semester (one garage only)</p>
         </div>
-        <!-- make the choice to pay for either one semester or two -->
+       
         
         <ion-card-content>
           <ion-select slot="end" (ionChange) = "garage_name($event)">
             <ion-select-option *ngFor="let item of garages" [value]="item" >{{item}}</ion-select-option>
           </ion-select>
           <ion-alert-controller></ion-alert-controller>
+          <!-- Button is only enabled when a garage choice is made and submits garage choice to the garagePaymentRoute() function -->
           <ion-button expand="block" [disabled] = "this.set_garage_name == ''" (click)="garagePaymentRoute()">Purchase Garage Pass</ion-button>
         </ion-card-content>
-        <!-- <ion-item>
-          <ion-button expand="block" slot="end" (click)="paymentRoute()">Purchase</ion-button>
-        </ion-item> -->
     </ion-card>
 
+    <!-- Card for the Lot Permit -->
     <ion-card>
       <div class="format">
         <h1>Lot Permit</h1>
@@ -44,6 +45,7 @@
       </div>
 
       <ion-card-content>
+        <!-- Button triggers the lotPaymentRoute() function -->
         <ion-button expand="block" (click)="lotPaymentRoute()">Purchase Lot Pass</ion-button>
       </ion-card-content>
     </ion-card>

@@ -30,11 +30,13 @@ export class PurchaseAPassSelectPage implements OnInit {
   private currentDate = new Date();
   private year = this.currentDate.getFullYear();
 
+  // Semester beginning and end dates
   private springStart = new Date(this.year, 0, 1);
   private springEnd = new Date(this.year, 7, 1);
   private fallStart = new Date(this.year, 7, 2);
   private fallEnd = new Date(this.year, 11, 31);
 
+  // Array of garages on campus
   private garages = ["Sumter Street Garage", "Hampton Garage", "Close-Hipp Garage", "Senate Street Garage", "Bull Street Garage", "Pendleton Street Garage", "Blossom Street Garage", "Athletic Village Garage"];
  
   purchase:Purchase = {
@@ -79,6 +81,7 @@ export class PurchaseAPassSelectPage implements OnInit {
     this.fetch();
   }
 
+  // Gets current information in 'lots' database
   fetch() {
     var self = this;
     this.database.collection('lots').onSnapshot(function(querySnapshot) {
@@ -99,12 +102,14 @@ export class PurchaseAPassSelectPage implements OnInit {
     });
   }
 
+  // Keeps track of the garage name as it is changed 
   garage_name($event){
     console.log($event.detail.value);
     this.set_garage_name = $event.detail.value;
     console.log(this.set_garage_name)
   }
 
+  // Triggered if the user decides to purchase a garage pass
   async garagePaymentRoute(){
 
     console.log(this.set_garage_name)
@@ -117,6 +122,7 @@ export class PurchaseAPassSelectPage implements OnInit {
     this.purchase.pass_type = "Garage";
     this.purchase.garage_name = this.set_garage_name;
 
+    // If the current date is in the spring or summer semester then the user can only purchase a pass for the spring
     if(this.currentDate >= this.springStart && this.currentDate < this.fallStart){
       const alert = await this.alertController.create({
         header: 'Which semesters would you like your pass to be valid for?',
@@ -156,6 +162,7 @@ export class PurchaseAPassSelectPage implements OnInit {
       await alert.present();
     
     }
+    // If the current date is in the fall semester then the user can purchase a pass for both fall and spring
     else if (this.currentDate >= this.fallStart && this.currentDate < this.springStart) {
       const alert = await this.alertController.create({
         header: 'Which semesters would you like your pass to be valid for?',
@@ -211,10 +218,9 @@ export class PurchaseAPassSelectPage implements OnInit {
       await alert.present();
     }
 
-
-    // this.router.navigate(['purchase-a-pass-shipping', {purchase:JSON.stringify(this.purchase)}]);
   }
   
+  // Triggered if the user decides to purchase a lot pass
   async lotPaymentRoute() {
    
     if (!this.loginState) {
