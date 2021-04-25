@@ -12,7 +12,7 @@ describe('ManagePassesPage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ManagePassesPage ],
-      imports: [IonicModule.forRoot(),RouterTestingModule,
+      imports: [IonicModule.forRoot(), RouterTestingModule, 
         AngularFireModule.initializeApp({
           apiKey: "AIzaSyAQN02izLyzeBTCBsBIADHoWSMu8nOfLWI",
           authDomain: "lotspotter-ba109.firebaseapp.com",
@@ -22,7 +22,7 @@ describe('ManagePassesPage', () => {
           messagingSenderId: "142655337490",
           appId: "1:142655337490:web:986c04ebfa6dd8cbef14cb",
           measurementId: "G-SBTVL9CDG0"
-        })]
+      })]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ManagePassesPage);

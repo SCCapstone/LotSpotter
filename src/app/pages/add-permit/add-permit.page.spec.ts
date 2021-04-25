@@ -33,4 +33,9 @@ describe('AddPermitPage', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  // On this test, a user is never logged in. The function should catch this.
+  it('should not allow a pass to be added', () => {
+    expectAsync(component.submit()).toBeRejected(); 
+  });
 });
