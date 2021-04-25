@@ -60,10 +60,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/lot-detail/lot-detail.module').then( m => m.LotDetailPageModule)
   },
   {
-    path: 'verify',
-    loadChildren: () => import('./pages/verify/verify.module').then( m => m.VerifyPageModule)
-  },
-  {
     path: 'purchase-a-pass-select',
     loadChildren: () => import('./pages/purchase-a-pass-select/purchase-a-pass-select.module').then( m => m.PurchaseAPassSelectPageModule)
   },
