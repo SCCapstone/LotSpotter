@@ -97,7 +97,35 @@ describe('Navigation', () => {
     page.sideMenuValidation();
     
    });
-   
+  });
+//####################################//
+//####################################//
+//####################################//
+
+   describe('Adding and Removing Cars from a lot', () => {
+  let page: AppPage;
+
+  beforeAll(() => {
+    page = new AppPage();
+    browser.get("/")
+    page.login('test@test.com', 'testtest')
+  })
+
+  beforeEach(() => {
+    page = new AppPage();
+    browser.get("/home")
+  });
+
+ 
+
+  it("The app should allow a user to add or remove cars from a lot", () => {
+    page.loadPage('/home');
+    page.clickLots();
+    page.loadPage('/all-lots');
+    page.getNumberSpaces();
+  });
+});
+    
    
  
 

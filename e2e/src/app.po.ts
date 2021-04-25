@@ -74,6 +74,24 @@ export class AppPage {
   clickDeleteUserAccount() {
     element(by.xpath('/html/body/app-root/ion-app/ion-split-pane/ion-router-outlet/app-settings/ion-content/ion-button[3]')).click();
   }
+  clickTesting() {
+    element(by.xpath("//*[contains(text(), 'Testing UI')]")).click();
+  }
+  addCarToALot() {
+    this.grabNewElements();
+    element(by.xpath("//*[contains(@class, 'select')]")).click();
+    browser.sleep(2000);
+    element(by.xpath("//div[contains(text(), 'AD3')]")).click();
+    browser.sleep(2000);
+    element(by.xpath("//*[contains(text(), 'OK')]")).click();
+    browser.sleep(2000);
+    this.grabNewElements();
+    element(by.xpath("//*[contains(text(), 'Add -')]")).click();
+    element(by.xpath("/html/body/app-root/ion-app/ion-split-pane/ion-router-outlet/app-testing-ui/ion-content/form/ion-item[2]/ion-input/input")).sendKeys("1")
+         browser.sleep(2000);
+    element(by.xpath("//*[text() ='Submit Changes']")).click();
+  }
+
 
   confirmAlert() {
     element(by.xpath('/html/body/app-root/ion-app/ion-alert/div[2]/div[3]/button[2]')).click();
@@ -142,4 +160,21 @@ export class AppPage {
     
     
   }
-}
+
+  getNumberSpaces() {
+    browser.waitForAngularEnabled(false)
+    var numberSpacesString = element.all(by.xpath("//ion-text[contains(text(), 'Spaces Open')]"))[0]
+    this.clickSettings();
+    this.loadPage('/settings');
+    this.clickTesting();
+    this.addCarToALot();
+    //this.loadPage('/home')
+    //this.clickLots();
+    //this.loadPage('/all-lots');
+    //var newNumberSpacesString = element.all(by.xpath("//ion-text[contains(text(), 'Spaces Open')]"))[0]
+    //expect(numberSpacesString != newNumberSpacesString)
+    }
+      
+    
+    
+  }
