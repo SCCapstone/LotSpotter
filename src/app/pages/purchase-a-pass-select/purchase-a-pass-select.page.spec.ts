@@ -26,6 +26,7 @@ describe('PurchaseAPassSelectPage', () => {
         })]
     }).compileComponents();
 
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 11000;
     fixture = TestBed.createComponent(PurchaseAPassSelectPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -33,5 +34,9 @@ describe('PurchaseAPassSelectPage', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  afterEach(() => {
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 5000; 
   });
 });

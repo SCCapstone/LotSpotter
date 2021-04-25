@@ -7,6 +7,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { LocationService } from '../../services/location.service';
 import { BackendService } from 'src/app/services/backend.service';
 import { AuthenticationService } from 'src/app/services/authentication-service';
+import { SelectorFlags } from '@angular/compiler/src/core';
 
 @Component({
   selector: 'app-all-lots',
@@ -18,9 +19,9 @@ export class AllLotsPage implements OnInit {
   private database = firebase.firestore();
   private lots:Lot[] = [];
 
-  constructor( private locServ: LocationService, 
-                private backend: BackendService,
-                private auth: AuthenticationService) 
+  constructor(private locServ: LocationService, 
+              private backend: BackendService,
+              private auth: AuthenticationService) 
   { }
 
   ngOnInit() {
@@ -32,6 +33,7 @@ export class AllLotsPage implements OnInit {
     this.locServ.openMapsApp(location.latitude + "," + location.longitude); 
   }
 
+  /* Fetches list of lots */ 
   doRefresh(event) {
     this.fetch();
     setTimeout(() => {
@@ -40,7 +42,10 @@ export class AllLotsPage implements OnInit {
     }, 2000);
   }
 
-  fetch() {
+  /* fetch() will populate a local list of lots from firebase.
+     This list has every lot from the 'lots' collection. */
+  fetch():number {
+    let status = 0;
     var self = this;
     this.database.collection('lots').onSnapshot(function(querySnapshot) {
       self.lots = [];
@@ -58,5 +63,9 @@ export class AllLotsPage implements OnInit {
         self.lots.push(lot);
       });
     });
+    if (!this.lots.length) {
+      status = 1;
+    }
+    return status;
   }
 }

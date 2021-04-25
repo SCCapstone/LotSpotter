@@ -23,4 +23,10 @@ describe('AvailableLotsPage', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should populate lots', () => {
+    let temp:number = component.fetch();
+
+    expect(temp).toBeGreaterThan(0);
+  })
 });

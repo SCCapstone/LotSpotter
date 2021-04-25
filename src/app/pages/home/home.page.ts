@@ -30,11 +30,14 @@ export class HomePage {
 
   ngOnInit() {
     this.logo = "../assets/images/USC_logo.png";
+    // Pre-populate this list for quicker loading.
     if(this.loginState) {
       this.auth.setFavorites();
     }
   }
 
+  /* The Home page is simply a link to many places and features in the app.
+     All of these functions are used for routing these links. */
   avaliableLotsNav() {
     this.router.navigate(['available-lots']);
   }
@@ -66,6 +69,7 @@ export class HomePage {
   favoritesNav() {
     this.router.navigate(['favorites']);
   }
+
   signOut(){
    var self = this;
    this.afAuth.signOut().then( function() { 
@@ -75,6 +79,7 @@ export class HomePage {
      self.nativeStorage.clear()
    });
   }
+
   signIn(){
     this.router.navigate(['/login']);
   }

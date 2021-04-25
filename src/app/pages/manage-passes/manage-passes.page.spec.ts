@@ -25,6 +25,7 @@ describe('ManagePassesPage', () => {
       })]
     }).compileComponents();
 
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
     fixture = TestBed.createComponent(ManagePassesPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -32,5 +33,9 @@ describe('ManagePassesPage', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  afterEach(() => {
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 5000; 
   });
 });
