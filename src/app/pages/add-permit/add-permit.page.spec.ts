@@ -40,7 +40,8 @@ describe('AddPermitPage', () => {
     expectAsync(component.submit()).toBeRejected(); 
   });
 
-  afterEach(() => {
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 5000;
-  })
+  it('should render title', () => {
+    const comp = fixture.debugElement.nativeElement;
+    expect(comp.querySelector('ion-title').textContent).toContain("Add a Parking Permit");
+  });
 });
