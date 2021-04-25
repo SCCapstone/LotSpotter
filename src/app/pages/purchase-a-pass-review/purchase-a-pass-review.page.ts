@@ -81,7 +81,6 @@ export class PurchaseAPassReviewPage implements OnInit {
   }
   async submitPurchase(){
 
-    // May come back later an add the purchase docID as a permit detail
     this.backend.newPurchase(this.purchase);
 
     
@@ -93,10 +92,14 @@ export class PurchaseAPassReviewPage implements OnInit {
     // between January 1 and August 1 (spring and summer semester) or
     // between August 2 and December 31 (fall and winter semester)
     
+    // If the current date is during the spring/summer then the expiration date
+    // is at the end of the summer semester
     if(this.currentDate >= this.springStart && this.currentDate < this.fallStart){
       this.permitDetails.expire = this.springEnd;
     
     }
+    // If the current date is during the fall/winter, depending on the semesters chosen the 
+    // expriation date is at the end of the fall or spring
     else if (this.currentDate >= this.fallStart && this.currentDate < this.springStart) {
       if(this.purchase.semesters.length == 1){
         if(this.purchase.semesters[0] == "Fall"){
@@ -137,14 +140,17 @@ export class PurchaseAPassReviewPage implements OnInit {
 
   }
 
+// Routes the user and purchase information back to the select page 
 async editLotType(){
   this.router.navigate(['purchase-a-pass-select', {purchase:JSON.stringify(this.purchase)}]);
 }
 
+// Routes the user and purchase information back to the shipping page 
 async editShipping(){
   this.router.navigate(['purchase-a-pass-shipping', {purchase:JSON.stringify(this.purchase)}]);
 }
 
+// Routes the user and purchase information back to the payment page 
 async editCard(){
   this.router.navigate(['purchase-a-pass-payment', {purchase:JSON.stringify(this.purchase)}]);
 }

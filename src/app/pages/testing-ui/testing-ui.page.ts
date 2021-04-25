@@ -51,6 +51,7 @@ export class TestingUiPage implements OnInit {
     this.fetch();
   }
 
+  // Get the current data in the 'lots' database
   fetch() {
     var self = this;
     this.database.collection('lots').onSnapshot(function(querySnapshot) {
@@ -73,22 +74,12 @@ export class TestingUiPage implements OnInit {
     });
   }
 
-
-  // I don't think this does anything, but apparently I wrote it -Cassidy
- 
-  // getLotInfo(name){
-  //   this.backend.getLotData(name).then((res) => {
-  //     this.currentLot = res; 
-  //     // TODO: Call the image API request.
-  //   }).catch((message) => {
-  //     console.log("Could not get lot data.")
-  //   });
-  //   console.log("Viewing Lot: " + name);
-  // }
-  
+  // Gets data input by user to increase/decrease the garage/lot capacity 
   async updateLot(value){
     console.log(value)
     console.log(value.lot_name)
+
+    // Gets the data of the lot/garage chosen to be updated
     let param:string = this.route.snapshot.paramMap.get("value.lot_name");
     console.log(param)
     await this.backend.getLotData(value.lot_name).then((res) => {
@@ -102,11 +93,13 @@ export class TestingUiPage implements OnInit {
     var converted_number_of_vehicles = Number(value.number_of_vehicles)
     this.converted_number_of_vehicles_2 = converted_number_of_vehicles;
     var action = 0;
+    // Adds the number of vehicles specified by the tester to the current lot capacity 
     if(value.operation == "add"){
       action = 1;
       this.new_capacity = this.currentLot.currCap + converted_number_of_vehicles;
       console.log(this.new_capacity);
     }
+    // Removes the number of vehicles specified by the tester from the current lot capacity
     else if(value.operation == "remove")
     {
       action = 0;
@@ -114,11 +107,14 @@ export class TestingUiPage implements OnInit {
       console.log(this.new_capacity);
     }
 
+    // Checks that the new capacity is not greater than the max capacity or less than 0
     if(this.new_capacity > this.currentLot.maxCap || this.new_capacity < 0)
     {
       console.error("Capacity can't be greater than Max Capacity or less than 0");
       return;
     }
+
+    // Update the lot data and stats
     let newValues = {
       name: this.currentLot.name,
       addr: this.currentLot.addr,
@@ -129,14 +125,12 @@ export class TestingUiPage implements OnInit {
       lotType: this.currentLot.lotType,
       id: this.currentLot.id,
     }
-
     let stats = {
       action: action,
       currCap: this.currentLot.currCap,
       lot: this.currentLot.name,
       time: firebase.firestore.Timestamp.fromDate(new Date())
     }
-
     console.log(newValues)
     console.log(newValues.id)
     this.backend.updateItem(newValues);
@@ -171,10 +165,4 @@ export class TestingUiPage implements OnInit {
 
   }
 
-  // Plans for later on:
-  //   Add in a pop up error if user enters a number that makes occupancy less than 0 or greater than maxCap and make function quit
-  //   Add in error checking to make sure user enters in numbers
-  //   Display the current number of open spots and max occupancy, maybe make it reactive to reflect what
-  //     user is inputing
-  //   Change icon based on capacity
 }
