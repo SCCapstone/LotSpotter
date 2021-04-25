@@ -31,6 +31,7 @@ export class FavoritesPage implements OnInit {
   constructor( private locServ: LocationService,
                private backend: BackendService,
                private auth: AuthenticationService) { 
+    /* Authentication protection to ensure a logged out user cannot access favorites. */
     this.auth.getLoginState().subscribe(value => {
       this.loginState = value;
     });
@@ -43,6 +44,8 @@ export class FavoritesPage implements OnInit {
     }
   }
 
+  /* toLot() requests LocationService to open the maps app at a given set
+     of coordinates. */
   toLot(location:firebase.firestore.GeoPoint):void {
     this.locServ.openMapsApp(location.latitude + "," + location.longitude); 
   }
@@ -55,6 +58,8 @@ export class FavoritesPage implements OnInit {
     }, 2000);
   }
 
+  /* fetch() will populate a local list of lots from firebase.
+     This list has every lot from the 'lots' collection. */
   async fetch() {
     this.auth.setFavorites();
     var self = this;

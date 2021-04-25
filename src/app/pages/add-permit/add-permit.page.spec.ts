@@ -25,6 +25,7 @@ describe('AddPermitPage', () => {
         })]
     }).compileComponents();
 
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
     fixture = TestBed.createComponent(AddPermitPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -38,4 +39,8 @@ describe('AddPermitPage', () => {
   it('should not allow a pass to be added', () => {
     expectAsync(component.submit()).toBeRejected(); 
   });
+
+  afterEach(() => {
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 5000;
+  })
 });

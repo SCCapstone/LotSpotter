@@ -17,8 +17,8 @@ export class ForgotPasswordPage implements OnInit {
 
   ngOnInit() {
   }
-
-
+  
+  /* The two functions below handle alerts for user notification. */
   async passwordChangeSuccess() {
     const alert = await this.alertController.create({
       message: 'An email has been sent to your LotSpotter email to initiate a password reset. You will now be navigated to the login page.',
@@ -31,12 +31,9 @@ export class ForgotPasswordPage implements OnInit {
           }
         }
       ],
-      
     });
     await alert.present();
     let result = await alert.onDidDismiss();
-    
-    console.log(result);
   }
 
   async passwordChangeNotSuccessful() { 
@@ -46,21 +43,17 @@ export class ForgotPasswordPage implements OnInit {
         {
           text: 'Ok',
           handler: () => {
-
             this.router.navigate(["/login"])
           }
         }
       ],
-      
     });
     await alert.present();
     let result = await alert.onDidDismiss();
-    
-    console.log(result);
-
   }
 
-
+  /* sendEmail() allows users to reset thier passwords. This is where the
+     reset email is sent from. */
   sendEmail(email) {
     var self = this;
     firebase.auth().sendPasswordResetEmail(email.value).then(function() {
@@ -68,8 +61,7 @@ export class ForgotPasswordPage implements OnInit {
     }).catch(function (error) {
       self.passwordChangeNotSuccessful()
 
-    })
-
+    });
   }
 
   

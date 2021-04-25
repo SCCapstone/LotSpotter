@@ -33,7 +33,7 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
     this.logo = "../../../assets/uofscbanner_red.png";
-    var self = this;
+    // This supports the bonus feature to keep a user logged in.
     this.nativeStorage.getItem('creds').then(
       data => this.logIn(data.storedEmail, data.storedPassword)
     );
@@ -46,6 +46,8 @@ export class LoginPage implements OnInit {
     this.menuCtrl.enable(true);
   }
 
+  /* logIn() handles reading the ionic inputs, then logging into the 
+     application with the inputs.*/
   logIn(email, password){
   	var self=this;
     this.validCreds = true;
@@ -65,8 +67,7 @@ export class LoginPage implements OnInit {
           );
         
        }
-
-      //get my users from database 
+      /* Get user from database, after ensuring they exist with afAuth */
       firebase.firestore().collection("users").where("uid", "==", user.uid)
         .get()
         .then(function(querySnapshot) {
@@ -80,8 +81,9 @@ export class LoginPage implements OnInit {
             console.log("Error getting documents: ", error);
         });
     }).catch(error => {
-
-
+      /* Handle the error cases for all the reasons someone shouldn't be able to log in.
+         Each case will determine what prompt will be sent to a user, depending on the code.
+         Simply sending an error code is not very useful to our users. */ 
       switch (error.code) {
         case 'auth/email-already-in-use':
           var message = "This email is already in use by another account."
@@ -112,25 +114,7 @@ export class LoginPage implements OnInit {
           break;
       }
       self.validCreds = false;
-  
-    
-      });
-
-
-  
-
-
-
-  }
-
-
-
-  signupNav() {
-  this.router.navigate(['signup']);
-  }
-
-  forgotPasswordNav() {
-    this.router.navigate(['forgot-password'])
+    });
   }
 
   async failedToLoginAlert(message) {
@@ -143,6 +127,14 @@ export class LoginPage implements OnInit {
         }}]
     });
     await alert.present();
+  }
+
+  signupNav() {
+    this.router.navigate(['signup']);
+  }
+  
+  forgotPasswordNav() {
+    this.router.navigate(['forgot-password'])
   }
 
 }

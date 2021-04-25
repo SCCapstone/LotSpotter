@@ -2,7 +2,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ForgotPasswordPage } from './forgot-password.page';
-import { Router } from '@angular/router';
 
 describe('ForgotPasswordPage', () => {
   let component: ForgotPasswordPage;
