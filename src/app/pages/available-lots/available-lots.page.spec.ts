@@ -9,30 +9,28 @@ describe('AvailableLotsPage', () => {
   let component: AvailableLotsPage;
   let fixture: ComponentFixture<AvailableLotsPage>;
 
+  beforeAll(() => {
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+  });
+  
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ AvailableLotsPage ],
       imports: [IonicModule.forRoot(), RouterTestingModule]
     }).compileComponents();
 
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
     fixture = TestBed.createComponent(AvailableLotsPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should render title', () => {
+    const comp = fixture.debugElement.nativeElement;
+    expect(comp.querySelector('ion-title').textContent).toContain("Available Lots");
   });
 
   it('should populate lots', () => {
-    let temp:number = component.fetch();
-
-    expect(temp).toBeGreaterThan(0);
+    expectAsync(component.fetch()).toBeResolved();
   })
-
-  afterEach(()=> {
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 5000;
-  });
   
 });

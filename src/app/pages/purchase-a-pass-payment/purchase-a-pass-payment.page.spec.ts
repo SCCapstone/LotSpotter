@@ -31,11 +31,8 @@ describe('PurchaseAPassPaymentPage', () => {
     fixture.detectChanges();
   }));
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
-  afterEach(() => {
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 5000;
+  it('should render title', () => {
+    const comp = fixture.debugElement.nativeElement;
+    expect(comp.querySelector('ion-title').textContent).toContain("Payment Information");
   });
 });

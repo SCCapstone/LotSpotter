@@ -22,16 +22,12 @@ describe('TestingUiPage', () => {
     fixture.detectChanges();
   }));
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should render title', () => {
+    const comp = fixture.debugElement.nativeElement;
+    expect(comp.querySelector('ion-title').textContent).toContain("Testing UI");
   });
 
   it('should populate lots', () => {
-    let temp:number = component.fetch();
-    expect(temp).toBeGreaterThan(0);
+    expectAsync(component.fetch()).toBeResolved();
   })
-
-  afterEach(() => {
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 5000;
-  });
 });

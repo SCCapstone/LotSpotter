@@ -40,20 +40,19 @@ import { MapPin} from '../../interfaces';
     /* getMapPins() calls the backend service to get the Coordinates of lots
        in firebase, then populates a local list to be read by the HTML.
        
-       Returns a PROMISE with a 1 if successful, 0 otherwise. */
-    async getMapPins() {
-      let status: number = 0;
+       Returns a PROMISE with a true if successful, false otherwise. */
+    async getMapPins():Promise<boolean> {
+      let status: boolean = false; 
       await this.backend.getCoordinates().then((res) => {
-        this.pins = res;
+        this.pins = res; // Set the local pins to the result. 
+        status = true; 
       });
 
-      if (this.pins.length > 0) {
-        status = 1;
-      }
-
-      return new Promise<number>((resolve, reject) => {
-        if (status != 0) resolve(status);
-        else reject(status)
+      return new Promise<boolean>((resolve, reject) => {
+        if (status == true) {
+          resolve(true);
+        }
+        else reject(false);
       });
     }
 
