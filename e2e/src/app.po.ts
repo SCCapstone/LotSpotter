@@ -26,6 +26,7 @@ export class AppPage {
   }
 
   login(email, password) {
+    browser.waitForAngularEnabled(false)
       this.emailEl.clear().then(() => {
       this.emailEl.sendKeys(email)
          })
@@ -132,5 +133,13 @@ export class AppPage {
     browser.waitForAngularEnabled(false)
     expect(elem.innerText = 'Settings');
 
+  }
+
+  sideMenuValidation() {
+    var elems = element.all(by.xpath("//ion-menu-toggle"));
+    browser.waitForAngularEnabled(false)
+    expect(elems.count()).toBe(8);
+    
+    
   }
 }
