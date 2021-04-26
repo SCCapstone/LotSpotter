@@ -151,7 +151,8 @@ export class TestingUiPage implements OnInit {
   async lotDataAlert(converted_number_of_vehicles) { 
     const alert = await this.alertController.create({
       message: this.currentLot.name + " had " + (this.currentLot.currCap) +
-                " and now has " + this.new_capacity + " spaces filled.", 
+                " and now has " + this.new_capacity + " spaces filled. There are " + 
+                (this.currentLot.maxCap - this.new_capacity) + " spaces left.", 
       buttons: [
         {
           text: 'Ok',

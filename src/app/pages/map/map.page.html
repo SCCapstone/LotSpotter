@@ -2,7 +2,6 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
-      <ion-back-button defaultHref="home" routerDirection="forward"></ion-back-button>
     </ion-buttons>
     <ion-title>
       Map
@@ -13,7 +12,7 @@
 <ion-content>
   <agm-map style="width: 100%; height: 100%;" [latitude]="33.989545" [longitude]="-81.029284" [zoom]="zoom">
     <agm-marker [latitude]="33.989545" [longitude]="-81.029284" label="LotSpotter HQ"></agm-marker>
-    <!-- This specific API (AGM) doesn't have a color property on thier markers. This is my work-around.-->
+    <!-- This specific API (AGM) doesn't have a color property on their markers. This is my work-around.-->
     <agm-circle [latitude]="lat" [longitude]="long" [radius]="35" [label]="You" [fillColor]="'blue'" [fillOpacity]="1"></agm-circle>
     <agm-marker  *ngFor="let pin of pins" [latitude]="pin.lat" [longitude]="pin.long" [label]="pin.spots"
                   (markerClick)="toLot(pin.name)">
