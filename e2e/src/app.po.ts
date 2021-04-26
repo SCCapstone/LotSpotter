@@ -53,7 +53,7 @@ export class AppPage {
   }
 
   click(elementText) {
-    element(by.xpath("//*[contains(text()," + elementText + ")][1]")).click();
+    element.all(by.xpath("//*[contains(text()," + elementText + ")]")).first().click();
   }
 
   clickLots() {
@@ -69,7 +69,7 @@ export class AppPage {
   }
 
   clickSettings() {
-    element(by.xpath("//*[contains(text(), 'Settings')][1]")).click();
+    element.all(by.xpath("//*[contains(text(), 'Settings')]")).first().click();
   }
   clickDeleteUserAccount() {
     element(by.xpath('/html/body/app-root/ion-app/ion-split-pane/ion-router-outlet/app-settings/ion-content/ion-button[3]')).click();
@@ -86,7 +86,7 @@ export class AppPage {
     element(by.xpath("//*[contains(text(), 'OK')]")).click();
     browser.sleep(2000);
     this.grabNewElements();
-    element(by.xpath("//*[contains(text(), 'Add -')]")).click();
+    element.all(by.xpath("//ion-radio")).first().click();
     element(by.xpath("/html/body/app-root/ion-app/ion-split-pane/ion-router-outlet/app-testing-ui/ion-content/form/ion-item[2]/ion-input/input")).sendKeys("1")
          browser.sleep(2000);
     element(by.xpath("//*[text() ='Submit Changes']")).click();
@@ -168,11 +168,11 @@ export class AppPage {
     this.loadPage('/settings');
     this.clickTesting();
     this.addCarToALot();
-    //this.loadPage('/home')
-    //this.clickLots();
-    //this.loadPage('/all-lots');
-    //var newNumberSpacesString = element.all(by.xpath("//ion-text[contains(text(), 'Spaces Open')]"))[0]
-    //expect(numberSpacesString != newNumberSpacesString)
+    this.loadPage('/home')
+    this.clickLots();
+    this.loadPage('/all-lots');
+    var newNumberSpacesString = element.all(by.xpath("//ion-text[contains(text(), 'Spaces Open')]"))[0]
+    expect(numberSpacesString != newNumberSpacesString)
     }
       
     
