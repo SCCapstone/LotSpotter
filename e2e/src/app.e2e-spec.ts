@@ -164,45 +164,38 @@ describe('User can purchase a parking pass', () => {
     page = new AppPage();
     browser.get("/")
     page.login('test@test.com', 'testtest')
+    browser.sleep(1000)
   });
 
-  // beforeEach(() => {
-  //   page = new AppPage();
-  //   browser.get("/");
-  // });
+ 
 
   it("The app should allow a user to navigate to the 'Purchase A Pass' page", () => {
-    page.loadPage('/home');
     page.clickPurchase();
-    page.loadPage('/purchase-a-pass');
     page.validatePurchase();
   });
 
   it("The app should click purchase a parking pass and enter Shipping Information", () => {
-    page.loadPage('/purchase-a-pass-select');
+    browser.waitForAngularEnabled(false);
+    browser.sleep(1000)
     page.clickPurchasePass();
-    page.loadPage('/purchase-a-pass-shipping');
-    // browser.sleep(1000)
+    browser.sleep(1000)
     page.validateShipping();
     page.fillShipping('mike', '123 street pl', '3', 'Columbia', 'SC', 'United States', '29208');
   });
-/*
+
   it("The app should fill payment information then click review order", () => {
-    // page.loadPage('/purchase-a-pass-payment');
     browser.sleep(1000)
     page.validatePayment();
+
     page.fillPayment('mike', '4424570143217732', '123', '29208');
-    page.clickReviewOrder();
   });
-  */
-/*
+  
+
   it("The app should review and place the order", () => {
-    // page.loadPage('/purchase-a-pass-review');
-    // browser.get('')
     browser.sleep(1000)
-    // page.validateOrder();
     page.clickSubmitOrder();
+    browser.sleep(1000)
     page.validatePurchaseSuccess();
-  })
-  */
+  });
+  
 });

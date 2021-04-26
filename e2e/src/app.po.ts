@@ -112,10 +112,10 @@ export class AppPage {
   }
 
   clickReviewOrder() {
-    element(by.xpath("//*[contains(text(), 'Review Order')]")).click()
+    element.all(by.xpath(("//*[@type = 'submit']"))).last().click();
   }
   clickSubmitOrder() {
-    element(by.xpath("//*[contains(text(), 'Submit Order')]")).click();
+    element.all(by.xpath(("//*[@type = 'submit']"))).last().click();
   }
 
   openTimesheetScroll() {
@@ -126,13 +126,13 @@ export class AppPage {
   }
 
   validatePurchaseSuccess() {
-    var purchaseEL = element(by.xpath('//*[@id="alert-12-msg"]'));
+    var purchaseEL = element(by.xpath("//*[@type = 'button']"));
     browser.waitForAngularEnabled(false);
     browser.driver.wait(function () {
       return purchaseEL.isDisplayed().then(function (IsVisible) {
         return IsVisible;
       });
-    }, 10000)
+    }, 1000)
   }
 
   validateAlert() {
@@ -142,7 +142,7 @@ export class AppPage {
       return alertelm.isDisplayed().then(function (IsVisible) {
         return IsVisible;
       });
-    }, 10000)
+    }, 1000)
   }
   validateShipping() {
     var elem = element(by.xpath("//ion-title[text() = 'Shipping Information']"));
@@ -171,7 +171,7 @@ export class AppPage {
     // var yearEl = element(by.xpath('/html/body/app-root/ion-app/ion-picker/div[2]/div[2]/ion-picker-column[2]/div/button[1]'));
     var monthEl = element(by.xpath("//*[contains(text(),'April')]"));
     var yearEl = element(by.xpath("//*[contains(text(),'2025')]"));
-    var doneEl = element(by.xpath('/html/body/app-root/ion-app/ion-picker/div[2]/div[1]/div[2]/button'));
+    var doneEl = element(by.xpath("//*[contains(text(),'Done')]"));
     // var doneEl = element(by.className('picker-toolbar-button sc-ion-picker-md'))
     var cvvEl = element(by.xpath('/html/body/app-root/ion-app/ion-split-pane/ion-router-outlet/app-purchase-a-pass-payment/ion-content/form/ion-item[4]/ion-input/input'));
     var zipEl = element(by.xpath('/html/body/app-root/ion-app/ion-split-pane/ion-router-outlet/app-purchase-a-pass-payment/ion-content/form/ion-item[5]/ion-input/input'));
@@ -184,30 +184,32 @@ export class AppPage {
     });
 
     expEl.click();
-    
-    // monthEl.click();
-    // yearEl.click();
+    browser.sleep(1000)
+    monthEl.click();
+    browser.sleep(1000)
+    //yearEl.click();
+     browser.sleep(1000)
     doneEl.click();
 
-    cvvEl.clear().then(() => {
-      cvvEl.sendKeys(cvv)
-    });
-    zipEl.clear().then(() => {
-      zipEl.sendKeys(zip)
-    });
+     cvvEl.clear().then(() => {
+       cvvEl.sendKeys(cvv)
+     });
+     zipEl.clear().then(() => {
+       zipEl.sendKeys(zip)
+     });
 
-    this.clickReviewOrder();
+     this.clickReviewOrder();
 
   }
 
   fillShipping(name, addr, aprt, city, state, country, zip) {
-    var nameEl = element(by.xpath('/html/body/app-root/ion-app/ion-split-pane/ion-router-outlet/app-purchase-a-pass-shipping/ion-content/form/ion-item[1]/ion-input/input'));
-    var addrEl = element(by.xpath('/html/body/app-root/ion-app/ion-split-pane/ion-router-outlet/app-purchase-a-pass-shipping/ion-content/form/ion-item[2]/ion-input/input'));
-    var aprtEl = element(by.xpath('/html/body/app-root/ion-app/ion-split-pane/ion-router-outlet/app-purchase-a-pass-shipping/ion-content/form/ion-item[3]/ion-input/input'));
-    var cityEl = element(by.xpath('/html/body/app-root/ion-app/ion-split-pane/ion-router-outlet/app-purchase-a-pass-shipping/ion-content/form/ion-item[4]/ion-input/input'));
-    var stateEl = element(by.xpath('/html/body/app-root/ion-app/ion-split-pane/ion-router-outlet/app-purchase-a-pass-shipping/ion-content/form/ion-item[5]/ion-input/input'));
-    var countryEl = element(by.xpath('/html/body/app-root/ion-app/ion-split-pane/ion-router-outlet/app-purchase-a-pass-shipping/ion-content/form/ion-item[6]/ion-input/input'));
-    var zipEl = element(by.xpath('/html/body/app-root/ion-app/ion-split-pane/ion-router-outlet/app-purchase-a-pass-shipping/ion-content/form/ion-item[7]/ion-input/input'));
+    var nameEl = element(by.xpath("//*[@name = 'ion-input-2']"));
+    var addrEl = element(by.xpath("//*[@name = 'ion-input-3']"));
+    var aprtEl = element(by.xpath("//*[@name = 'ion-input-4']"));
+    var cityEl = element(by.xpath("//*[@name = 'ion-input-5']"));
+    var stateEl = element(by.xpath("//*[@name = 'ion-input-6']"));
+    var countryEl = element(by.xpath("//*[@name = 'ion-input-7']"));
+    var zipEl = element(by.xpath("//*[@name = 'ion-input-8']"));
     nameEl.clear().then(() => {
       nameEl.sendKeys(name)
     });
