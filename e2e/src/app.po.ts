@@ -84,7 +84,7 @@ export class AppPage {
   }
 
   clickPurchase() {
-    element(by.xpath("//*[contains(text(), 'Purchase A Pass')]")).click();
+    element.all(by.xpath("//*[contains(text(), 'Purchase Pass')]")).first().click();
   }
 
   clickSettings() {
@@ -274,7 +274,7 @@ export class AppPage {
   }
 
   validatePurchase() {
-    var elem = element(by.xpath("//ion-title[text() = 'Purchase A Pass']"));
+    var elem = element(by.xpath("//ion-title[text() = 'Purchase Pass']"));
     browser.waitForAngularEnabled(false)
     expect(elem.innerText = 'Select Garage/Lot');
 

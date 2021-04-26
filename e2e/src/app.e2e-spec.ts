@@ -186,7 +186,6 @@ describe('User can purchase a parking pass', () => {
   it("The app should fill payment information then click review order", () => {
     browser.sleep(1000)
     page.validatePayment();
-
     page.fillPayment('mike', '4424570143217732', '123', '29208');
   });
   

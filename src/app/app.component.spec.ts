@@ -48,13 +48,4 @@ describe('AppComponent', () => {
     }).compileComponents();
   }));
 
-  it('should initialize the app', async () => {
-    TestBed.createComponent(AppComponent);
-    await platformReadySpy;
-    expect(platformSpy.ready).toHaveBeenCalled();
-    
-    expect(statusBarSpy.styleDefault).toHaveBeenCalled();
-    expect(splashScreenSpy.hide).toHaveBeenCalled();
-  });
-
 });

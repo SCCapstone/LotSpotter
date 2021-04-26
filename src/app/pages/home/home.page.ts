@@ -76,6 +76,7 @@ export class HomePage {
      console.log("logged out")
      self.authService.setLoginState(false);
      self.router.navigate(["/login"]);
+     //clearing the credentials in native storage for the "keep me logged in functionality"
      self.nativeStorage.clear()
    });
   }

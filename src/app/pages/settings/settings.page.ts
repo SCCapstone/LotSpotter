@@ -4,6 +4,7 @@ import { AuthenticationService } from "../../services/authentication-service";
 import { AlertController } from '@ionic/angular';
 import firebase from 'firebase';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 
 @Component({
@@ -21,7 +22,8 @@ export class SettingsPage implements OnInit {
   constructor( public authService: AuthenticationService, 
                public FormBuilder: FormBuilder, 
                public router: Router, 
-               public alertc: AlertController) { }
+               public alertc: AlertController,
+               public nativeStorage: NativeStorage) { }
 
   ngOnInit() {
       /* Updates the local usertype */
@@ -60,11 +62,15 @@ export class SettingsPage implements OnInit {
 
   /* deleteUser() allows for account deletion from within the app. This is use the
      unique id assigned to each user to find their credentials and remove them from
-     authtication. */
+     authentication. */
   deleteUser(){
     // Fetch current user in the database
+    var self = this;
     var user = firebase.auth().currentUser;
     user.delete().then(function() {
+      //clearing the credentials in native storage for the "keep me logged in functionality"
+      self.nativeStorage.clear()
+      
       // console.log(user.uid, " deleted");
       alert("Account deleted.")
     }, function(error) {

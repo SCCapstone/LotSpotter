@@ -5,6 +5,7 @@ import { Validators, FormBuilder, FormControl, FormGroup } from '@angular/forms'
 import { AlertController } from '@ionic/angular';
 import { AuthenticationService } from "../../services/authentication-service";
 import { serializeNodes } from '@angular/compiler/src/i18n/digest';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { Router } from "@angular/router";
 
 @Component({
@@ -22,6 +23,7 @@ export class PasswordResetPage implements OnInit {
     public alertController: AlertController,
     public router: Router,
     public authService: AuthenticationService,
+    public nativeStorage: NativeStorage
   ) { }
 
   ngOnInit() {
@@ -39,6 +41,7 @@ export class PasswordResetPage implements OnInit {
     this.afAuth.signOut().then( function() { 
       // Change the login state for the authentication protections.
       self.authService.setLoginState(false);
+      self.nativeStorage.clear()
     })
    }
 
@@ -63,6 +66,8 @@ export class PasswordResetPage implements OnInit {
         if(form.newPassword == form.confirmNewPassword) {
           user.updatePassword(form.confirmNewPassword).then(function(){
             self.passwordChangeSuccess();
+          }).catch(error => {
+            self.passwordTooShortAlert();
           })
         }
       }).catch(error => {
@@ -83,6 +88,19 @@ export class PasswordResetPage implements OnInit {
       let result = await alert.onDidDismiss();
       console.log(result);
     }
+
+    async passwordTooShortAlert() {
+      const alert = await this.alertController.create({
+        message: 'Your new password must be at least 6 characters long.',
+        buttons: ['OK'],
+      });
+    
+      await alert.present();
+      let result = await alert.onDidDismiss();
+      console.log(result);
+    }
+
+
   
     async newPasswordsDontMatch() {
       const alert = await this.alertController.create({
@@ -101,7 +119,8 @@ export class PasswordResetPage implements OnInit {
           {
             text: 'OK',
             handler: () => {
-              this.signOut();  
+              this.nativeStorage.clear()
+              this.signOut(); 
               this.router.navigate(["/login"])
             }
           }
