@@ -43,7 +43,7 @@ export class AppPage {
   signup(email, password) {
     browser.waitForAngularEnabled(false)
     // this.signupEl.click()
-    // this.loadPage('/signup')
+    // this.loadPage('/signup') 
     this.newemailEl.clear().then(() => {
       this.newemailEl.sendKeys(email)
     })
@@ -58,8 +58,21 @@ export class AppPage {
     this.logOutEl.click()
   }
 
+
   click(elementText) {
-    element(by.xpath("//*[contains(text()," + elementText + ")][1]")).click();
+    element.all(by.xpath("//*[contains(text()," + elementText + ")]")).first().click();
+  }
+
+  clickFavorites() {
+    element.all(by.xpath("//*[contains(text(), 'Favorites')]")).first().click();
+  }
+
+  clickSignup() {
+    element.all(by.xpath("//*[contains(text(), 'Signup')]")).first().click();
+  }
+
+  clickManage() {
+    element.all(by.xpath("//*[contains(text(), 'Manage Passes')]")).first().click();
   }
 
   clickLots() {
@@ -75,8 +88,13 @@ export class AppPage {
   }
 
   clickSettings() {
-    element(by.xpath("//*[contains(text(), 'Settings')][1]")).click();
+    element.all(by.xpath("//*[contains(text(), 'Settings')]")).first().click();
   }
+
+  clickTesting() {
+    element(by.xpath("//*[contains(text(), 'Testing UI')]")).click();
+  }
+
   clickDeleteUserAccount() {
     element(by.xpath('/html/body/app-root/ion-app/ion-split-pane/ion-router-outlet/app-settings/ion-content/ion-button[3]')).click();
   }
@@ -103,7 +121,6 @@ export class AppPage {
   openTimesheetScroll() {
     return element(by.css('mbsc-time input')).click();
   }
-
   getTimesheetScrollModal() {
     return element(by.css('.mbsc-fr')).isDisplayed();
   }
@@ -275,4 +292,39 @@ export class AppPage {
 
 
   }
+
+  addCarToALot() {
+    this.grabNewElements();
+    element(by.xpath("//*[contains(@class, 'select')]")).click();
+    browser.sleep(1000);
+    element(by.xpath("//div[contains(text(), 'AD3')]")).click();
+    browser.sleep(1000);
+    element(by.xpath("//*[contains(text(), 'OK')]")).click();
+    browser.sleep(1000);
+    this.grabNewElements();
+    element.all(by.xpath("//ion-radio")).first().click();
+    element(by.xpath("/html/body/app-root/ion-app/ion-split-pane/ion-router-outlet/app-testing-ui/ion-content/form/ion-item[2]/ion-input/input")).sendKeys("1")
+         browser.sleep(1000);
+    element(by.xpath("//*[text() ='Submit Changes']")).click();
+  }
+
+
+
+
+  getNumberSpaces() {
+    browser.waitForAngularEnabled(false)
+    var numberSpacesString = element.all(by.xpath("//ion-text[contains(text(), 'Spaces Open')]")).first()
+    this.clickSettings();
+    this.loadPage('/settings');
+    this.clickTesting();
+    this.addCarToALot();
+    this.loadPage('/home')
+    this.clickLots();
+    this.loadPage('/all-lots');
+    var newNumberSpacesString = element.all(by.xpath("//ion-text[contains(text(), 'Spaces Open')]")).first()
+    expect(numberSpacesString != newNumberSpacesString)
+    }
+
+
+
 }
